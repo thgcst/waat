@@ -29,10 +29,25 @@ class Usuário():
         return (self.senha)
 
 class Profissional(Usuário):
+<<<<<<< HEAD
+    def __init__(self, nome, cpf, senha, profissao, telefone, enderecoComercial, email, resgistroProfissional):
+=======
     def __init__(self, nome, cpf, senha, profissao, registroProfissional):
+>>>>>>> 334a9cd9a8ea2dba0cbdffa4f43194bf1c291cdd
         super().__init__(nome, cpf, senha)                              #Usando o fato de ser subclasse e herdando metodos e atributos da classe mãe
         self.resgistroProfissional =  resgistroProfissional
         self.profissao = profissao
+<<<<<<< HEAD
+        self.telefone =  telefone
+        self.enderecoComercial = enderecoComercial
+        self.email = email
+
+    def set_registroProfissional(self, resgistroProfissional):
+        self.resgistroProfissional =  resgistroProfissional
+
+    def get_registroProfissional(self):
+        return(self.resgistroProfissional)
+=======
         self.registroProfissional =  registroProfissional
 
     def set_profissao(self, profissao):
@@ -46,6 +61,7 @@ class Profissional(Usuário):
 
     def get_registroProfissional(self):
         return(self.registroProfissional)
+>>>>>>> 334a9cd9a8ea2dba0cbdffa4f43194bf1c291cdd
 
 
 class Cliente(Usuário):                                              #Criando Clase profissional que é subclasse de Usuário
@@ -102,9 +118,27 @@ class Cliente(Usuário):                                              #Criando C
 clientes = []
 clienteAtual = 0
 
-@app.route('/<nomeProfissional>/<registroProfissional>/<profissao>/<nome>/<cpf>/<precoConsulta>/<email>/<enderecoComercial>/<telefone>')
-def pdf_template(nomeProfissional, registroProfissional, profissao, nome, cpf, precoConsulta, email, enderecoComercial, telefone):
-    rendered = render_template('pdf_template18+.html', nomeProfissional = nomeProfissional, registroProfissional = registroProfissional, profissao = profissao, nome = nome, cpf = cpf, precoConsulta = precoConsulta, email=email, enderecoComercial= enderecoComercial, telefone=telefone)
+<<<<<<< HEAD
+
+@app.route('/<nomePofissional>/<resgistroProfissional>/<AreaDeAtuacao/><nome>/<cpf>/<precoConsulta>')
+def pdf_template(nomePofissional, resgistroProfissional, nome, cpf, precoConsulta):
+    rendered = render_template('pdf_template18+.html', nomePofissional = nomePofissional, resgistroProfissional = resgistroProfissional, AreaDeAtuacao = AreaDeAtuacao, nome = nome, cpf = cpf, precoConsulta = precoConsulta)
+    pdf = pdfkit.from_string(rendered, False)
+
+    response =  make_response(pdf)
+    response.headers['Content-Type'] =  'applocation/pdf'
+    response.headers['Content-Disposition'] =   'inline; filename = recibo.pdf'
+
+    return response
+
+@app.route('/<nomePofissional>/<resgistroProfissional>/<AreaDeAtuacao>/<nome>/<nomeResponsavel>/<cpfResponsavel>/<precoConsulta>/<>')
+def pdf_template(nomePofissional, resgistroProfissional, nome, cpf, precoConsulta):
+    rendered = render_template('pdf_template18-.html', nomePofissional = nomePofissional, resgistroProfissional = resgistroProfissional, AreaDeAtuacao = AreaDeAtuacao, nome = nome, cpf = cpf, precoConsulta = precoConsulta)
+=======
+@app.route('/<nomeProfissional>/<registroProfissional>/<nomeResponsavel>/<cpfResponsavel>/<precoConsulta>')
+def pdf_template(nomeProfissional, registroProfissional, nomeResponsavel, cpfResponsavel, precoConsulta):
+    rendered = render_template('pdf_template.html', nomeProfissional = nomeProfissional, registroProfissional = registroProfissional, nomeResponsavel = nomeResponsavel, cpfResponsavel = cpfResponsavel, precoConsulta = precoConsulta)
+>>>>>>> 334a9cd9a8ea2dba0cbdffa4f43194bf1c291cdd
     pdf = pdfkit.from_string(rendered, False)
 
     response =  make_response(pdf)
@@ -118,42 +152,47 @@ def pdf_template(nomeProfissional, registroProfissional, profissao, nome, cpf, p
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
     error = None
-    if request.method == "POST":  
-        if request.form["radio"] == 0: #cliente
+    if request.method == "POST":
+        if request.form["nome"] == "" or request.form["cpfResponsavel"] == "" or request.form["cpf"] == "" or request.form["nome"] == "" or request.form["senha"] == "":
+            error = "Preencha todos os campos!"
+        else:
+            cliente1 = Cliente(request.form["nome"], str(request.form["cpf"]), str(request.form["senha"]), 0, str(request.form["nomeResponsavel"]), request.form["cpfResponsavel"], 0, 0, 0, 0)
+            arq = open('lista.txt', 'a')
+            arq.writelines(cliente1.get_cliente())
+            arq.close()
+            error = None
 
-            nome = request.form["nome"]
-            data_de_nascimento = request.form["nascimento"]
-            cpf = request.form["cpf"]
-            tel = request.form["tel"]
-            endereco = request.form["endereco"]
-            email = request.form["email"]
-            senha = request.form["senha"]
-            nome_responsavel = request.form["nomeRes"]
-            cpf_responsavel = request.form["cpfRes"]
-
-            if nome=='' or data_de_nascimento=='' or cpf=='' or tel=='' or endereco=='' or email=='' or senha=='' or cpf_responsavel=='' or nome_responsavel=='':
-                error = "Preencha todos os campos!"
-            else:
-                controler.cadastra_cliente(nome, data_de_nascimento, cpf, tel, endereco, email, senha, cpf_responsavel, nome_responsavel)                
-                error = None
-
-        else: #profissional
-            nome = request.form["nome"]
-            cpf = request.form["cpf"]
-            profissao = request.form["profissao"]
-            endereco_comercial = request.form["endereco"]
-            email = request.form["email"]
-            registro_profissional = request.form["regProf"]
-            tel = request.form["tel"]
-            senha = request.form["senha"]
-            if nome=='' or cpf=='' or profissao=='' or endereco_comercial=='' or email=='' or registro_profissional=='' or tel=='' or senha=='':
-                error = "Preencha todos os campos!"
-            else:
-                controler.cadastra_profissional(nome, cpf, profissao, endereco_comercial, email, registro_profissional, tel, senha)
-                error = None
-                return redirect("http://127.0.0.1:5000/")
     return render_template('create.html' , error=error)
 
+
+
+@app.route('/login_antigo', methods=['GET', 'POST'])
+def login_antigo():
+    error = None
+    if request.method =='POST':
+        arq = open('lista.txt', 'r')
+        texto = arq.readlines()
+        for i in range(0,len(texto)) :
+            clientes.append(texto[i].split(","))
+        arq.close()
+
+        for i in range(0,len(clientes)):
+            if clientes[i][0] == request.form["cpf"]:
+                if clientes[i][1] == request.form["senha"]:
+                    clienteAtual = i
+                    error = str(i)
+                    return redirect(url_for('loggedPaciente'))
+                    break
+                else:
+                    error = "Senha incorreta!"
+                    break
+            if i == len(clientes)-1:
+                error = "Usuário não cadastrado"
+
+
+        # error = 'O usuário "' + request.form['cpf'] + '" não está cadastrado!'
+
+    return render_template('login.html', error=error)
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -161,35 +200,19 @@ def login():
     if request.method =='POST':
         cpf_inserido = request.form["cpf"]
         senha_inserida = request.form["senha"]
-
-        if controler.verifica_cpf(cpf_inserido, "clientes"): # ta na bd
-            if senha_inserida==controler.cpf_senha(cpf_inserido, "clientes"):
+        if controler.verifica_cpf(cpf_inserido): # ta na bd
+            if senha_inserida==controler.cpf_senha(cpf_inserido):
                 id_cliente = controler.select("id_cliente","clientes", "cpf="+cpf_inserido)[0][0]
-                return redirect(url_for('loggedCliente', id_cliente=id_cliente))
+                return redirect(url_for('logged', id_cliente=id_cliente))
             else:
                 error = "Senha incorreta!"
-
-        elif controler.verifica_cpf(cpf_inserido, "profissionais"): # ta na bd
-            if senha_inserida==controler.cpf_senha(cpf_inserido, "profissionais"):
-                id_profissional = controler.select("id_profissional","profissionais", "cpf="+cpf_inserido)[0][0]
-                return redirect(url_for('loggedProfissional', id_profissional=id_profissional))
-            else:
-                error = "Senha incorreta!"
-
         else:
             error = "Usuário não cadastrado"
-
     return render_template('login.html', error=error)
 
 
-@app.route('/loggedProfissional/<id_profissional>')
-def loggedProfissional(id_profissional):
-    nome = controler.select("nome","profissionais", "id_profissional="+str(id_profissional))[0][0]
-    return render_template("loggedProfissional.html", Profissional=nome)
-
-
-@app.route('/loggedCliente/<id_cliente>')
-def loggedCliente(id_cliente):
+@app.route('/logged/<id_cliente>')
+def logged(id_cliente):
     nome = controler.select("nome","clientes", "id_cliente="+str(id_cliente))[0][0]
     return render_template("loggedCliente.html", cliente=nome)
 
