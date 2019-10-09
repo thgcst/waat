@@ -1,3 +1,4 @@
+import random
 import MySQLdb
 host = 'waatufrj.mysql.pythonanywhere-services.com'
 user = "waatufrj"
@@ -42,31 +43,51 @@ def delete(table, where):
     cursor.execute(query)
     con.commit()
 
-def verifica_cpf(cpf):
+def verifica_cpf(cpf, tabela):
     """retorna True se o cpf já está cadastrado e False c.c."""
     cpf = "cpf="+str(cpf)
-    cpf_no_db = bool(len(select("cpf", "clientes", cpf)))
+    cpf_no_db = bool(len(select("cpf", tabela, cpf)))
     return cpf_no_db
     
-def cpf_senha(cpf):
+def cpf_senha(cpf, tabela):
     """Retorna a senha correspondente ao cpf"""
     cpf = "cpf="+str(cpf)
-    senha = select("senha", "clientes", cpf)
+    senha = select("senha", tabela, cpf)
     return senha[0][0]
+
+def gera_id_cliente():
+    id_gerado = random.randint(1,100000)
+    id = "id_cliente="+str(id_gerado)
+    id_na_bd = bool(len(select("id_cliente", "clientes", id)))
+    while id_na_bd:        
+        id_gerado = random.randint(1,100000)
+        id = "id_cliente="+str(id_gerado)
+        id_na_bd = bool(len(select("id_cliente", "clientes", id)))
+    return id_gerado
+
+
+def gera_id_profissional():
+    id_gerado = random.randint(1,100000)
+    id = "id_profissional="+str(id_gerado)
+    id_na_bd = bool(len(select("id_profissional", "profissionais", id)))
+    while id_na_bd:        
+        id_gerado = random.randint(1,100000)
+        id = "id_profissional="+str(id_gerado)
+        id_na_bd = bool(len(select("id_profissional", "profissionais", id)))
+    return id_gerado
 
 
 def cadastra_cliente(nome, data_de_nascimento, cpf, telefone, endereco, email, senha, cpf_responsavel, nome_responsavel):
     id_cliente = gera_id_cliente()
-    sql = "INSERT INTO clientes(id_cliente, nome, data_de_nascimento, cpf, telefone, endereco, senha, cpf_responsavel, nome_responsavel) VALUES(%s, %s, %s, %s, %s, %s, %s)"
+    sql = "INSERT INTO clientes (id_cliente, nome, data_de_nascimento, cpf, telefone, endereco, email, senha, cpf_responsavel, nome_responsavel) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
     data = (id_cliente, nome, data_de_nascimento, cpf, telefone, endereco, email, senha, cpf_responsavel, nome_responsavel)
     cursor.execute(sql, data)
     con.commit()
 
-
-def cadastra_profissional(nome, cpf, profissao, enderecoComercial, email, registroProfissional, telefone, senha):
-    id_profissional = gera_id_profissionais()
-    sql = "INSERT INTO profissionais(id_cliente, nome, data_de_nascimento, cpf, telefone, endereco, senha, cpf_responsavel, nome_responsavel) VALUES(%s, %s, %s, %s, %s, %s, %s)"
-    data = (id_profissional, nome, cpf, profissao, enderecoComercial, email, registroProfissional, telefone, senha)
+#em progresso
+def cadastra_profissional(nome, cpf, profissao, endereco_comercial, email, registro_profissional, telefone, senha):
+    id_profissional = gera_id_profissional()
+    sql = "INSERT INTO profissionais (id_profissional, nome, cpf, profissao, endereco_comercial, email, registro_profissional, telefone, senha) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    data = (id_profissional, nome, cpf, profissao, endereco_comercial, email, registro_profissional, telefone, senha)
     cursor.execute(sql, data)
     con.commit()
-
