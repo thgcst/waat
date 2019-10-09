@@ -85,7 +85,8 @@ def cadastra_cliente(nome, data_de_nascimento, cpf, telefone, endereco, email, s
     data = (id_cliente, nome, data_de_nascimento, cpf, telefone, endereco, email, senha, cpf_responsavel, nome_responsavel)
     cursor.execute(sql, data)
     con.commit()
-#em progresso
+
+
 def cadastra_profissional(nome, cpf, profissao, endereco_comercial, email, registro_profissional, telefone, senha):
     id_profissional = gera_id_profissional()
     sql = "INSERT INTO profissionais (id_profissional, nome, cpf, profissao, endereco_comercial, email, registro_profissional, telefone, senha) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)"

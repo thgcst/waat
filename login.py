@@ -124,17 +124,17 @@ def cadastro():
             nome = request.form["nome"]
             data_de_nascimento = request.form["nascimento"]
             cpf = request.form["cpf"]
-            tel = request.form["tel"]
+            telefone = request.form["telefone"]
             endereco = request.form["endereco"]
             email = request.form["email"]
             senha = request.form["senha"]
             nome_responsavel = request.form["nomeRes"]
             cpf_responsavel = request.form["cpfRes"]
 
-            if nome=='' or data_de_nascimento=='' or cpf=='' or tel=='' or endereco=='' or email=='' or senha=='':
+            if nome=='' or data_de_nascimento=='' or cpf=='' or telefone=='' or endereco=='' or email=='' or senha=='':
                 error = "Preencha todos os campos!"
             else:
-                controler.cadastra_cliente(nome, data_de_nascimento, cpf, tel, endereco, email, senha, cpf_responsavel, nome_responsavel)               
+                controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, endereco, email, senha, cpf_responsavel, nome_responsavel)               
                 return redirect("http://127.0.0.1:5000/")
 
 
@@ -143,6 +143,7 @@ def cadastro():
             cpf = request.form["cpf"]
             profissao = request.form["profissao"]
             endereco_comercial = request.form["endereco"]
+            cep = request.form["cep"]
             email = request.form["email"]
             registro_profissional = request.form["regProf"]
             tel = request.form["tel"]
