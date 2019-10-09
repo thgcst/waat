@@ -1,8 +1,8 @@
 import MySQLdb
-host = 'sql10.freesqldatabase.com'
-user = "sql10308309"
-senha = "rPgCW78Vu7"
-db = "sql10308309"
+host = 'waatufrj.mysql.pythonanywhere-services.com'
+user = "waatufrj"
+senha = "BolinhoDeAtum"
+db = "waatufrj$datawaat"
 port = 3306
 
 con = MySQLdb.Connect(host, user, senha, db, port)
