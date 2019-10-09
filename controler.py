@@ -45,6 +45,19 @@ def delete(table, where):
     cursor.execute(query)
     con.commit()
 
+def limpa_telefone(telefone):
+    if len(telefone)==14:
+        ddd = telefone[1:3]
+        bloco5 = telefone[4:9]
+        bloco4 = telefone[10:]
+        return ddd+bloco5+bloco4
+    
+    if len(telefone)==13:
+        ddd = telefone[1:3]
+        bloco1 = telefone[4:8]
+        bloco2 = telefone[9:]
+        return ddd+bloco1+bloco2
+
 def limpa_cpf(cpf):
     '''Limpa o CPF, tirando ponto e traço'''
     first = cpf[:3]

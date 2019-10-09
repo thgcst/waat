@@ -123,7 +123,7 @@ def cadastro():
             nome = request.form["nome"]
             data_de_nascimento = request.form["nascimento"]
             cpf = controler.limpa_cpf(request.form["cpf"])
-            telefone = request.form["telefone"]
+            telefone = controler.limpa_telefone(request.form["telefone"])
             email = request.form["email"]
             senha = request.form["senha"]
             cep=request.form["cep"]
@@ -146,7 +146,7 @@ def cadastro():
             cpf = controler.limpa_cpf(request.form["cpf"])
             profissao = request.form["profissao"]
             registro_profissional = request.form["regProf"]
-            telefone = request.form["telefone"]
+            telefone = controler.limpa_telefone(request.form["telefone"])
             data_de_nascimento = request.form["nascimento"]
             email = request.form["email"]
             senha = request.form["senha"]
