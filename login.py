@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request, make_response
-import pdfkit
+import pdfkit, controler
 
 app = Flask(__name__)
 
@@ -144,11 +144,10 @@ def cadastro():
 
 
 
-@app.route('/', methods=['GET', 'POST'])
-def login():
+@app.route('/login_antigo', methods=['GET', 'POST'])
+def login_antigo():
     error = None
     if request.method =='POST':
-
         arq = open('lista.txt', 'r')
         texto = arq.readlines()
         for i in range(0,len(texto)) :
@@ -172,6 +171,24 @@ def login():
         # error = 'O usuário "' + request.form['cpf'] + '" não está cadastrado!'
 
     return render_template('login.html', error=error)
+
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method =='POST':
+        cpf_inserido = request.form["cpf"]
+        senha_inserida = request.form["senha"]
+        if controler.verifica_cpf(cpf_inserido): # ta na bd
+            if senha_inserida==controler.cpf_senha(cpf_inserido):
+                id_cliente = controler.select("id_cliente","clientes", "cpf="+cpf_inserido)[0][0]
+                return redirect(url_for('logged', id_cliente=id_cliente))
+            else:
+                error = "Senha incorreta!"
+        else:
+            error = "Usuário não cadastrado"
+    return render_template('login.html', error=error)
+
+
 
 
 @app.route('/logged')
