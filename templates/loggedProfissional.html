@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/loggedPaciente.css') }}">
-    <!-- <link rel="stylesheet" type="text/css" href="../static/styles/loggedPaciente.css"> -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/loggedMedico.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="../static/styles/loggedMedico.css"> -->
 
 
     <title>Login</title>
@@ -18,12 +18,10 @@
 <body>
     <div class="limiter">
         <div class="container-login100">
-                {% if paciente %}
-                <strong class="greetings">Bem vindo, Paciente {{ paciente }}!</strong>
-                    {% endif %}
-                <!-- <strong class="greetings">Bem vindo, Paciente _________!</strong> -->
+                <strong class="greetings">Bem vindo, _________!</strong>
             <div class="botoes">
                 <button class="botao">Informações de cadastro</button>
+                <button class="botao">Clientes</button>
                 <button class="botao">Recibos</button>
             </div>
         </div>

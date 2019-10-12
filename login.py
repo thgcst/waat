@@ -192,7 +192,7 @@ def login():
 @app.route('/logged/<id_cliente>')
 def logged(id_cliente):
     nome = controler.select("nome","clientes", "id_cliente="+str(id_cliente))[0][0]
-    return render_template("loggedPaciente.html", paciente=nome)
+    return render_template("loggedCliente.html", cliente=nome)
 
 
 if __name__ == '__main__':
