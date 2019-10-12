@@ -1,13 +1,12 @@
 import MySQLdb
-host = "127.0.0.1"
-user = "waat"
-senha = "anderson123"
-db = "waat"
+host = 'sql10.freesqldatabase.com'
+user = "sql10308309"
+senha = "rPgCW78Vu7"
+db = "sql10308309"
 port = 3306
 
 con = MySQLdb.Connect(host, user, senha, db, port)
 cursor = con.cursor()
-#cursor = con.cursor(MySQLdb.cursors.DictCursor)
 
 def select(fields, tables, where = None):
     global cursor

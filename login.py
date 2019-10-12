@@ -189,12 +189,10 @@ def login():
     return render_template('login.html', error=error)
 
 
-
-
-@app.route('/logged')
-def logged():
-    return render_template("loggedPaciente.html", nome=joão)
-
+@app.route('/logged/<id_cliente>')
+def logged(id_cliente):
+    nome = controler.select("nome","clientes", "id_cliente="+str(id_cliente))[0][0]
+    return render_template("loggedPaciente.html", paciente=nome)
 
 
 if __name__ == '__main__':
