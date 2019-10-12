@@ -1,0 +1,136 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  font-family: sans-serif;
+}
+
+.container-login100 {
+  width: 100%;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background: #69acd8;
+  background: -webkit-linear-gradient(-135deg, #2179b4, #69acd8);
+  background: -o-linear-gradient(-135deg, #2179b4, #69acd8);
+  background: -moz-linear-gradient(-135deg, #2179b4, #69acd8);
+  background: linear-gradient(-135deg, #2179b4, #69acd8);
+}
+
+.limiter {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.wrap-login100 {
+  /* width: 960px; */
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* padding: 177px 130px 33px 95px; */
+  /* padding: 50px; */
+  width: 400px;
+}
+
+.inputBox {
+  padding: 10px 0px;
+}
+
+.input {
+  background: #e7e7e7;
+  border-radius: 100px;
+  border-width: 0;
+  height: 50px;
+  width: 300px;
+  font-size: 20px;
+  padding: 0px 20px 0px 20px;
+
+  transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: 2px 2px 20px #eee;
+}
+
+.botao {
+  background: #2ecc71;
+  border-radius: 100px;
+  border-width: 0;
+  height: 50px;
+  width: 300px;
+  font-size: 20px;
+  padding: 0px 15px 0px 15px;
+  color: #fff;
+
+  transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+}
+
+.botao:hover {
+  background: #2ecc71;
+  border-radius: 100px;
+  border-width: 0;
+  height: 50px;
+  width: 300px;
+  font-size: 20px;
+  padding: 0px 15px 0px 15px;
+  color: #fff;
+
+  box-shadow: 2px 2px 20px #dadada;
+}
+
+.container {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* Hide the browser's default radio button */
+.container input {
+  visibility: hidden;
+  /* opacity: 0; */
+  /* cursor: pointer; */
+  padding: 0px 10px;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  padding: 5px 15px;
+  background-color: #eee;
+  border-radius: 200px;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #239c55;
+}

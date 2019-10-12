@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/create.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="../static/styles/create.css"> -->
+
+
+    <title>Cadastro</title>
+</head>
+
+<body>
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <form method="POST">
+                    <h1 style="text-align: center; padding-top: 30px"><strong>Cadastre-se</strong></h1>
+                    <div style="padding: 50px 0 10px 0;">
+                        <label class="container">
+                            <input type="radio" checked="checked" name="radio">
+                            <span class="checkmark">Paciente</span>
+                        </label>
+                        <label class="container">
+                            <input type="radio" name="radio">
+                            <span class="checkmark">Profissional</span>
+                        </label>
+                    </div>
+                    <div class="inputBox" style="padding-top: 10px">
+                        <input type="text" name="nome" placeholder="Nome" value="{{
+							request.form.nome }}" class="input" />
+                    </div>
+                    <div class="inputBox" style="">
+                        <input type="text" name="curso" placeholder="Curso" value="{{
+                                request.form.curso }}" class="input" />
+                    </div>
+                    <div class="inputBox" style="">
+                        <input type="tel" name="cpf" placeholder="CPF" value="{{
+                                request.form.cpf }}" class="input" />
+                    </div>
+                    <div class="inputBox" style="">
+                        <input type="tel" name="dre" placeholder="DRE" value="{{
+                                    request.form.dre }}" class="input" />
+                    </div>
+                    <div class="inputBox" style="">
+                        <input type="password" name="senha" placeholder="Senha" value="{{
+                                        request.form.username }}" class="input" />
+                    </div>
+                    {% if error %}
+                    <p class="error" style="text-align: center; color: #e74c3c; font-size: 14px"> {{ error }}
+                        {% endif %}
+                        <div class="inputBox" style="padding-bottom: 40px; padding-top: 20px">
+                            <button class="botao" type="submit">Criar conta</button>
+                        </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
