@@ -23,33 +23,38 @@
                     <h1 style="text-align: center; padding-top: 30px"><strong>Cadastre-se</strong></h1>
                     <div style="padding: 50px 0 10px 0;">
                         <label class="container">
-                            <input type="radio" checked="checked" name="radio">
+                            <input type="radio" checked="checked" name="radio" id="paciente">
                             <span class="checkmark">Paciente</span>
                         </label>
                         <label class="container">
-                            <input type="radio" name="radio">
+                            <input type="radio" name="radio" id="profissional">
                             <span class="checkmark">Profissional</span>
                         </label>
                     </div>
-                    <div class="inputBox" style="padding-top: 10px">
-                        <input type="text" name="nome" placeholder="Nome" value="{{
+                    <div id="table">
+                        <div class="inputBox" style="padding-top: 10px">
+                            <input type="text" name="nome" placeholder="Nome" value="{{
 							request.form.nome }}" class="input" />
-                    </div>
-                    <div class="inputBox" style="">
-                        <input type="text" name="curso" placeholder="Curso" value="{{
-                                request.form.curso }}" class="input" />
-                    </div>
-                    <div class="inputBox" style="">
-                        <input type="tel" name="cpf" placeholder="CPF" value="{{
+                        </div>
+                        <div class="inputBox" style=""><input type="tel" name="nascimento"
+                                placeholder="Data de nascimento" value="{{request.form.nascimento }}" class="input" />
+                        </div>
+                        <div class="inputBox" style="">
+                            <input type="tel" name="cpf" placeholder="CPF" value="{{
                                 request.form.cpf }}" class="input" />
-                    </div>
-                    <div class="inputBox" style="">
-                        <input type="tel" name="dre" placeholder="DRE" value="{{
-                                    request.form.dre }}" class="input" />
-                    </div>
-                    <div class="inputBox" style="">
-                        <input type="password" name="senha" placeholder="Senha" value="{{
+                        </div>
+                        <div class="inputBox" style="">
+                            <input type="tel" name="tel" placeholder="Telefone" value="{{
+                                        request.form.tel }}" class="input" />
+                        </div>
+                        <div class="inputBox" style="">
+                            <input type="text" name="endereco" placeholder="Endereço" value="{{
+                                            request.form.endereco }}" class="input" />
+                        </div>
+                        <div class="inputBox" style="">
+                            <input type="password" name="senha" placeholder="Senha" value="{{
                                         request.form.username }}" class="input" />
+                        </div>
                     </div>
                     {% if error %}
                     <p class="error" style="text-align: center; color: #e74c3c; font-size: 14px"> {{ error }}
@@ -63,6 +68,28 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById("profissional").addEventListener("click", profissional);
+
+        function profissional() {
+            var list = document.getElementById("table");
+            while (list.hasChildNodes()) {
+                list.removeChild(list.firstChild);
+            }
+            list.innerHTML = '<div class="inputBox" style="padding-top: 10px"><input type="text" name="nome" placeholder="Nome" value="{{request.form.nome }}" class="input" /></div> <div class="inputBox" style=""><input type="tel" name="cpf" placeholder="CPF" value="{{request.form.cpf }}" class="input" /></div><div class="inputBox" style=""><input type="text" name="regProf" placeholder="Registro profissional" value="{{request.form.regProf }}" class="input" /></div><div class="inputBox" style=""><input type="tel" name="tel" placeholder="Telefone" value="{{request.form.tel }}" class="input" /></div><div class="inputBox" style=""><input type="password" name="senha" placeholder="Senha" value="{{request.form.username }}" class="input" /></div>';
+        }
+
+        document.getElementById("paciente").addEventListener("click", paciente);
+
+        function paciente() {
+            var list = document.getElementById("table");
+            while (list.hasChildNodes()) {
+                list.removeChild(list.firstChild);
+            }
+            list.innerHTML = '<div class="inputBox" style="padding-top: 10px"><input type="text" name="nome" placeholder="Nome" value="{{request.form.nome }}" class="input" /></div> <div class="inputBox" style=""><input type="tel" name="nascimento" placeholder="Data de nascimento" value="{{request.form.nascimento }}" class="input" /></div><div class="inputBox" style=""><input type="tel" name="cpf" placeholder="CPF" value="{{request.form.cpf }}" class="input" /></div><div class="inputBox" style=""><input type="tel" name="tel" placeholder="Telefone" value="{{request.form.tel }}" class="input" /></div><div class="inputBox" style=""><input type="text" name="endereco" placeholder="Endereço" value="{{request.form.endereco }}" class="input" /></div><div class="inputBox" style=""><input type="password" name="senha" placeholder="Senha" value="{{request.form.username }}" class="input" /></div>';
+        }
+    </script>
 
 
 </body>
