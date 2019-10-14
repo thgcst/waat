@@ -29,25 +29,10 @@ class Usuário():
         return (self.senha)
 
 class Profissional(Usuário):
-<<<<<<< HEAD
-    def __init__(self, nome, cpf, senha, profissao, telefone, enderecoComercial, email, resgistroProfissional):
-=======
     def __init__(self, nome, cpf, senha, profissao, registroProfissional):
->>>>>>> 334a9cd9a8ea2dba0cbdffa4f43194bf1c291cdd
         super().__init__(nome, cpf, senha)                              #Usando o fato de ser subclasse e herdando metodos e atributos da classe mãe
         self.resgistroProfissional =  resgistroProfissional
         self.profissao = profissao
-<<<<<<< HEAD
-        self.telefone =  telefone
-        self.enderecoComercial = enderecoComercial
-        self.email = email
-
-    def set_registroProfissional(self, resgistroProfissional):
-        self.resgistroProfissional =  resgistroProfissional
-
-    def get_registroProfissional(self):
-        return(self.resgistroProfissional)
-=======
         self.registroProfissional =  registroProfissional
 
     def set_profissao(self, profissao):
@@ -61,7 +46,6 @@ class Profissional(Usuário):
 
     def get_registroProfissional(self):
         return(self.registroProfissional)
->>>>>>> 334a9cd9a8ea2dba0cbdffa4f43194bf1c291cdd
 
 
 class Cliente(Usuário):                                              #Criando Clase profissional que é subclasse de Usuário
@@ -118,27 +102,9 @@ class Cliente(Usuário):                                              #Criando C
 clientes = []
 clienteAtual = 0
 
-<<<<<<< HEAD
-
-@app.route('/<nomePofissional>/<resgistroProfissional>/<AreaDeAtuacao/><nome>/<cpf>/<precoConsulta>')
-def pdf_template(nomePofissional, resgistroProfissional, nome, cpf, precoConsulta):
-    rendered = render_template('pdf_template18+.html', nomePofissional = nomePofissional, resgistroProfissional = resgistroProfissional, AreaDeAtuacao = AreaDeAtuacao, nome = nome, cpf = cpf, precoConsulta = precoConsulta)
-    pdf = pdfkit.from_string(rendered, False)
-
-    response =  make_response(pdf)
-    response.headers['Content-Type'] =  'applocation/pdf'
-    response.headers['Content-Disposition'] =   'inline; filename = recibo.pdf'
-
-    return response
-
-@app.route('/<nomePofissional>/<resgistroProfissional>/<AreaDeAtuacao>/<nome>/<nomeResponsavel>/<cpfResponsavel>/<precoConsulta>/<>')
-def pdf_template(nomePofissional, resgistroProfissional, nome, cpf, precoConsulta):
-    rendered = render_template('pdf_template18-.html', nomePofissional = nomePofissional, resgistroProfissional = resgistroProfissional, AreaDeAtuacao = AreaDeAtuacao, nome = nome, cpf = cpf, precoConsulta = precoConsulta)
-=======
 @app.route('/<nomeProfissional>/<registroProfissional>/<nomeResponsavel>/<cpfResponsavel>/<precoConsulta>')
 def pdf_template(nomeProfissional, registroProfissional, nomeResponsavel, cpfResponsavel, precoConsulta):
     rendered = render_template('pdf_template.html', nomeProfissional = nomeProfissional, registroProfissional = registroProfissional, nomeResponsavel = nomeResponsavel, cpfResponsavel = cpfResponsavel, precoConsulta = precoConsulta)
->>>>>>> 334a9cd9a8ea2dba0cbdffa4f43194bf1c291cdd
     pdf = pdfkit.from_string(rendered, False)
 
     response =  make_response(pdf)
