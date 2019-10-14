@@ -118,26 +118,22 @@ def pdf_template(nomeProfissional, registroProfissional, nomeResponsavel, cpfRes
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
     error = None
-    if request.method == "POST":
-        option = request.form['radio']
-        if option == ''
+    if request.method == "POST":  #cliente
+        if request.form["nome"] == "" or request.form["cpf"] == "" or request.form["nascimento"] == "" or request.form["tel"] == "" or request.form["endereco"] or request.form["senha"] == "" or request.form["cpfResponsavel"] == "" or request.form["nomeResponsavel"] == "":
+            error = "Preencha todos os campos!"
         else:
-                
-            if request.form["nome"] == "" or request.form["cpf"] == "" or request.form["nascimento"] == "" or request.form["tel"] == "" or request.form["endereco"] or request.form["senha"] == "":
-                error = "Preencha todos os campos!"
-            else:
-                nome = request.form["nome"]
-                data_de_nascimento = request.form["nascimento"]
-                cpf = request.form["cpf"]
-                tel = request.form["tel"]
-                endereco = request.form["endereco"]
-                email = request.form["email"]
-                senha = request.form["senha"]
-                nome_responsavel = request.form["nomeResponsavel"]
-                cpf_responsavel = request.form["cpfResponsavel"]
-                controler.cadastra_cliente(nome, data_de_nascimento, cpf, tel, endereco, email, senha, cpf_resposavel, nome_resposavel)
-                error = None
-            return render_template('create.html' , error=error)
+            nome = request.form["nome"]
+            data_de_nascimento = request.form["nascimento"]
+            cpf = request.form["cpf"]
+            tel = request.form["tel"]
+            endereco = request.form["endereco"]
+            email = request.form["email"]
+            senha = request.form["senha"]
+            nome_responsavel = request.form["nomeResponsavel"]
+            cpf_responsavel = request.form["cpfResponsavel"]
+            controler.cadastra_cliente(nome, data_de_nascimento, cpf, tel, endereco, email, senha, cpf_resposavel, nome_resposavel)                
+            error = None
+    return render_template('create.html' , error=error)
 
 
 @app.route('/', methods=['GET', 'POST'])
