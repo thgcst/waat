@@ -69,3 +69,4 @@ def cadastra_profissional(nome, cpf, profissao, enderecoComercial, email, regist
     data = (id_profissional, nome, cpf, profissao, enderecoComercial, email, registroProfissional, telefone, senha)
     cursor.execute(sql, data)
     con.commit()
+
