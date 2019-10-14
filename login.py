@@ -1,4 +1,3 @@
-#teste
 from flask import Flask, render_template, redirect, url_for, request, make_response
 import pdfkit, controler
 
@@ -33,22 +32,19 @@ class Usuário():
 
 
 class Profissional(Usuário):
-    def __init__(self, nome, cpf, senha, profissao, registoProfissional):
+    def __init__(self, nome, cpf, senha, profissao, telefone, enderecoComercial, email, resgistroProfissional):
         super().__init__(nome, cpf, senha)                              #Usando o fato de ser subclasse e herdando metodos e atributos da classe mãe
+        self.resgistroProfissional =  resgistroProfissional
         self.profissao = profissao
-        self.registoProfissional =  registoProfissional
+        self.telefone =  telefone
+        self.enderecoComercial = enderecoComercial
+        self.email = email
 
-    def set_profissao(self, profissao):
-        self.profissao = profissao
-
-    def set_registroProfissional(self, registoProfissional):
-        self.registoProfissional =  registoProfissional
-
-    def get_profissional(self):
-        return (self.profissao)
+    def set_registroProfissional(self, resgistroProfissional):
+        self.resgistroProfissional =  resgistroProfissional
 
     def get_registroProfissional(self):
-        return(self.registoProfissional)
+        return(self.resgistroProfissional)
 
 
 class Cliente(Usuário):                                              #Criando Clase profissional que é subclasse de Usuário
@@ -60,7 +56,6 @@ class Cliente(Usuário):                                              #Criando C
         self.nomeResponsavel = nomeResponsavel
         self.cpfResponsavel = cpfResponsavel
         self.enderecoResponsavel = enderecoResponsavel
-        self.frequencia =  frequencia
         self.diaDaSemana = diaDaSemana
         self.horario = horario
 
@@ -75,9 +70,6 @@ class Cliente(Usuário):                                              #Criando C
 
     def set_enderecoResponsavel(self, enderecoResponsavel ):
         self.enderecoResponsavel = enderecoResponsavel
-
-    def set_frequencia(self, frequencia ):
-        self.frequencia =  frequencia
 
     def set_diaDaSemana(self, diaDaSemana ):
         self.diaDaSemana = diaDaSemana
@@ -97,9 +89,6 @@ class Cliente(Usuário):                                              #Criando C
     def get_enderecoResponsavel(self):
         return(self.enderecoResponsavel)
 
-    def get_frequencia(self):
-        return(self.frequencia)
-
     def get_diaDaSemana(self):
         return(self.diaDaSemana)
 
@@ -115,9 +104,20 @@ clientes = []
 clienteAtual = 0
 
 
-@app.route('/<nomePofissional>/<registoProfissional>/<nomeResponsavel>/<cpfResponsavel>/<precoConsulta>')
-def pdf_template(nomePofissional, registoProfissional, nomeResponsavel, cpfResponsavel, precoConsulta):
-    rendered = render_template('pdf_template.html', nomePofissional = nomePofissional, registoProfissional = registoProfissional, nomeResponsavel = nomeResponsavel, cpfResponsavel = cpfResponsavel, precoConsulta = precoConsulta)
+@app.route('/<nomePofissional>/<resgistroProfissional>/<AreaDeAtuacao/><nome>/<cpf>/<precoConsulta>')
+def pdf_template(nomePofissional, resgistroProfissional, nome, cpf, precoConsulta):
+    rendered = render_template('pdf_template18+.html', nomePofissional = nomePofissional, resgistroProfissional = resgistroProfissional, AreaDeAtuacao = AreaDeAtuacao, nome = nome, cpf = cpf, precoConsulta = precoConsulta)
+    pdf = pdfkit.from_string(rendered, False)
+
+    response =  make_response(pdf)
+    response.headers['Content-Type'] =  'applocation/pdf'
+    response.headers['Content-Disposition'] =   'inline; filename = recibo.pdf'
+
+    return response
+
+@app.route('/<nomePofissional>/<resgistroProfissional>/<AreaDeAtuacao>/<nome>/<nomeResponsavel>/<cpfResponsavel>/<precoConsulta>/<>')
+def pdf_template(nomePofissional, resgistroProfissional, nome, cpf, precoConsulta):
+    rendered = render_template('pdf_template18-.html', nomePofissional = nomePofissional, resgistroProfissional = resgistroProfissional, AreaDeAtuacao = AreaDeAtuacao, nome = nome, cpf = cpf, precoConsulta = precoConsulta)
     pdf = pdfkit.from_string(rendered, False)
 
     response =  make_response(pdf)
