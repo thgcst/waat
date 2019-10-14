@@ -119,46 +119,22 @@ def pdf_template(nomeProfissional, registroProfissional, nomeResponsavel, cpfRes
 def cadastro():
     error = None
     if request.method == "POST":
-        if request.form["nome"] == "" or request.form["cpfResponsavel"] == "" or request.form["cpf"] == "" or request.form["nome"] == "" or request.form["senha"] == "":
+        if request.form["nome"] == "" or request.form["cpf"] == "" or request.form["nascimento"] == "" or request.form["tel"] == "" or request.form["endereco"] or request.form["senha"] == "":
             error = "Preencha todos os campos!"
         else:
-            cliente1 = Cliente(request.form["nome"], str(request.form["cpf"]), str(request.form["senha"]), 0, str(request.form["nomeResponsavel"]), request.form["cpfResponsavel"], 0, 0, 0, 0)
-            arq = open('lista.txt', 'a')
-            arq.writelines(cliente1.get_cliente())
-            arq.close()
+            nome = request.form["nome"]
+            data_de_nascimento = request.form["nascimento"]
+            cpf = request.form["cpf"]
+            tel = request.form["tel"]
+            endereco = request.form["endereco"]
+            email = request.form["email"]
+            senha = request.form["senha"]
+            nome_responsavel = request.form["nomeResponsavel"]
+            cpf_responsavel = request.form["cpfResponsavel"]
+            controler.cadastra_cliente(nome, data_de_nascimento, cpf, tel, endereco, email, senha, cpf_resposavel, nome_resposavel)
             error = None
-
     return render_template('create.html' , error=error)
 
-
-
-@app.route('/login_antigo', methods=['GET', 'POST'])
-def login_antigo():
-    error = None
-    if request.method =='POST':
-        arq = open('lista.txt', 'r')
-        texto = arq.readlines()
-        for i in range(0,len(texto)) :
-            clientes.append(texto[i].split(","))
-        arq.close()
-
-        for i in range(0,len(clientes)):
-            if clientes[i][0] == request.form["cpf"]:
-                if clientes[i][1] == request.form["senha"]:
-                    clienteAtual = i
-                    error = str(i)
-                    return redirect(url_for('loggedPaciente'))
-                    break
-                else:
-                    error = "Senha incorreta!"
-                    break
-            if i == len(clientes)-1:
-                error = "Usuário não cadastrado"
-
-
-        # error = 'O usuário "' + request.form['cpf'] + '" não está cadastrado!'
-
-    return render_template('login.html', error=error)
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
