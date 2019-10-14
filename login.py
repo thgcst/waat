@@ -102,9 +102,9 @@ class Cliente(Usuário):                                              #Criando C
 clientes = []
 clienteAtual = 0
 
-@app.route('/<nomeProfissional>/<registroProfissional>/<nomeResponsavel>/<cpfResponsavel>/<precoConsulta>')
-def pdf_template(nomeProfissional, registroProfissional, nomeResponsavel, cpfResponsavel, precoConsulta):
-    rendered = render_template('pdf_template.html', nomeProfissional = nomeProfissional, registroProfissional = registroProfissional, nomeResponsavel = nomeResponsavel, cpfResponsavel = cpfResponsavel, precoConsulta = precoConsulta)
+@app.route('/<nomeProfissional>/<registroProfissional>/<profissao/><nome>/<cpf>/<precoConsulta>/<email>/<enderecoComercial>/<telefone>')
+def pdf_template(nomeProfissional, registroProfissional, profissao, nome, cpf, precoConsulta, email, enderecoComercial, telefone):
+    rendered = render_template('pdf_template18+.html', nomeProfissional = nomeProfissional, registroProfissional = registroProfissional, profissao = profissao, nome = nome, cpf = cpf, precoConsulta = precoConsulta, email=email, enderecoComercial= enderecoComercial, telefone=telefone)
     pdf = pdfkit.from_string(rendered, False)
 
     response =  make_response(pdf)
