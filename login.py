@@ -28,26 +28,23 @@ class Usuário():
     def get_senha(self):
         return (self.senha)
 
-
-
-
 class Profissional(Usuário):
-    def __init__(self, nome, cpf, senha, profissao, registoProfissional):
+    def __init__(self, nome, cpf, senha, profissao, registroProfissional):
         super().__init__(nome, cpf, senha)                              #Usando o fato de ser subclasse e herdando metodos e atributos da classe mãe
         self.profissao = profissao
-        self.registoProfissional =  registoProfissional
+        self.registroProfissional =  registroProfissional
 
     def set_profissao(self, profissao):
         self.profissao = profissao
 
-    def set_registroProfissional(self, registoProfissional):
-        self.registoProfissional =  registoProfissional
+    def set_registroProfissional(self, registroProfissional):
+        self.registroProfissional =  registroProfissional
 
     def get_profissional(self):
         return (self.profissao)
 
     def get_registroProfissional(self):
-        return(self.registoProfissional)
+        return(self.registroProfissional)
 
 
 class Cliente(Usuário):                                              #Criando Clase profissional que é subclasse de Usuário
@@ -108,15 +105,12 @@ class Cliente(Usuário):                                              #Criando C
     def get_cliente(self):
         return str(self.nome) + "," + str(self.cpf) + "," + str(self.nomeResponsavel) + "," + str(self.cpfResponsavel) + "," + str(self.senha) + "\n"
 
-
-
 clientes = []
 clienteAtual = 0
 
-
-@app.route('/<nomePofissional>/<registoProfissional>/<nomeResponsavel>/<cpfResponsavel>/<precoConsulta>')
-def pdf_template(nomePofissional, registoProfissional, nomeResponsavel, cpfResponsavel, precoConsulta):
-    rendered = render_template('pdf_template.html', nomePofissional = nomePofissional, registoProfissional = registoProfissional, nomeResponsavel = nomeResponsavel, cpfResponsavel = cpfResponsavel, precoConsulta = precoConsulta)
+@app.route('/<nomeProfissional>/<registroProfissional>/<nomeResponsavel>/<cpfResponsavel>/<precoConsulta>')
+def pdf_template(nomeProfissional, registroProfissional, nomeResponsavel, cpfResponsavel, precoConsulta):
+    rendered = render_template('pdf_template.html', nomeProfissional = nomeProfissional, registroProfissional = registroProfissional, nomeResponsavel = nomeResponsavel, cpfResponsavel = cpfResponsavel, precoConsulta = precoConsulta)
     pdf = pdfkit.from_string(rendered, False)
 
     response =  make_response(pdf)
