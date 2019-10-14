@@ -13,13 +13,9 @@
         <div id="conteudo">
             <div id="conteudo-principal">
                 <h1>
-                    <center>{{nomeProfissional}}</center>
+                    <center>{{nomePofissional}}</center>
                     <h1>
-<<<<<<< HEAD:templates/pdf_template18-.html
                         <center>{{resgistroProfissional}}</center>
-=======
-                        <center>{{registroProfissional}}</center>
->>>>>>> 334a9cd9a8ea2dba0cbdffa4f43194bf1c291cdd:templates/pdf_template.html
                     </h1><br /><br /><br />
                     <h1>
                         <center>RECIBO</center>
@@ -27,8 +23,8 @@
 
                     <p>
                         <center> Recebi de {{nomeResponsavel}}, CPF {{cpfResponsavel}},<br />
-                            o valor de {{precoConsulta}}, referente ao atendimento de {{nome}} no dia {{dataDoAtendimento}},<br />
-                            na area de {{AreaDeAtuacao}} em sessões de 50 minutos de duraçao.<br />
+                          o valor de {{precoConsulta}}, referente ao atendimento de {{nome}} no dia {{dataDoAtendimento}},<br />
+                           na area de {{AreaDeAtuacao}} em sessões de 50 minutos de duraçao.<br />
                         </center>
                     </p>
 
@@ -43,13 +39,13 @@
         </div><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         <div id="rodape">
             <p id="telefone-email">
-                contato@exemplo.com.br
+                {{email}}
                 <br>
-                <span class="ddd">41</span> 5555-5555
+                <span class="ddd">(21)</span> {{telefone}}
             </p>
 
             <p id="endereco">
-                {{endereco}}
+                {{enderecoComercial}}
                 <br>
                 {{CEP}}
                 <br>
