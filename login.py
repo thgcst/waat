@@ -133,7 +133,7 @@ def cadastro():
             cpf_responsavel = request.form["cpfResponsavel"]
             controler.cadastra_cliente(nome, data_de_nascimento, cpf, tel, endereco, email, senha, cpf_resposavel, nome_resposavel)
             error = None
-    return render_template('create.html' , error=error)
+        return render_template('create.html' , error=error)
 
 
 @app.route('/', methods=['GET', 'POST'])
