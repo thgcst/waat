@@ -54,6 +54,15 @@ def cpf_senha(cpf):
     senha = select("senha", "clientes", cpf)
     return senha[0][0]
 
+def gera_id_cliente():
+    id_gerado = random.randint(1,100000)
+    id = "id_cliente="+str(id_gerado)
+    id_na_bd = bool(len(select("id_cliente", "clientes", id)))
+    while id_na_bd:        
+        id_gerado = random.randint(1,100000)
+        id = "id_cliente="+str(id_gerado)
+        id_na_bd = bool(len(select("id_cliente", "clientes", id)))
+    return id_gerado
 
 def cadastra_cliente(nome, data_de_nascimento, cpf, telefone, endereco, email, senha, cpf_responsavel, nome_responsavel):
     id_cliente = gera_id_cliente()
