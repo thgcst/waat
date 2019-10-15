@@ -15,16 +15,16 @@
                 <h1>
                     <center>{{nomePofissional}}</center>
                     <h1>
-                        <center>{{registoProfissional}}</center>
+                        <center>{{resgistroProfissional}}</center>
                     </h1><br /><br /><br />
                     <h1>
                         <center>RECIBO</center>
                     </h1>
 
                     <p>
-                        <center> Recebi de {{nomeResponsavel}}, CPF {{cpfResponsavel}},<br />
+                        <center> Recebi de {{nome}}, CPF {{cpf}},<br />
                             o valor de {{precoConsulta}}, referente ao atendimento no dia {{dataDoAtendimento}},<br />
-                            na area de Psicologia em sessões de 50 minutos de duraçao.<br />
+                            na area de {{profissao}} em sessões de 50 minutos de duraçao.<br />
                         </center>
                     </p>
 
@@ -39,13 +39,13 @@
         </div><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         <div id="rodape">
             <p id="telefone-email">
-                contato@exemplo.com.br
+                {{email}}
                 <br>
-                <span class="ddd">41</span> 5555-5555
+                <span class="ddd">(21)</span> {{telefone}}
             </p>
 
             <p id="endereco">
-                {{endereco}}
+                {{enderecoComercial}}
                 <br>
                 {{CEP}}
                 <br>

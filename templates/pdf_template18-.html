@@ -1,0 +1,63 @@
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Site da Empresa</title>
+    <!-- <link href="css/estilos.css" rel="stylesheet"> -->
+</head>
+
+<body>
+
+    <div id="site">
+
+        <div id="conteudo">
+            <div id="conteudo-principal">
+                <h1>
+                    <center>{{nomePofissional}}</center>
+                    <h1>
+                        <center>{{resgistroProfissional}}</center>
+                    </h1><br /><br /><br />
+                    <h1>
+                        <center>RECIBO</center>
+                    </h1>
+
+                    <p>
+                        <center> Recebi de {{nomeResponsavel}}, CPF {{cpfResponsavel}},<br />
+                          o valor de {{precoConsulta}}, referente ao atendimento de {{nome}} no dia {{dataDoAtendimento}},<br />
+                           na area de {{AreaDeAtuacao}} em sessões de 50 minutos de duraçao.<br />
+                        </center>
+                    </p>
+
+                    <p><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                        <center> Rio de Janeiro, {{data}}</center>
+                        <center> <img alt="imagem assinatura" src="assinatura.jpeg" width="190" height="150" /></center>
+                    </p>
+
+
+            </div>
+
+        </div><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <div id="rodape">
+            <p id="telefone-email">
+                {{email}}
+                <br>
+                <span class="ddd">(21)</span> {{telefone}}
+            </p>
+
+            <p id="endereco">
+                {{enderecoComercial}}
+                <br>
+                {{CEP}}
+                <br>
+                {{cidade}}
+            </p>
+
+            <small id="copyright">
+                &copy; Empresa Ltda. Todos os Direitos Reservados.
+            </small>
+        </div>
+    </div>
+
+</body>
+
+</html>

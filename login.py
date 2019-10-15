@@ -1,4 +1,3 @@
-#teste
 from flask import Flask, render_template, redirect, url_for, request, make_response
 #import pdfkit, controler
 
@@ -29,26 +28,24 @@ class Usuário():
     def get_senha(self):
         return (self.senha)
 
-
-
-
 class Profissional(Usuário):
-    def __init__(self, nome, cpf, senha, profissao, registoProfissional):
+    def __init__(self, nome, cpf, senha, profissao, registroProfissional):
         super().__init__(nome, cpf, senha)                              #Usando o fato de ser subclasse e herdando metodos e atributos da classe mãe
+        self.resgistroProfissional =  resgistroProfissional
         self.profissao = profissao
-        self.registoProfissional =  registoProfissional
+        self.registroProfissional =  registroProfissional
 
     def set_profissao(self, profissao):
         self.profissao = profissao
 
-    def set_registroProfissional(self, registoProfissional):
-        self.registoProfissional =  registoProfissional
+    def set_registroProfissional(self, registroProfissional):
+        self.registroProfissional =  registroProfissional
 
     def get_profissional(self):
         return (self.profissao)
 
     def get_registroProfissional(self):
-        return(self.registoProfissional)
+        return(self.registroProfissional)
 
 
 class Cliente(Usuário):                                              #Criando Clase profissional que é subclasse de Usuário
@@ -60,7 +57,6 @@ class Cliente(Usuário):                                              #Criando C
         self.nomeResponsavel = nomeResponsavel
         self.cpfResponsavel = cpfResponsavel
         self.enderecoResponsavel = enderecoResponsavel
-        self.frequencia =  frequencia
         self.diaDaSemana = diaDaSemana
         self.horario = horario
 
@@ -75,9 +71,6 @@ class Cliente(Usuário):                                              #Criando C
 
     def set_enderecoResponsavel(self, enderecoResponsavel ):
         self.enderecoResponsavel = enderecoResponsavel
-
-    def set_frequencia(self, frequencia ):
-        self.frequencia =  frequencia
 
     def set_diaDaSemana(self, diaDaSemana ):
         self.diaDaSemana = diaDaSemana
@@ -97,9 +90,6 @@ class Cliente(Usuário):                                              #Criando C
     def get_enderecoResponsavel(self):
         return(self.enderecoResponsavel)
 
-    def get_frequencia(self):
-        return(self.frequencia)
-
     def get_diaDaSemana(self):
         return(self.diaDaSemana)
 
@@ -109,15 +99,12 @@ class Cliente(Usuário):                                              #Criando C
     def get_cliente(self):
         return str(self.nome) + "," + str(self.cpf) + "," + str(self.nomeResponsavel) + "," + str(self.cpfResponsavel) + "," + str(self.senha) + "\n"
 
-
-
 clientes = []
 clienteAtual = 0
 
-
-@app.route('/<nomePofissional>/<registoProfissional>/<nomeResponsavel>/<cpfResponsavel>/<precoConsulta>')
-def pdf_template(nomePofissional, registoProfissional, nomeResponsavel, cpfResponsavel, precoConsulta):
-    rendered = render_template('pdf_template.html', nomePofissional = nomePofissional, registoProfissional = registoProfissional, nomeResponsavel = nomeResponsavel, cpfResponsavel = cpfResponsavel, precoConsulta = precoConsulta)
+@app.route('/<nomeProfissional>/<registroProfissional>/<profissao>/<nome>/<cpf>/<precoConsulta>/<email>/<enderecoComercial>/<telefone>')
+def pdf_template(nomeProfissional, registroProfissional, profissao, nome, cpf, precoConsulta, email, enderecoComercial, telefone):
+    rendered = render_template('pdf_template18+.html', nomeProfissional = nomeProfissional, registroProfissional = registroProfissional, profissao = profissao, nome = nome, cpf = cpf, precoConsulta = precoConsulta, email=email, enderecoComercial= enderecoComercial, telefone=telefone)
     pdf = pdfkit.from_string(rendered, False)
 
     response =  make_response(pdf)
@@ -131,47 +118,23 @@ def pdf_template(nomePofissional, registoProfissional, nomeResponsavel, cpfRespo
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
     error = None
-    if request.method == "POST":
-        if request.form["nome"] == "" or request.form["cpfResponsavel"] == "" or request.form["cpf"] == "" or request.form["nome"] == "" or request.form["senha"] == "":
+    if request.method == "POST":  #cliente
+        if request.form["nome"] == "" or request.form["cpf"] == "" or request.form["nascimento"] == "" or request.form["tel"] == "" or request.form["endereco"] or request.form["senha"] == "" or request.form["cpfResponsavel"] == "" or request.form["nomeResponsavel"] == "":
             error = "Preencha todos os campos!"
         else:
-            cliente1 = Cliente(request.form["nome"], str(request.form["cpf"]), str(request.form["senha"]), 0, str(request.form["nomeResponsavel"]), request.form["cpfResponsavel"], 0, 0, 0, 0)
-            arq = open('lista.txt', 'a')
-            arq.writelines(cliente1.get_cliente())
-            arq.close()
+            nome = request.form["nome"]
+            data_de_nascimento = request.form["nascimento"]
+            cpf = request.form["cpf"]
+            tel = request.form["tel"]
+            endereco = request.form["endereco"]
+            email = request.form["email"]
+            senha = request.form["senha"]
+            nome_responsavel = request.form["nomeResponsavel"]
+            cpf_responsavel = request.form["cpfResponsavel"]
+            controler.cadastra_cliente(nome, data_de_nascimento, cpf, tel, endereco, email, senha, cpf_resposavel, nome_resposavel)                
             error = None
-
     return render_template('create.html' , error=error)
 
-
-
-@app.route('/login_antigo', methods=['GET', 'POST'])
-def login_antigo():
-    error = None
-    if request.method =='POST':
-        arq = open('lista.txt', 'r')
-        texto = arq.readlines()
-        for i in range(0,len(texto)) :
-            clientes.append(texto[i].split(","))
-        arq.close()
-
-        for i in range(0,len(clientes)):
-            if clientes[i][0] == request.form["cpf"]:
-                if clientes[i][1] == request.form["senha"]:
-                    clienteAtual = i
-                    error = str(i)
-                    return redirect(url_for('loggedPaciente'))
-                    break
-                else:
-                    error = "Senha incorreta!"
-                    break
-            if i == len(clientes)-1:
-                error = "Usuário não cadastrado"
-
-
-        # error = 'O usuário "' + request.form['cpf'] + '" não está cadastrado!'
-
-    return render_template('login.html', error=error)
 
 @app.route('/', methods=['GET', 'POST'])
 def login():

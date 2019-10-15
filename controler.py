@@ -54,17 +54,28 @@ def cpf_senha(cpf):
     senha = select("senha", "clientes", cpf)
     return senha[0][0]
 
-def cadastra_cliente(lista):
-    a = lista[0]
-    #value = '\"DEAULT' + a + '"'
-    query = "\"DEAULT,"
-    for i in range(len(lista)-1):
-        query += "'"+str(lista[i]) +"'"+','
-    query+=lista[-1]+'"'
-    return query
-    #insert([query], "clientes")
+def gera_id_cliente():
+    id_gerado = random.randint(1,100000)
+    id = "id_cliente="+str(id_gerado)
+    id_na_bd = bool(len(select("id_cliente", "clientes", id)))
+    while id_na_bd:        
+        id_gerado = random.randint(1,100000)
+        id = "id_cliente="+str(id_gerado)
+        id_na_bd = bool(len(select("id_cliente", "clientes", id)))
+    return id_gerado
+
+def cadastra_cliente(nome, data_de_nascimento, cpf, telefone, endereco, email, senha, cpf_responsavel, nome_responsavel):
+    id_cliente = gera_id_cliente()
+    sql = "INSERT INTO clientes(id_cliente, nome, data_de_nascimento, cpf, telefone, endereco, senha, cpf_responsavel, nome_responsavel) VALUES(%s, %s, %s, %s, %s, %s, %s)"
+    data = (id_cliente, nome, data_de_nascimento, cpf, telefone, endereco, email, senha, cpf_responsavel, nome_responsavel)
+    cursor.execute(sql, data)
+    con.commit()
 
 
-
-
+def cadastra_profissional(nome, cpf, profissao, enderecoComercial, email, registroProfissional, telefone, senha):
+    id_profissional = gera_id_profissionais()
+    sql = "INSERT INTO profissionais(id_cliente, nome, data_de_nascimento, cpf, telefone, endereco, senha, cpf_responsavel, nome_responsavel) VALUES(%s, %s, %s, %s, %s, %s, %s)"
+    data = (id_profissional, nome, cpf, profissao, enderecoComercial, email, registroProfissional, telefone, senha)
+    cursor.execute(sql, data)
+    con.commit()
 
