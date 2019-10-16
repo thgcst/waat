@@ -189,7 +189,7 @@ def login():
 @app.route('/loggedProfissional/<id_profissional>')
 def loggedProfissional(id_profissional):
     nome = controler.select("nome","profissionais", "id_profissional="+str(id_profissional))[0][0]
-    return render_template("loggedProfissional.html", Profissional=nome)
+    return render_template("loggedProfissional.html", profissional=nome)
 
 
 @app.route('/loggedCliente/<id_cliente>')
