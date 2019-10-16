@@ -210,14 +210,18 @@
             var table = document.getElementById("table");
 
             if (maiorDeIdade() || document.getElementById("nascimento").value == "") {
-                table.removeChild(table.lastChild);
-                table.removeChild(table.lastChild);
-                table.removeChild(table.firstChild);
+                if (table.firstElementChild.firstElementChild.id == "cliente") {
+                    table.removeChild(table.lastChild);
+                    table.removeChild(table.lastChild);
+                    table.removeChild(table.firstChild);
+                }
             }
             else {
-                table.insertBefore(create('<h4 style="padding-left: 15px">Cliente</h4>'), table.childNodes[0]);
-                table.appendChild(create('<h4 style="padding: 20px 0 0 15px">Responsável</h4>'));
-                table.appendChild(create('<div class="inputBox"><input type="text" name="nomeRes" placeholder="Nome" value="{{request.form.nomeRes }}" class="input" /></div><div class="inputBox"><input type="tel" name="cpfRes" placeholder="CPF" value="{{request.form.cpfRes }}" class="input" maxlength="14" oninput="this.value = CPF(this.value, event)" /></div><div class="inputBox" id="telefone"><input type="tel" name="telRes" placeholder="Telefone" value="{{request.form.telRes }}" class="input" maxlength="14" oninput="this.value = TEL(this.value, event)" /></div>'))
+                if (table.firstElementChild.firstElementChild.id != "cliente") {
+                    table.insertBefore(create('<h4 style="padding-left: 15px" id="cliente">Cliente</h4>'), table.childNodes[0]);
+                    table.appendChild(create('<h4 style="padding: 20px 0 0 15px">Responsável</h4>'));
+                    table.appendChild(create('<div class="inputBox"><input type="text" name="nomeRes" placeholder="Nome" value="{{request.form.nomeRes }}" class="input" /></div><div class="inputBox"><input type="tel" name="cpfRes" placeholder="CPF" value="{{request.form.cpfRes }}" class="input" maxlength="14" oninput="this.value = CPF(this.value, event)" /></div><div class="inputBox" id="telefone"><input type="tel" name="telRes" placeholder="Telefone" value="{{request.form.telRes }}" class="input" maxlength="14" oninput="this.value = TEL(this.value, event)" /></div>'))
+                }
             }
         }
 
