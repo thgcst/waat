@@ -43,16 +43,16 @@ def delete(table, where):
     cursor.execute(query)
     con.commit()
 
-def verifica_cpf(cpf):
+def verifica_cpf(cpf, tabela):
     """retorna True se o cpf já está cadastrado e False c.c."""
     cpf = "cpf="+str(cpf)
-    cpf_no_db = bool(len(select("cpf", "clientes", cpf)))
+    cpf_no_db = bool(len(select("cpf", tabela, cpf)))
     return cpf_no_db
     
-def cpf_senha(cpf):
+def cpf_senha(cpf, tabela):
     """Retorna a senha correspondente ao cpf"""
     cpf = "cpf="+str(cpf)
-    senha = select("senha", "clientes", cpf)
+    senha = select("senha", tabela, cpf)
     return senha[0][0]
 
 def gera_id_cliente():

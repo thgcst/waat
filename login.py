@@ -161,19 +161,35 @@ def login():
     if request.method =='POST':
         cpf_inserido = request.form["cpf"]
         senha_inserida = request.form["senha"]
-        if controler.verifica_cpf(cpf_inserido): # ta na bd
-            if senha_inserida==controler.cpf_senha(cpf_inserido):
+
+        if controler.verifica_cpf(cpf_inserido, "clientes"): # ta na bd
+            if senha_inserida==controler.cpf_senha(cpf_inserido, "clientes"):
                 id_cliente = controler.select("id_cliente","clientes", "cpf="+cpf_inserido)[0][0]
-                return redirect(url_for('logged', id_cliente=id_cliente))
+                return redirect(url_for('loggedCliente', id_cliente=id_cliente))
             else:
                 error = "Senha incorreta!"
+
+        elif controler.verifica_cpf(cpf_inserido, "profissionais"): # ta na bd
+            if senha_inserida==controler.cpf_senha(cpf_inserido, "profissionais"):
+                id_profissional = controler.select("id_profissional","profissionais", "cpf="+cpf_inserido)[0][0]
+                return redirect(url_for('loggedProfissional', id_profissional=id_profissional))
+            else:
+                error = "Senha incorreta!"
+
         else:
             error = "Usuário não cadastrado"
+
     return render_template('login.html', error=error)
 
 
-@app.route('/logged/<id_cliente>')
-def logged(id_cliente):
+@app.route('/loggedProfissional/<id_profissional>')
+def loggedProfissional(id_profissional):
+    nome = controler.select("nome","profissionais", "id_profissional="+str(id_profissional))[0][0]
+    return render_template("loggedProfissional.html", Profissional=nome)
+
+
+@app.route('/loggedCliente/<id_cliente>')
+def loggedCliente(id_cliente):
     nome = controler.select("nome","clientes", "id_cliente="+str(id_cliente))[0][0]
     return render_template("loggedCliente.html", cliente=nome)
 
