@@ -151,7 +151,6 @@ def cadastro():
                 error = "Preencha todos os campos!"
             else:
                 controler.cadastra_profissional(nome, cpf, profissao, endereco_comercial, email, registro_profissional, tel, senha)
-                error = None
                 return redirect("http://127.0.0.1:5000/")
     return render_template('create.html' , error=error)
 
