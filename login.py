@@ -131,15 +131,12 @@ def cadastro():
             nome_responsavel = request.form["nomeRes"]
             cpf_responsavel = request.form["cpfRes"]
 
-            if nome=='' or data_de_nascimento=='' or cpf=='' or tel=='' or endereco=='' or email=='' or senha=='' or cpf_responsavel=='' or nome_responsavel=='':
+            if nome=='' or data_de_nascimento=='' or cpf=='' or tel=='' or endereco=='' or email=='' or senha=='':
                 error = "Preencha todos os campos!"
             else:
-                if nome_responsavel=='' and cpf_responsavel =='':
-                    cadastra_cliente(nome, data_de_nascimento, cpf, telefone, endereco, email, senha,'' , '')
-                    return redirect("http://127.0.0.1:5000/")
-                else:
-                    cadastra_cliente(nome, data_de_nascimento, cpf, telefone, endereco, email, senha, cpf_responsavel, nome_responsavel)               
-                    return redirect("http://127.0.0.1:5000/")
+                controler.cadastra_cliente(nome, data_de_nascimento, cpf, tel, endereco, email, senha, cpf_responsavel, nome_responsavel)               
+                return redirect("http://127.0.0.1:5000/")
+
 
         if request.form["radio"] == 1: #profissional
             nome = request.form["nome"]
