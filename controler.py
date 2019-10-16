@@ -1,13 +1,15 @@
 import random
 import MySQLdb
+
 host = 'sql10.freesqldatabase.com'
-user = "sql10308309"
-senha = "rPgCW78Vu7"
-db = "sql10308309"
+user = 'sql10308309'
+senha = 'rPgCW78Vu7'
+db = 'sql10308309'
 port = 3306
 
 con = MySQLdb.Connect(host, user, senha, db, port)
 cursor = con.cursor()
+
 
 def select(fields, tables, where = None):
     global cursor
