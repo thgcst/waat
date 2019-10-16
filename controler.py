@@ -79,14 +79,7 @@ def gera_id_profissional():
     return id_gerado
 
 
-def cadastra_cliente_adulto(nome, data_de_nascimento, cpf, telefone, endereco, email, senha):
-    id_cliente = gera_id_cliente()
-    sql = "INSERT INTO clientes (id_cliente, nome, data_de_nascimento, cpf, telefone, endereco, email, senha) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)"
-    data = (id_cliente, nome, data_de_nascimento, cpf, telefone, endereco, email, senha)
-    cursor.execute(sql, data)
-    con.commit()
-
-def cadastra_cliente_menor(nome, data_de_nascimento, cpf, telefone, endereco, email, senha, cpf_responsavel, nome_responsavel):
+def cadastra_cliente(nome, data_de_nascimento, cpf, telefone, endereco, email, senha, cpf_responsavel, nome_responsavel):
     id_cliente = gera_id_cliente()
     sql = "INSERT INTO clientes (id_cliente, nome, data_de_nascimento, cpf, telefone, endereco, email, senha, cpf_responsavel, nome_responsavel) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
     data = (id_cliente, nome, data_de_nascimento, cpf, telefone, endereco, email, senha, cpf_responsavel, nome_responsavel)
