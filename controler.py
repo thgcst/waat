@@ -1,3 +1,4 @@
+import random
 import MySQLdb
 host = 'sql10.freesqldatabase.com'
 user = "sql10308309"
@@ -64,18 +65,29 @@ def gera_id_cliente():
         id_na_bd = bool(len(select("id_cliente", "clientes", id)))
     return id_gerado
 
+
+def gera_id_profissional():
+    id_gerado = random.randint(1,100000)
+    id = "id_profissional="+str(id_gerado)
+    id_na_bd = bool(len(select("id_profissional", "profissionais", id)))
+    while id_na_bd:        
+        id_gerado = random.randint(1,100000)
+        id = "id_profissional="+str(id_gerado)
+        id_na_bd = bool(len(select("id_profissional", "profissionais", id)))
+    return id_gerado
+
+
 def cadastra_cliente(nome, data_de_nascimento, cpf, telefone, endereco, email, senha, cpf_responsavel, nome_responsavel):
     id_cliente = gera_id_cliente()
-    sql = "INSERT INTO clientes(id_cliente, nome, data_de_nascimento, cpf, telefone, endereco, senha, cpf_responsavel, nome_responsavel) VALUES(%s, %s, %s, %s, %s, %s, %s)"
+    sql = "INSERT INTO clientes (id_cliente, nome, data_de_nascimento, cpf, telefone, endereco, email, senha, cpf_responsavel, nome_responsavel) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
     data = (id_cliente, nome, data_de_nascimento, cpf, telefone, endereco, email, senha, cpf_responsavel, nome_responsavel)
     cursor.execute(sql, data)
     con.commit()
 
-
-def cadastra_profissional(nome, cpf, profissao, enderecoComercial, email, registroProfissional, telefone, senha):
-    id_profissional = gera_id_profissionais()
-    sql = "INSERT INTO profissionais(id_cliente, nome, data_de_nascimento, cpf, telefone, endereco, senha, cpf_responsavel, nome_responsavel) VALUES(%s, %s, %s, %s, %s, %s, %s)"
-    data = (id_profissional, nome, cpf, profissao, enderecoComercial, email, registroProfissional, telefone, senha)
+#em progresso
+def cadastra_profissional(nome, cpf, profissao, endereco_comercial, email, registro_profissional, telefone, senha):
+    id_profissional = gera_id_profissional()
+    sql = "INSERT INTO profissionais (id_profissional, nome, cpf, profissao, endereco_comercial, email, registro_profissional, telefone, senha) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    data = (id_profissional, nome, cpf, profissao, endereco_comercial, email, registro_profissional, telefone, senha)
     cursor.execute(sql, data)
     con.commit()
-

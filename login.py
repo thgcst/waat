@@ -118,10 +118,9 @@ def pdf_template(nomeProfissional, registroProfissional, profissao, nome, cpf, p
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
     error = None
-    if request.method == "POST":  #cliente
-        if request.form["nome"] == "" or request.form["cpf"] == "" or request.form["nascimento"] == "" or request.form["tel"] == "" or request.form["endereco"] or request.form["senha"] == "" or request.form["cpfResponsavel"] == "" or request.form["nomeResponsavel"] == "":
-            error = "Preencha todos os campos!"
-        else:
+    if request.method == "POST":  
+        if request.form["radio"] == 0: #cliente
+
             nome = request.form["nome"]
             data_de_nascimento = request.form["nascimento"]
             cpf = request.form["cpf"]
@@ -129,10 +128,30 @@ def cadastro():
             endereco = request.form["endereco"]
             email = request.form["email"]
             senha = request.form["senha"]
-            nome_responsavel = request.form["nomeResponsavel"]
-            cpf_responsavel = request.form["cpfResponsavel"]
-            controler.cadastra_cliente(nome, data_de_nascimento, cpf, tel, endereco, email, senha, cpf_resposavel, nome_resposavel)                
-            error = None
+            nome_responsavel = request.form["nomeRes"]
+            cpf_responsavel = request.form["cpfRes"]
+
+            if nome=='' or data_de_nascimento=='' or cpf=='' or tel=='' or endereco=='' or email=='' or senha=='' or cpf_responsavel=='' or nome_responsavel=='':
+                error = "Preencha todos os campos!"
+            else:
+                controler.cadastra_cliente(nome, data_de_nascimento, cpf, tel, endereco, email, senha, cpf_responsavel, nome_responsavel)                
+                error = None
+
+        else: #profissional
+            nome = request.form["nome"]
+            cpf = request.form["cpf"]
+            profissao = request.form["profissao"]
+            endereco_comercial = request.form["endereco"]
+            email = request.form["email"]
+            registro_profissional = request.form["regProf"]
+            tel = request.form["tel"]
+            senha = request.form["senha"]
+            if nome=='' or cpf=='' or profissao=='' or endereco_comercial=='' or email=='' or registro_profissional=='' or tel=='' or senha=='':
+                error = "Preencha todos os campos!"
+            else:
+                controler.cadastra_profissional(nome, cpf, profissao, endereco_comercial, email, registro_profissional, tel, senha)
+                error = None
+                return redirect("http://127.0.0.1:5000/")
     return render_template('create.html' , error=error)
 
 
