@@ -47,10 +47,8 @@
                         <!--cpf-->
                         <div class="inputBox">
                             <input type="tel" name="cpf" placeholder="CPF" value="{{
-                            request.form.cpf }}" class="input"
-                            maxlength="14"
-                            oninput="this.value = CPF(this.value, event)"
-                            />
+                            request.form.cpf }}" class="input" maxlength="14"
+                                oninput="this.value = CPF(this.value, event)" />
                         </div>
                         <!--telefone-->
                         <div class="inputBox" id="telefone">
@@ -95,7 +93,7 @@
             while (list.hasChildNodes()) {
                 list.removeChild(list.firstChild);
             }
-            list.innerHTML = '<div class="inputBox" style="padding-top: 20px"><input type="text" name="nome" placeholder="Nome" value="{{request.form.nome }}" class="input" /></div><div class="inputBox"><input type="tel" name="cpf" placeholder="CPF" value="{{request.form.cpf }}" class="input" maxlength="11" oninput="this.value = CPF(this.value, event)" /></div><div class="inputBox"><input type="text" name="profissao" placeholder="Profissão" value="{{request.form.profissao }}" class="input" /></div><div class="inputBox" id="endereco"><input type="text" name="endereco" placeholder="Endereço Comercial" value="{{request.form.endereco }}" class="input" /></div><div class="inputBox"><input type="tel" name="cep" placeholder="CEP" value="{{request.form.cep }}" class="input" maxlength="9" oninput="this.value = CEP(this.value, event)" /></div><div class="inputBox"><input type="tel" name="regProf" placeholder="Registro Profissional" value="{{request.form.regProf }}" class="input"/></div><div class="inputBox" id="telefone"><input type="tel" name="tel" placeholder="Telefone" value="{{request.form.tel }}" class="input" maxlength="14" oninput="this.value = TEL(this.value, event)" /></div><div class="inputBox"><input type="email" name="email" placeholder="E-mail" value="{{request.form.email }}" class="input" /></div><div class="inputBox"><input type="password" name="senha" placeholder="Senha" value="{{request.form.senha }}" class="input" /></div>';
+            list.innerHTML = '<div class="inputBox" style="padding-top: 20px"><input type="text" name="nome" placeholder="Nome" value="{{request.form.nome }}" class="input" /></div><div class="inputBox"><input type="tel" name="cpf" placeholder="CPF" value="{{request.form.cpf }}" class="input" maxlength="11" oninput="this.value = CPF(this.value, event)" /></div><div class="inputBox"><input type="text" name="profissao" placeholder="Profissão" value="{{request.form.profissao }}" class="input" /></div><div class="inputBox"><input type="tel" name="cep" id="cep" placeholder="CEP comercial" onblur="APIrua()" value="{{request.form.cep }}" class="input" maxlength="9" oninput="this.value = CEP(this.value, event)" /></div><div class="inputBox" id="endereco"><input type="text" name="endereco" id="enderecoComercial" placeholder="Endereço comercial" value="{{request.form.endereco }}" class="input" /></div><div class="inputBox"><input type="tel" name="regProf" placeholder="Registro profissional" value="{{request.form.regProf }}" class="input"/></div><div class="inputBox" id="telefone"><input type="tel" name="tel" placeholder="Telefone" value="{{request.form.tel }}" class="input" maxlength="14" oninput="this.value = TEL(this.value, event)" /></div><div class="inputBox"><input type="email" name="email" placeholder="E-mail" value="{{request.form.email }}" class="input" /></div><div class="inputBox"><input type="password" name="senha" placeholder="Senha" value="{{request.form.senha }}" class="input" /></div>';
         }
 
         document.getElementById("cliente").addEventListener("click", cliente);
@@ -136,6 +134,49 @@
 
         //     return newValue.split('').map((v, i) => aux(i) ? v + '.' : (i == 8 ? v + '-' : v)).join('');
         // };
+
+        function APIrua() {
+            var cep = document.getElementById("cep").value;
+            var enderecoComercial = document.getElementById("enderecoComercial");
+            console.log(cep);
+            // getJSONP('https://viacep.com.br/ws/22775-053/json/',console.log(data));
+            fetch(
+                "https://viacep.com.br/ws/" + cep + "/json/",
+                {
+                    method: "GET"
+                }
+            )
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    }
+                })
+                .then(serverResponse => {
+                    var resposta = JSON.parse(serverResponse);
+                    enderecoComercial.value = resposta.logradouro;
+                    console.log(enderecoComercial);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        };
+
+        function getJSONP(url, success) {
+
+            var ud = '_' + +new Date,
+                script = document.createElement('script'),
+                head = document.getElementsByTagName('head')[0]
+                    || document.documentElement;
+
+            window[ud] = function (data) {
+                head.removeChild(script);
+                success && success(data);
+            };
+
+            script.src = url.replace('callback=?', 'callback=' + ud);
+            head.appendChild(script);
+
+        };
 
         function CEP(value, event) {
             let newValue = value.replace(/[^0-9]/g, '');
