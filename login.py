@@ -31,7 +31,7 @@ class Usuário():
 class Profissional(Usuário):
     def __init__(self, nome, cpf, senha, profissao, registroProfissional):
         super().__init__(nome, cpf, senha)                              #Usando o fato de ser subclasse e herdando metodos e atributos da classe mãe
-        self.resgistroProfissional =  resgistroProfissional
+        self.registroProfissional =  registroProfissional
         self.profissao = profissao
         self.registroProfissional =  registroProfissional
 
@@ -146,12 +146,12 @@ def cadastro():
             cep = request.form["cep"]
             email = request.form["email"]
             registro_profissional = request.form["regProf"]
-            tel = request.form["tel"]
+            telefone = request.form["telefone"]
             senha = request.form["senha"]
-            if nome=='' or cpf=='' or profissao=='' or endereco_comercial=='' or email=='' or registro_profissional=='' or tel=='' or senha=='':
+            if nome=='' or cpf=='' or profissao=='' or endereco_comercial=='' or cep=='' or email=='' or registro_profissional=='' or telefone=='' or senha=='':
                 error = "Preencha todos os campos!"
             else:
-                controler.cadastra_profissional(nome, cpf, profissao, endereco_comercial, email, registro_profissional, tel, senha)
+                controler.cadastra_profissional(nome, cpf, profissao, endereco_comercial, cep, email, registro_profissional, telefone, senha)
                 return redirect("http://127.0.0.1:5000/")
     return render_template('create.html' , error=error)
 
