@@ -1,5 +1,6 @@
 import random
 import mysql.connector
+from datetime import *
 
 config = {
   'user': 'sql10308309',
@@ -117,6 +118,16 @@ def cpf_senha(cpf, tabela):
     cpf = "cpf="+str(cpf)
     senha = select("senha", tabela, cpf)
     return senha[0][0]
+
+def verifica_idade(data_de_nascimento):
+    hoje = date.today()
+    nascimento = date(int(data_de_nascimento[6:]),int(data_de_nascimento[3:5]),int(data_de_nascimento[:2]))
+    idade = hoje.year - nascimento.year - ((hoje.month, hoje.day) < (hoje.month, hoje.day))
+    if idade>=18:
+        return True
+    else:
+        return False
+
 
 def gera_id_cliente():
     id_gerado = random.randint(1,100000)
