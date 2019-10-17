@@ -6,8 +6,7 @@ config = {
   'password': 'rPgCW78Vu7',
   'host': 'sql10.freesqldatabase.com',
   'database': 'sql10308309',
-  'port': '3306'
-  }
+  'port': '3306'}
 
 con = mysql.connector.connect(**config)
 cursor = con.cursor()

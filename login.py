@@ -134,12 +134,8 @@ def cadastro():
             estado = request.form["estado"]
             nome_responsavel = request.form["nomeRes"]
             cpf_responsavel = request.form["cpfRes"]
-
-            if nome=='' or data_de_nascimento=='' or cpf=='' or telefone=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
-                error = "Preencha todos os campos!"
-            else:
-                controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)               
-                return redirect("http://127.0.0.1:5000/")
+            controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)               
+            return redirect("http://127.0.0.1:5000/")
 
         if request.form["radio"] == 1: #profissional
             nome = request.form["nome"]
@@ -156,13 +152,10 @@ def cadastro():
             complemento = request.form["complemento"]
             cidade = request.form["cidade"]
             estado = request.form["estado"]
-            
-            if nome=='' or cpf=='' or profissao=='' or registro_profissional=='' or telefone=='' or data_de_nascimento=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
-                error = "Preencha todos os campos!"
-            else:
-                controler.cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado)
-                return redirect("http://127.0.0.1:5000/")
-    return render_template('create.html' , error=error)
+            controler.cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado)
+            return redirect("http://127.0.0.1:5000/")
+
+    return render_template('create.html')
 
 
 @app.route('/', methods=['GET', 'POST'])
