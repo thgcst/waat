@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, make_response
-import pdfkit, controler
+import pdfkit
+import controler
 
 app = Flask(__name__)
 
@@ -114,7 +115,6 @@ def pdf_template(nomeProfissional, registroProfissional, profissao, nome, cpf, p
     return response
 
 
-
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
     error = None
@@ -122,7 +122,7 @@ def cadastro():
         if request.form["radio"] == 0: #cliente
             nome = request.form["nome"]
             data_de_nascimento = request.form["nascimento"]
-            cpf = request.form["cpf"]
+            cpf = controler.limpa_cpf(request.form["cpf"])
             telefone = request.form["telefone"]
             email = request.form["email"]
             senha = request.form["senha"]
@@ -143,18 +143,24 @@ def cadastro():
 
         if request.form["radio"] == 1: #profissional
             nome = request.form["nome"]
-            cpf = request.form["cpf"]
+            cpf = controler.limpa_cpf(request.form["cpf"])
             profissao = request.form["profissao"]
-            endereco_comercial = request.form["endereco"]
-            cep = request.form["cep"]
-            email = request.form["email"]
             registro_profissional = request.form["regProf"]
             telefone = request.form["telefone"]
+            data_de_nascimento = request.form["nascimento"]
+            email = request.form["email"]
             senha = request.form["senha"]
-            if nome=='' or cpf=='' or profissao=='' or endereco_comercial=='' or cep=='' or email=='' or registro_profissional=='' or telefone=='' or senha=='':
+            cep=request.form["cep"]
+            endereco = request.form["endereco"]
+            numero = request.form["numero"]
+            complemento = request.form["complemento"]
+            cidade = request.form["cidade"]
+            estado = request.form["estado"]
+            
+            if nome=='' or cpf=='' or profissao=='' or registro_profissional=='' or telefone=='' or data_de_nascimento=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
                 error = "Preencha todos os campos!"
             else:
-                controler.cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, cep, endereco, numero, complemento, cidade, estado, senha)
+                controler.cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado)
                 return redirect("http://127.0.0.1:5000/")
     return render_template('create.html' , error=error)
 
