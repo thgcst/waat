@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, make_response
-import pdfkit, controler
+import pdfkit
+import controler
 
 app = Flask(__name__)
 
@@ -31,7 +32,7 @@ class Usuário():
 class Profissional(Usuário):
     def __init__(self, nome, cpf, senha, profissao, registroProfissional):
         super().__init__(nome, cpf, senha)                              #Usando o fato de ser subclasse e herdando metodos e atributos da classe mãe
-        self.resgistroProfissional =  resgistroProfissional
+        self.registroProfissional =  registroProfissional
         self.profissao = profissao
         self.registroProfissional =  registroProfissional
 
@@ -114,43 +115,52 @@ def pdf_template(nomeProfissional, registroProfissional, profissao, nome, cpf, p
     return response
 
 
-
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
     error = None
     if request.method == "POST":  
         if request.form["radio"] == 0: #cliente
-
             nome = request.form["nome"]
             data_de_nascimento = request.form["nascimento"]
-            cpf = request.form["cpf"]
-            tel = request.form["tel"]
-            endereco = request.form["endereco"]
+            cpf = controler.limpa_cpf(request.form["cpf"])
+            telefone = request.form["telefone"]
             email = request.form["email"]
             senha = request.form["senha"]
+            cep=request.form["cep"]
+            endereco = request.form["endereco"]
+            numero = request.form["numero"]
+            complemento = request.form["complemento"]
+            cidade = request.form["cidade"]
+            estado = request.form["estado"]
             nome_responsavel = request.form["nomeRes"]
             cpf_responsavel = request.form["cpfRes"]
 
-            if nome=='' or data_de_nascimento=='' or cpf=='' or tel=='' or endereco=='' or email=='' or senha=='':
+            if nome=='' or data_de_nascimento=='' or cpf=='' or telefone=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
                 error = "Preencha todos os campos!"
             else:
-                controler.cadastra_cliente(nome, data_de_nascimento, cpf, tel, endereco, email, senha, cpf_responsavel, nome_responsavel)               
+                controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)               
                 return redirect("http://127.0.0.1:5000/")
-
 
         if request.form["radio"] == 1: #profissional
             nome = request.form["nome"]
-            cpf = request.form["cpf"]
+            cpf = controler.limpa_cpf(request.form["cpf"])
             profissao = request.form["profissao"]
-            endereco_comercial = request.form["endereco"]
-            email = request.form["email"]
             registro_profissional = request.form["regProf"]
-            tel = request.form["tel"]
+            telefone = request.form["telefone"]
+            data_de_nascimento = request.form["nascimento"]
+            email = request.form["email"]
             senha = request.form["senha"]
-            if nome=='' or cpf=='' or profissao=='' or endereco_comercial=='' or email=='' or registro_profissional=='' or tel=='' or senha=='':
+            cep=request.form["cep"]
+            endereco = request.form["endereco"]
+            numero = request.form["numero"]
+            complemento = request.form["complemento"]
+            cidade = request.form["cidade"]
+            estado = request.form["estado"]
+            
+            if nome=='' or cpf=='' or profissao=='' or registro_profissional=='' or telefone=='' or data_de_nascimento=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
                 error = "Preencha todos os campos!"
             else:
-                controler.cadastra_profissional(nome, cpf, profissao, endereco_comercial, email, registro_profissional, tel, senha)
+                controler.cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado)
                 return redirect("http://127.0.0.1:5000/")
     return render_template('create.html' , error=error)
 
@@ -162,6 +172,10 @@ def login():
         cpf_inserido = request.form["cpf"]
         senha_inserida = request.form["senha"]
 
+#### A mudança pra pessoa que tem conta cliente e profissional vai ser aqui. Algo do tipo
+# if cpf in clientes and cpf in profissionais:
+# redirect pra uma pagina "logged", intermediária
+# nessa página a pessoa decide em qual conta vai entrar
         if controler.verifica_cpf(cpf_inserido, "clientes"): # ta na bd
             if senha_inserida==controler.cpf_senha(cpf_inserido, "clientes"):
                 id_cliente = controler.select("id_cliente","clientes", "cpf="+cpf_inserido)[0][0]
