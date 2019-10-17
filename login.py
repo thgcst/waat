@@ -169,7 +169,7 @@ def cadastro():
 def login():
     error = None
     if request.method =='POST':
-        cpf_inserido = request.form["cpf"]
+        cpf_inserido = controler.limpa_cpf(request.form["cpf"])
         senha_inserida = request.form["senha"]
 
 #### A mudança pra pessoa que tem conta cliente e profissional vai ser aqui. Algo do tipo
