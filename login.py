@@ -119,7 +119,7 @@ def pdf_template(nomeProfissional, registroProfissional, profissao, nome, cpf, p
 def cadastro():
     error = None
     if request.method == "POST":  
-        if request.form["radio"] == 0: #cliente
+        if request.form["radio"] == '0': #cliente
             nome = request.form["nome"]
             data_de_nascimento = request.form["nascimento"]
             cpf = controler.limpa_cpf(request.form["cpf"])
@@ -132,12 +132,17 @@ def cadastro():
             complemento = request.form["complemento"]
             cidade = request.form["cidade"]
             estado = request.form["estado"]
-            nome_responsavel = request.form["nomeRes"]
-            cpf_responsavel = request.form["cpfRes"]
+            if controler.verifica_idade(data_de_nascimento)==False:
+                nome_responsavel = '-'
+                cpf_responsavel = '-'
+            else:
+                nome_responsavel = request.form["nomeRes"]
+                cpf_responsavel = request.form["cpfRes"]
+
             controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)               
             return redirect("http://127.0.0.1:5000/")
 
-        if request.form["radio"] == 1: #profissional
+        if request.form["radio"] == '1': #profissional
             nome = request.form["nome"]
             cpf = controler.limpa_cpf(request.form["cpf"])
             profissao = request.form["profissao"]
