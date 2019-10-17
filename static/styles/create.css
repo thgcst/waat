@@ -58,9 +58,8 @@ body{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  /* padding: 177px 130px 33px 95px; */
-  /* padding: 50px; */
-  width: 400px;
+
+  /* width: 400px; */
 }
 
 .inputBox {
@@ -84,7 +83,7 @@ body{
 
 .input:focus {
   outline: none;
-  box-shadow: 2px 2px 20px #eee;
+  box-shadow: 2px 2px 20px #ddd;
 }
 
 .botao {
@@ -144,4 +143,9 @@ body{
 /* When the radio button is checked, add a blue background */
 .container input:checked ~ .checkmark {
   background-color: #239c55;
+}
+
+.table{
+  display: flex;
+  flex-direction: row;
 }
