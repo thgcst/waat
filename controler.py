@@ -46,6 +46,19 @@ def delete(table, where):
     cursor.execute(query)
     con.commit()
 
+def limpa_telefone(telefone):
+    if len(telefone)==14:
+        ddd = telefone[1:3]
+        bloco5 = telefone[4:9]
+        bloco4 = telefone[10:]
+        return ddd+bloco5+bloco4
+    
+    if len(telefone)==13:
+        ddd = telefone[1:3]
+        bloco1 = telefone[4:8]
+        bloco2 = telefone[9:]
+        return ddd+bloco1+bloco2
+
 def limpa_cpf(cpf):
     '''Limpa o CPF, tirando ponto e traço'''
     first = cpf[:3]
@@ -138,7 +151,7 @@ def cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep,
 
 def cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado):
     id_profissional = gera_id_profissional()
-    sql = "INSERT INTO profissionais (id_profissional, nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    sql = "INSERT INTO profissionais (id_profissional, nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     data = (id_profissional, nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado)
     cursor.execute(sql, data)
     con.commit()
