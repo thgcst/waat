@@ -1,6 +1,6 @@
 import random
 import mysql.connector
-from datetime import *
+from datetime import date
 
 config = {
   'user': 'sql10308309',
@@ -127,7 +127,6 @@ def verifica_idade(data_de_nascimento):
         return True
     else:
         return False
-
 
 def gera_id_cliente():
     id_gerado = random.randint(1,100000)

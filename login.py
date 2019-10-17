@@ -117,7 +117,7 @@ def pdf_template(nomeProfissional, registroProfissional, profissao, nome, cpf, p
 
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
-    error = None
+    #error = None
     if request.method == "POST":  
         if request.form["radio"] == '0': #cliente
             nome = request.form["nome"]
@@ -132,6 +132,7 @@ def cadastro():
             complemento = request.form["complemento"]
             cidade = request.form["cidade"]
             estado = request.form["estado"]
+
             if controler.verifica_idade(data_de_nascimento)==False:
                 nome_responsavel = '-'
                 cpf_responsavel = '-'
