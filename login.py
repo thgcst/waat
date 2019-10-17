@@ -120,23 +120,26 @@ def cadastro():
     error = None
     if request.method == "POST":  
         if request.form["radio"] == 0: #cliente
-
             nome = request.form["nome"]
             data_de_nascimento = request.form["nascimento"]
             cpf = request.form["cpf"]
             telefone = request.form["telefone"]
-            endereco = request.form["endereco"]
             email = request.form["email"]
             senha = request.form["senha"]
+            cep=request.form["cep"]
+            endereco = request.form["endereco"]
+            numero = request.form["numero"]
+            complemento = request.form["complemento"]
+            cidade = request.form["cidade"]
+            estado = request.form["estado"]
             nome_responsavel = request.form["nomeRes"]
             cpf_responsavel = request.form["cpfRes"]
 
-            if nome=='' or data_de_nascimento=='' or cpf=='' or telefone=='' or endereco=='' or email=='' or senha=='':
+            if nome=='' or data_de_nascimento=='' or cpf=='' or telefone=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
                 error = "Preencha todos os campos!"
             else:
-                controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, endereco, email, senha, cpf_responsavel, nome_responsavel)               
+                controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)               
                 return redirect("http://127.0.0.1:5000/")
-
 
         if request.form["radio"] == 1: #profissional
             nome = request.form["nome"]
@@ -151,7 +154,7 @@ def cadastro():
             if nome=='' or cpf=='' or profissao=='' or endereco_comercial=='' or cep=='' or email=='' or registro_profissional=='' or telefone=='' or senha=='':
                 error = "Preencha todos os campos!"
             else:
-                controler.cadastra_profissional(nome, cpf, profissao, endereco_comercial, cep, email, registro_profissional, telefone, senha)
+                controler.cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, cep, endereco, numero, complemento, cidade, estado, senha)
                 return redirect("http://127.0.0.1:5000/")
     return render_template('create.html' , error=error)
 
@@ -163,6 +166,10 @@ def login():
         cpf_inserido = request.form["cpf"]
         senha_inserida = request.form["senha"]
 
+#### A mudança pra pessoa que tem conta cliente e profissional vai ser aqui. Algo do tipo
+# if cpf in clientes and cpf in profissionais:
+# redirect pra uma pagina "logged", intermediária
+# nessa página a pessoa decide em qual conta vai entrar
         if controler.verifica_cpf(cpf_inserido, "clientes"): # ta na bd
             if senha_inserida==controler.cpf_senha(cpf_inserido, "clientes"):
                 id_cliente = controler.select("id_cliente","clientes", "cpf="+cpf_inserido)[0][0]
