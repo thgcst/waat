@@ -18,9 +18,9 @@
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
-                <form method="POST">
+                <form method="POST" style="display: flex; flex-direction: column; justify-content: center">
                     <h1 style="text-align: center; padding-top: 30px"><strong>Cadastre-se</strong></h1>
-                    <div style="padding: 50px 0 10px 20px;">
+                    <div style="padding: 50px 0 10px 0; justify-content: center; display: flex">
                         <label class="container">
                             <input type="radio" checked="checked" name="radio" id="cliente" value="0">
                             <span class="checkmark">Cliente</span>
@@ -31,51 +31,81 @@
                         </label>
                     </div>
                     <div style="height: 20px"></div>
-                    <div id="table">
-                        <!--nome-->
-                        <div class="inputBox">
-                            <input type="text" name="nome" placeholder="Nome" value="{{
+                    <div id="table" class="table">
+                        <div style="padding: 0 20px 0 30px">
+                            <!--nome-->
+                            <div class="inputBox">
+                                <input type="text" name="nome" placeholder="Nome" value="{{
                             request.form.nome }}" class="input" />
-                        </div>
-                        <!--nascimento-->
-                        <div class="inputBox">
-                            <input type="tel" name="nascimento" placeholder="Data de nascimento"
-                                value="{{request.form.nascimento }}" class="input"
-                                oninput="this.value = DDMMYYYY(this.value, event)" maxlength="10" id="nascimento"
-                                onblur="addCampo()" />
-                        </div>
-                        <!--cpf-->
-                        <div class="inputBox">
-                            <input type="tel" name="cpf" placeholder="CPF" value="{{
+                            </div>
+                            <!--nascimento-->
+                            <div class="inputBox">
+                                <input type="tel" name="nascimento" placeholder="Data de nascimento"
+                                    value="{{request.form.nascimento }}" class="input"
+                                    oninput="this.value = DDMMYYYY(this.value, event)" maxlength="10" id="nascimento"
+                                    onblur="addCampo()" />
+                            </div>
+                            <!--cpf-->
+                            <div class="inputBox">
+                                <input type="tel" name="cpf" placeholder="CPF" value="{{
                             request.form.cpf }}" class="input" maxlength="14"
-                                oninput="this.value = CPF(this.value, event)" />
-                        </div>
-                        <!--telefone-->
-                        <div class="inputBox" id="telefone">
-                            <input type="tel" name="telefone" placeholder="Telefone" value="{{
+                                    oninput="this.value = CPF(this.value, event)" />
+                            </div>
+                            <!--telefone-->
+                            <div class="inputBox" id="telefone">
+                                <input type="tel" name="telefone" placeholder="Telefone" value="{{
                             request.form.telefone }}" class="input" maxlength="14"
-                                oninput="this.value = TEL(this.value, event)" />
-                        </div>
-                        <!--endereco-->
-                        <div class="inputBox" id="endereco">
-                            <input type="text" name="endereco" placeholder="Endereço" value="{{
-                            request.form.endereco }}" class="input" />
-                        </div>
-                        <!--email-->
-                        <div class="inputBox">
-                            <input type="email" name="email" placeholder="E-mail" value="{{
+                                    oninput="this.value = TEL(this.value, event)" />
+                            </div>
+                            <!--email-->
+                            <div class="inputBox">
+                                <input type="email" name="email" placeholder="E-mail" value="{{
                             request.form.email }}" class="input" />
-                        </div>
-                        <!--senha-->
-                        <div class="inputBox">
-                            <input type="password" name="senha" placeholder="Senha" value="{{
+                            </div>
+                            <!--senha-->
+                            <div class="inputBox">
+                                <input type="password" name="senha" placeholder="Senha" value="{{
                             request.form.senha }}" class="input" />
+                            </div>
+                        </div>
+                        <div style="padding: 0 30px 0 0" id="divMeio">
+                            <!--CEP-->
+                            <div class="inputBox"><input type="tel" name="cep" id="cep" placeholder="CEP"
+                                    onblur="APIrua()" value="{{request.form.cep }}" class="input" maxlength="9"
+                                    oninput="this.value = CEP(this.value, event)" />
+                            </div>
+                            <!--endereco-->
+                            <div class="inputBox">
+                                <input type="text" name="endereco" id="endereco" placeholder="Endereço" value="{{
+                            request.form.endereco }}" class="input" />
+                            </div>
+                            <!--numero-->
+                            <div class="inputBox">
+                                <input type="tel" name="numero" placeholder="Número" value="{{
+                                request.form.numero }}" class="input" />
+                            </div>
+                            <!--complemento-->
+                            <div class="inputBox">
+                                <input type="text" name="complemento" placeholder="Complemento" value="{{
+                            request.form.complemento }}" class="input" />
+                            </div>
+                            <!--cidade-->
+                            <div class="inputBox">
+                                <input type="text" name="cidade" id="cidade" placeholder="Cidade" value="{{
+                            request.form.cidade }}" class="input" />
+                            </div>
+                            <!--estado-->
+                            <div class="inputBox">
+                                <input type="text" name="estado" id="estado" placeholder="Estado" value="{{
+                            request.form.estado }}" class="input" />
+                            </div>
                         </div>
                     </div>
                     {% if error %}
                     <p class="error" style="text-align: center; color: #e74c3c; font-size: 14px"> {{ error }}
                         {% endif %}
-                        <div class="inputBox" style="padding-bottom: 40px; padding-top: 20px">
+                        <div class="inputBox"
+                            style="padding-bottom: 40px; padding-top: 20px; display: flex; justify-content: center">
                             <button class="botao" type="submit">Criar conta</button>
                         </div>
 
@@ -93,7 +123,7 @@
             while (list.hasChildNodes()) {
                 list.removeChild(list.firstChild);
             }
-            list.innerHTML = '<div class="inputBox" style="padding-top: 20px"><input type="text" name="nome" placeholder="Nome" value="{{request.form.nome }}" class="input" /></div><div class="inputBox"><input type="tel" name="cpf" placeholder="CPF" value="{{request.form.cpf }}" class="input" maxlength="14" oninput="this.value = CPF(this.value, event)" /></div><div class="inputBox"><input type="text" name="profissao" placeholder="Profissão" value="{{request.form.profissao }}" class="input" /></div><div class="inputBox"><input type="tel" name="cep" id="cep" placeholder="CEP comercial" onblur="APIrua()" value="{{request.form.cep }}" class="input" maxlength="9" oninput="this.value = CEP(this.value, event)" /></div><div class="inputBox" id="endereco"><input type="text" name="endereco" id="enderecoComercial" placeholder="Endereço comercial" value="{{request.form.endereco }}" class="input" /></div><div class="inputBox"><input type="tel" name="regProf" placeholder="Registro profissional" value="{{request.form.regProf }}" class="input"/></div><div class="inputBox" id="telefone"><input type="tel" name="tel" placeholder="Telefone" value="{{request.form.tel }}" class="input" maxlength="14" oninput="this.value = TEL(this.value, event)" /></div><div class="inputBox"><input type="email" name="email" placeholder="E-mail" value="{{request.form.email }}" class="input" /></div><div class="inputBox"><input type="password" name="senha" placeholder="Senha" value="{{request.form.senha }}" class="input" /></div>';
+            list.innerHTML = '<div style="padding: 0 20px 0 30px"> <!--nome--> <div class="inputBox"> <input type="text" name="nome" placeholder="Nome" value="{{ request.form.nome }}" class="input" /> </div> <!--cpf--> <div class="inputBox"> <input type="tel" name="cpf" placeholder="CPF" value="{{ request.form.cpf }}" class="input" maxlength="14" oninput="this.value = CPF(this.value, event)" /> </div> <!--profissao--> <div class="inputBox"> <input type="text" name="profissao" placeholder="Profissão" value="{{ request.form.profissao }}" class="input" /> </div> <!--Registro Profissional--> <div class="inputBox"> <input type="text" name="regProf" placeholder="Registro profissional" value="{{ request.form.regProf }}" class="input" /> </div> <!--telefone--> <div class="inputBox" id="telefone"> <input type="tel" name="telefone" placeholder="Telefone" value="{{ request.form.telefone }}" class="input" maxlength="14" oninput="this.value = TEL(this.value, event)" /> </div> <!--nascimento--> <div class="inputBox"> <input type="tel" name="nascimento" placeholder="Data de nascimento" value="{{request.form.nascimento }}" class="input" oninput="this.value = DDMMYYYY(this.value, event)" maxlength="10" /> </div> <!--email--> <div class="inputBox"> <input type="email" name="email" placeholder="E-mail" value="{{ request.form.email }}" class="input" /> </div> <!--senha--> <div class="inputBox"> <input type="password" name="senha" placeholder="Senha" value="{{ request.form.senha }}" class="input" /> </div> </div> <div style="padding: 0 30px 0 0" id="divMeio"> <!--CEP--> <div class="inputBox"><input type="tel" name="cep" id="cep" placeholder="CEP" onblur="APIrua()" value="{{request.form.cep }}" class="input" maxlength="9" oninput="this.value = CEP(this.value, event)" /> </div> <!--endereco--> <div class="inputBox"> <input type="text" name="endereco" id="endereco" placeholder="Endereço" value="{{ request.form.endereco }}" class="input" /> </div> <!--numero--> <div class="inputBox"> <input type="tel" name="numero" placeholder="Número" value="{{ request.form.numero }}" class="input" /> </div> <!--complemento--> <div class="inputBox"> <input type="text" name="complemento" placeholder="Complemento" value="{{ request.form.complemento }}" class="input" /> </div> <!--cidade--> <div class="inputBox"> <input type="text" name="cidade" id="cidade" placeholder="Cidade" value="{{ request.form.cidade }}" class="input" /> </div> <!--estado--> <div class="inputBox"> <input type="text" name="estado" id="estado" placeholder="Estado" value="{{ request.form.estado }}" class="input" /> </div> </div>';
         }
 
         document.getElementById("cliente").addEventListener("click", cliente);
@@ -103,7 +133,7 @@
             while (list.hasChildNodes()) {
                 list.removeChild(list.firstChild);
             }
-            list.innerHTML = '<div class="inputBox"><input type="text" name="nome" placeholder="Nome" value="{{request.form.nome }}" class="input" /></div><div class="inputBox"><input type="tel" name="nascimento" placeholder="Data de nascimento" value="{{request.form.nascimento }}"class="input" oninput="this.value = DDMMYYYY(this.value, event)" maxlength="10" id="nascimento"onblur="addCampo()" /></div><div class="inputBox"><input type="tel" name="cpf" placeholder="CPF" value="{{request.form.cpf }}" class="input" maxlength="14" oninput="this.value = CPF(this.value, event)" /></div><div class="inputBox" id="telefone"><input type="tel" name="tel" placeholder="Telefone" value="{{request.form.tel }}" class="input" maxlength="14" oninput="this.value = TEL(this.value, event)" /></div><div class="inputBox" id="endereco"><input type="text" name="endereco" placeholder="Endereço" value="{{request.form.endereco }}" class="input" /></div><div class="inputBox"><input type="email" name="email" placeholder="E-mail" value="{{request.form.email }}" class="input" /></div><div class="inputBox"><input type="password" name="senha" placeholder="Senha" value="{{request.form.senha }}" class="input" /></div>';
+            list.innerHTML = '<div style="padding: 0 20px 0 30px"> <div class="inputBox"> <input type="text" name="nome" placeholder="Nome" value="{{ request.form.nome }}" class="input" /> </div> <div class="inputBox"> <input type="tel" name="nascimento" placeholder="Data de nascimento" value="{{request.form.nascimento }}" class="input" oninput="this.value = DDMMYYYY(this.value, event)" maxlength="10" id="nascimento" onblur="addCampo()" /> </div> <div class="inputBox"> <input type="tel" name="cpf" placeholder="CPF" value="{{ request.form.cpf }}" class="input" maxlength="14" oninput="this.value = CPF(this.value, event)" /> </div> <div class="inputBox" id="telefone"> <input type="tel" name="telefone" placeholder="Telefone" value="{{ request.form.telefone }}" class="input" maxlength="14" oninput="this.value = TEL(this.value, event)" /> </div> <div class="inputBox"> <input type="email" name="email" placeholder="E-mail" value="{{ request.form.email }}" class="input" /> </div> <div class="inputBox"> <input type="password" name="senha" placeholder="Senha" value="{{ request.form.senha }}" class="input" /> </div> </div> <div style="padding: 0 30px 0 0" id="divMeio"> <div class="inputBox"><input type="tel" name="cep" id="cep" placeholder="CEP" onblur="APIrua()" value="{{request.form.cep }}" class="input" maxlength="9" oninput="this.value = CEP(this.value, event)" /> </div> <div class="inputBox"> <input type="text" name="endereco" id="endereco" placeholder="Endereço" value="{{ request.form.endereco }}" class="input" /> </div> <div class="inputBox"> <input type="tel" name="numero" placeholder="Número" value="{{ request.form.numero }}" class="input" /> </div> <div class="inputBox"> <input type="text" name="complemento" placeholder="Complemento" value="{{ request.form.complemento }}" class="input" /> </div> <div class="inputBox"> <input type="text" name="cidade" id="cidade" placeholder="Cidade" value="{{ request.form.cidade }}" class="input" /> </div> <div class="inputBox"> <input type="text" name="estado" id="estado" placeholder="Estado" value="{{ request.form.estado }}" class="input" /> </div> </div>';
         }
     </script>
 
@@ -137,7 +167,10 @@
 
         function APIrua() {
             var cep = document.getElementById("cep").value;
-            var enderecoComercial = document.getElementById("enderecoComercial");
+            var endereco = document.getElementById("endereco");
+            var cidade = document.getElementById("cidade");
+            var estado = document.getElementById("estado");
+
             console.log(cep);
             // getJSONP('https://viacep.com.br/ws/22775-053/json/',console.log(data));
             fetch(
@@ -154,9 +187,13 @@
                 .then(serverResponse => {
                     var resposta = JSON.parse(serverResponse);
                     if (resposta.logradouro != undefined) {
-                        enderecoComercial.value = resposta.logradouro
+                        endereco.value = resposta.logradouro;
+                        cidade.value = resposta.localidade;
+                        estado.value = resposta.uf;
+                    } else {
+                        endereco.value = "CEP não encontrado"
                     }
-                    console.log(enderecoComercial);
+                    console.log(endereco);
                 })
                 .catch(e => {
                     console.log(e);
@@ -238,17 +275,16 @@
             var table = document.getElementById("table");
 
             if (maiorDeIdade() || document.getElementById("nascimento").value == "") {
-                if (table.firstElementChild.firstElementChild.id == "cliente") {
-                    table.removeChild(table.lastChild);
-                    table.removeChild(table.lastChild);
-                    table.removeChild(table.firstChild);
+                if (table.childNodes.length == 6) {
+                    table.removeChild(table.lastChild);     
                 }
             }
             else {
-                if (table.firstElementChild.firstElementChild.id != "cliente") {
-                    table.insertBefore(create('<h4 style="padding-left: 15px" id="cliente">Cliente</h4>'), table.childNodes[0]);
-                    table.appendChild(create('<h4 style="padding: 20px 0 0 15px">Responsável</h4>'));
-                    table.appendChild(create('<div class="inputBox"><input type="text" name="nomeRes" placeholder="Nome" value="{{request.form.nomeRes }}" class="input" /></div><div class="inputBox"><input type="tel" name="cpfRes" placeholder="CPF" value="{{request.form.cpfRes }}" class="input" maxlength="14" oninput="this.value = CPF(this.value, event)" /></div><div class="inputBox" id="telefone"><input type="tel" name="telRes" placeholder="Telefone" value="{{request.form.telRes }}" class="input" maxlength="14" oninput="this.value = TEL(this.value, event)" /></div>'))
+                if (table.childNodes.length != 6) {
+                    // table.insertBefore(create('<h4 style="padding-left: 15px" id="cliente">Cliente</h4>'), table.childNodes[0]);
+                    // table.appendChild(create('<h4 style="padding: 20px 0 0 15px">Responsável</h4>'));
+                    table.appendChild(create('<div style="padding: 0 30px 0 0px"><div class="inputBox"><input type="text" name="nomeRes" placeholder="Nome do responsável" value="{{request.form.nomeRes }}" class="input" /></div><div class="inputBox"><input type="tel" name="cpfRes" placeholder="CPF do responsável" value="{{request.form.cpfRes }}" class="input" maxlength="14" oninput="this.value = CPF(this.value, event)" /></div></div>'));
+                    document.getElementById("divMeio").style = "padding: 0 20px 0 0";
                 }
             }
         }
