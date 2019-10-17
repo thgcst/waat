@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/sobreNos.css') }}">
+
+
+    <title>sobreNos</title>
+</head>
+
+<body>
+    <div class="limiter">
+        <div class="container-login100">
+                <strong class="greetings"><br><br><br><br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;Olá! O WAAT é uma plataforma idealizada e desenvolvida por alunos da UFRJ.</br></br>
+                  &nbsp;&nbsp;&nbsp;Nosso intuito é facilitar a relação entre profissionais liberais e seus<p> clientes. Por aqui você
+                  pode ter acesso a recibos, relatórios, laudos e outros documentos vinculados a serviços que você prestou ou recebeu.</p>
+
+                  <center><br>Agora é só se cadastar e começar a usar!</center></strong>
+
+                  <div style="text-align: center; padding-bottom: 10px">
+                      <a class="txt2" href="#"
+                          onclick="window.location.href='{{ url_for( 'cadastro')}}';" style="font-size: 18px">
+                          Crie sua conta
+                      </a>
+                  </div>
+
+
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>

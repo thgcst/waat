@@ -35,6 +35,7 @@ class Profissional(Usuário):
         self.registroProfissional =  registroProfissional
         self.profissao = profissao
         self.registroProfissional =  registroProfissional
+        self.cep = cep
 
     def set_profissao(self, profissao):
         self.profissao = profissao
@@ -103,9 +104,20 @@ class Cliente(Usuário):                                              #Criando C
 clientes = []
 clienteAtual = 0
 
-@app.route('/<nomeProfissional>/<registroProfissional>/<profissao>/<nome>/<cpf>/<precoConsulta>/<email>/<enderecoComercial>/<telefone>')
-def pdf_template(nomeProfissional, registroProfissional, profissao, nome, cpf, precoConsulta, email, enderecoComercial, telefone):
-    rendered = render_template('pdf_template18+.html', nomeProfissional = nomeProfissional, registroProfissional = registroProfissional, profissao = profissao, nome = nome, cpf = cpf, precoConsulta = precoConsulta, email=email, enderecoComercial= enderecoComercial, telefone=telefone)
+@app.route('/<nomeProfissional>/<registroProfissional>/<profissao>/<nome>/<cpf>/<precoConsulta>/<email>/<enderecoComercial>/<telefone>/<cep>')
+def pdf_template1(nomeProfissional, registroProfissional, profissao, nome, cpf, precoConsulta, email, enderecoComercial, telefone, cep):
+    rendered = render_template('pdf_template18+.html', nomeProfissional = nomeProfissional, registroProfissional = registroProfissional, profissao = profissao, nome = nome, cpf = cpf, precoConsulta = precoConsulta, email=email, enderecoComercial = enderecoComercial, telefone = telefone, cep = cep)
+    pdf = pdfkit.from_string(rendered, False)
+
+    response =  make_response(pdf)
+    response.headers['Content-Type'] =  'applocation/pdf'
+    response.headers['Content-Disposition'] =   'inline; filename = recibo.pdf'
+
+    return response
+
+@app.route('/<nomeProfissional>/<registroProfissional>/<profissao>/<nome>/<cpfResponsavel>/<nomeResponsavel>/<precoConsulta>/<email>/<enderecoComercial>/<telefone>/<cep>')
+def pdf_template2(nomeProfissional, registroProfissional, profissao, nome, cpfResponsavel, nomeResponsavel, precoConsulta, email, enderecoComercial, telefone, cep):
+    rendered = render_template('pdf_template18-.html', nomeProfissional = nomeProfissional, registroProfissional = registroProfissional, profissao = profissao, nome = nome, cpfResponsavel = cpfResponsavel, nomeResponsavel = nomeResponsavel, precoConsulta = precoConsulta, email=email, enderecoComercial = enderecoComercial, telefone = telefone, cep = cep)
     pdf = pdfkit.from_string(rendered, False)
 
     response =  make_response(pdf)
@@ -118,7 +130,7 @@ def pdf_template(nomeProfissional, registroProfissional, profissao, nome, cpf, p
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
     #error = None
-    if request.method == "POST":  
+    if request.method == "POST":
         if request.form["radio"] == '0': #cliente
             nome = request.form["nome"]
             data_de_nascimento = request.form["nascimento"]
@@ -140,7 +152,7 @@ def cadastro():
                 nome_responsavel = request.form["nomeRes"]
                 cpf_responsavel = request.form["cpfRes"]
 
-            controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)               
+            controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
             return redirect("http://127.0.0.1:5000/")
 
         if request.form["radio"] == '1': #profissional
@@ -205,6 +217,14 @@ def loggedProfissional(id_profissional):
 def loggedCliente(id_cliente):
     nome = controler.select("nome","clientes", "id_cliente="+str(id_cliente))[0][0]
     return render_template("loggedCliente.html", cliente=nome)
+
+@app.route('/sobreNos', methods=['GET', 'POST'])
+def sobreNos():
+    error = None
+    if request.method =='POST':
+        return redirect(url_for('cadastro'))
+
+    return render_template('sobreNos.html', error=error)
 
 
 if __name__ == '__main__':
