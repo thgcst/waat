@@ -16,24 +16,18 @@
 </head>
 
 <body>
-    <div class="limiter">
         <div class="container-login100">
-                {% if cliente %}
-                <strong class="greetings">Bem vindo, {{ cliente.split()[0] }}!</strong>
-                    {% endif %}
-                <!-- <strong class="greetings">Bem vindo, _________!</strong> -->
+            <strong class="greetings">Bem vindo, {{ cliente.split()[0] }}!</strong>
             <div class="botoes">
                 <button class="botao">Informações de cadastro</button>
                 <button class="botao">Recibos</button>
+                <button class="botao">Configurações</button>
             </div>
-            <a class="txt2" href="#"
-                onclick="window.location.href='{{ url_for( 'login')}}';" style="font-size: 18px">
-              <p style="margin-top: 600px">Sair</p>
-            </a>
+            <button class="sair" onclick="window.location.href='{{ url_for( 'login')}}'">Sair</button>            
         </div>
-    </div>
 
 
 </body>
 
 </html>
+

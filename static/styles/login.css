@@ -10,6 +10,16 @@ html {
   font-family: sans-serif;
 }
 
+body{
+  background: #69acd8;
+  background: -webkit-linear-gradient(-135deg, #2179b4, #69acd8);
+  background: -o-linear-gradient(-135deg, #2179b4, #69acd8);
+  background: -moz-linear-gradient(-135deg, #2179b4, #69acd8);
+  background: linear-gradient(-135deg, #2179b4, #69acd8);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 .container-login100 {
   width: 100%;
   min-height: 100vh;
@@ -22,11 +32,6 @@ html {
   justify-content: center;
   align-items: center;
   padding: 15px;
-  background: #69acd8;
-  /* background: -webkit-linear-gradient(-135deg, #2179b4, #69acd8);
-  background: -o-linear-gradient(-135deg, #2179b4, #69acd8);
-  background: -moz-linear-gradient(-135deg, #2179b4, #69acd8); */
-  background: linear-gradient(-135deg, #2179b4, #69acd8);
 }
 
 .limiter {
@@ -47,8 +52,6 @@ html {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  /* padding: 177px 130px 33px 95px; */
-  /* padding: 50px; */
   width: 400px;
 }
 

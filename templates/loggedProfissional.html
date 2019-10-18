@@ -16,20 +16,15 @@
 </head>
 
 <body>
-    <div class="limiter">
-        <div class="container-login100">
-                <strong class="greetings">Bem vindo, {{ profissional.split()[0] }}!</strong>
-            <div class="botoes">
-                <button class="botao">Informações de cadastro</button>
-                <button class="botao">Meus Clientes</button>
-                <button class="botao">Recibos</button>
-            </div>
-            <a class="txt2" href="#"
-                onclick="window.location.href='{{ url_for( 'login')}}';" style="font-size: 18px">
-              <p style="margin-top: 600px">Sair</p>
-            </a>
-
+    <div class="container-login100">
+        <strong class="greetings">Bem vindo, {{ profissional.split()[0] }}!</strong>
+        <div class="botoes">
+            <button class="botao">Informações de cadastro</button>
+            <button class="botao">Meus Clientes</button>
+            <button class="botao">Recibos</button>
+            <button class="botao">Configurações</button>
         </div>
+        <button class="sair" onclick="window.location.href='{{ url_for( 'login')}}'">Sair</button>            
     </div>
 
 

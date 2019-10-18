@@ -10,6 +10,15 @@ html {
   font-family: sans-serif;
 }
 
+body{
+  background: #69acd8;
+  background: -webkit-linear-gradient(-135deg, #2179b4, #69acd8);
+  background: -o-linear-gradient(-135deg, #2179b4, #69acd8);
+  background: -moz-linear-gradient(-135deg, #2179b4, #69acd8);
+  background: linear-gradient(-135deg, #2179b4, #69acd8);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
 
 .container-login100 {
   width: 100%;
@@ -19,20 +28,10 @@ html {
   display: -moz-box;
   display: -ms-flexbox;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  padding: 15px;
-  background: #69acd8;
-  background: -webkit-linear-gradient(-135deg, #2179b4, #69acd8);
-  background: -o-linear-gradient(-135deg, #2179b4, #69acd8);
-  background: -moz-linear-gradient(-135deg, #2179b4, #69acd8);
-  background: linear-gradient(-135deg, #2179b4, #69acd8);
-}
-
-.limiter {
-  width: 100%;
-  margin: 0 auto;
 }
 
 .botao {
@@ -58,11 +57,32 @@ html {
 
 .botoes {
   position: absolute;
-
 }
 
 .greetings{
   color: #fff;
   font-size: 35px;
   transform: translate(0,-200px)
+}
+
+.sair{
+  background: #bdc3c773;
+  background: linear-gradient(0deg, #2ecc71, #2ecc70c5);
+  border-radius: 20px;
+  border-width: 0;
+  height: 50px;
+  /* min-width: 300px; */
+  font-size: 25px;
+  font-weight: 600;
+  padding: 0 40px 0 40px;
+  margin: 15px;
+  color: #fff;
+  transition-duration: 0.2s;
+  -webkit-transition-duration: 0.2s;
+  cursor: pointer;
+  transform: translate(0,200px)
+}
+
+.sair:hover {
+  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.199);
 }

@@ -16,41 +16,39 @@
 </head>
 
 <body>
-    <div class="limiter">
-        <div class="container-login100">
-            <div class="wrap-login100">
-                <form method="POST">
-                    <h1 style="text-align: center; padding-top: 30px"><strong>Bem Vindo!</strong></h1>
-                    <div class="inputBox" style="padding-top: 40px">
-                        <input type="text" name="cpf" placeholder="CPF" value="{{
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <form method="POST">
+                <h1 style="text-align: center; padding-top: 30px"><strong>Bem Vindo!</strong></h1>
+                <div class="inputBox" style="padding-top: 40px">
+                    <input type="text" name="cpf" placeholder="CPF" value="{{
 							request.form.cpf }}" class="input" maxlength="14" oninput="this.value = CPF(this.value, event)" />
-                    </div>
-                    <div class="inputBox">
-                        <input type="password" name="senha" placeholder="Senha" value="{{
+                </div>
+                <div class="inputBox">
+                    <input type="password" name="senha" placeholder="Senha" value="{{
 							request.form.senha }}" class="input" />
+                </div>
+                {% if error %}
+                <p class="error" style="text-align: center; color: #e74c3c; font-size: 14px">{{ error }}
+                    {% endif %}
+
+                    <div class="inputBox" style="padding-bottom: 10px; padding-top: 30px">
+                        <button class="botao" type="submit">Entrar</button>
                     </div>
-                    {% if error %}
-                    <p class="error" style="text-align: center; color: #e74c3c; font-size: 14px">{{ error }}
-                        {% endif %}
 
-                        <div class="inputBox" style="padding-bottom: 10px; padding-top: 30px">
-                            <button class="botao" type="submit">Entrar</button>
-                        </div>
+                    <div style="text-align: center; padding-bottom: 10px">
+                        <a class="txt2" href="#" onclick="window.location.href='{{ url_for( 'cadastro')}}';"
+                            style="font-size: 18px">
+                            <p>Crie sua conta</p>
+                        </a>
+                        <a class="txt2" href="#" onclick="window.location.href='{{ url_for( 'sobreNos')}}';"
+                            style="font-size: 18px">
+                            <p style="margin-top: 8px">Sobre nós</p>
+                        </a>
+                    </div>
 
-                        <div style="text-align: center; padding-bottom: 10px">
-                            <a class="txt2" href="#" onclick="window.location.href='{{ url_for( 'cadastro')}}';"
-                                style="font-size: 18px">
-                                <p>Crie sua conta</p>
-                            </a>
-                            <a class="txt2" href="#"
-                                onclick="window.location.href='{{ url_for( 'sobreNos')}}';" style="font-size: 18px">
-                              <p style="margin-top: 8px">Sobre nós</p>
-                            </a>
-                        </div>
+            </form>
 
-                </form>
-
-            </div>
         </div>
     </div>
 
