@@ -47,13 +47,11 @@
                             Sobre nós
                         </a>
                     </div>
-
             </form>
-
         </div>
     </div>
 
-    <script>
+    <!-- <script>
         function CPF(value, event) {
             let newValue = value.replace(/[^0-9]/g, '');
 
@@ -67,7 +65,8 @@
 
             return newValue.split('').map((v, i) => aux(i) ? v + '.' : (i == 8 ? v + '-' : v)).join('');
         };
-    </script>
+    </script> -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/login.js') }}"></script>
 
 </body>
 

@@ -87,6 +87,10 @@ body{
   box-shadow: 2px 2px 20px #ddd;
 }
 
+.cpfError{
+  color: rgb(221, 57, 57)
+}
+
 .botao {
   background: #2ecc71;
   border-radius: 100px;
