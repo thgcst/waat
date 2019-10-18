@@ -125,7 +125,7 @@ body{
   visibility: hidden;
   /* opacity: 0; */
   /* cursor: pointer; */
-  padding: 0px 10px;
+  padding: 0px 0px;
 }
 
 /* Create a custom radio button */
@@ -140,7 +140,7 @@ body{
   background-color: #ccc;
 }
 
-/* When the radio button is checked, add a blue background */
+/* When the radio button is checked, add a green background */
 .container input:checked ~ .checkmark {
   background-color: #239c55;
 }

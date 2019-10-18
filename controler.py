@@ -123,7 +123,7 @@ def verifica_idade(data_de_nascimento):
     hoje = date.today()
     nascimento = date(int(data_de_nascimento[6:]),int(data_de_nascimento[3:5]),int(data_de_nascimento[:2]))
     idade = hoje.year - nascimento.year - ((hoje.month, hoje.day) < (hoje.month, hoje.day))
-    if idade>=18:
+    if idade<18:
         return True
     else:
         return False

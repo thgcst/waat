@@ -283,7 +283,7 @@
                 if (table.childNodes.length != 6) {
                     // table.insertBefore(create('<h4 style="padding-left: 15px" id="cliente">Cliente</h4>'), table.childNodes[0]);
                     // table.appendChild(create('<h4 style="padding: 20px 0 0 15px">Responsável</h4>'));
-                    table.appendChild(create('<div style="padding: 0 30px 0 0px"><div class="inputBox"><input type="text" name="nomeRes" placeholder="Nome do responsável" value="{{request.form.nomeRes }}" class="input" /></div><div class="inputBox"><input type="tel" name="cpfRes" placeholder="CPF do responsável" value="{{request.form.cpfRes }}" class="input" maxlength="14" oninput="this.value = CPF(this.value, event)" /></div></div>'));
+                    table.appendChild(create('<div style="padding: 0 30px 0 0px"><div class="inputBox"><input type="text" name="nomeRes" placeholder="Nome do responsável" value="{{ request.form.nomeRes }}" class="input" /></div><div class="inputBox"><input type="tel" name="cpfRes" placeholder="CPF do responsável" value="{{request.form.cpfRes }}" class="input" maxlength="14" oninput="this.value = CPF(this.value, event)" /></div></div>'));
                     document.getElementById("divMeio").style = "padding: 0 20px 0 0";
                 }
             }

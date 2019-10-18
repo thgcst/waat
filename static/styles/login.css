@@ -10,7 +10,6 @@ html {
   font-family: sans-serif;
 }
 
-
 .container-login100 {
   width: 100%;
   min-height: 100vh;
@@ -115,7 +114,6 @@ html {
 }
 
 .txt2 {
-
   font-size: 14px;
   line-height: 1.7;
   color: #666666;
@@ -124,7 +122,6 @@ html {
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
-
 }
 
 .txt2:focus {
@@ -132,6 +129,6 @@ html {
 }
 
 .txt2:hover {
-
   color: #57b846;
 }
+
