@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/loggedMedico.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/loggedProfissional.css') }}">
     <!-- <link rel="stylesheet" type="text/css" href="../static/styles/loggedMedico.css"> -->
 
 
@@ -18,7 +18,7 @@
 <body>
     <div class="limiter">
         <div class="container-login100">
-                <strong class="greetings">Bem vindo, {{ profissional }}!</strong>
+                <strong class="greetings">Bem vindo, {{ profissional.split()[0] }}!</strong>
             <div class="botoes">
                 <button class="botao">Informações de cadastro</button>
                 <button class="botao">Clientes</button>

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/loggedPaciente.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/loggedCliente.css') }}">
     <!-- <link rel="stylesheet" type="text/css" href="../static/styles/loggedPaciente.css"> -->
 
 
@@ -19,7 +19,7 @@
     <div class="limiter">
         <div class="container-login100">
                 {% if cliente %}
-                <strong class="greetings">Bem vindo, {{ cliente }}!</strong>
+                <strong class="greetings">Bem vindo, {{ cliente.split()[0] }}!</strong>
                     {% endif %}
                 <!-- <strong class="greetings">Bem vindo, _________!</strong> -->
             <div class="botoes">
