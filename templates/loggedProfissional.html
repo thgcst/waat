@@ -21,9 +21,14 @@
                 <strong class="greetings">Bem vindo, {{ profissional.split()[0] }}!</strong>
             <div class="botoes">
                 <button class="botao">Informações de cadastro</button>
-                <button class="botao">Clientes</button>
+                <button class="botao">Meus Clientes</button>
                 <button class="botao">Recibos</button>
             </div>
+            <a class="txt2" href="#"
+                onclick="window.location.href='{{ url_for( 'login')}}';" style="font-size: 18px">
+              <p style="margin-top: 600px">Sair</p>
+            </a>
+
         </div>
     </div>
 

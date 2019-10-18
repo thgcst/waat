@@ -30,34 +30,34 @@ class Usuário():
         return (self.senha)
 
 class Profissional(Usuário):
-    def __init__(self, nome, cpf, senha, profissao, registroProfissional):
+    def __init__(self, nome, cpf, senha, profissao, regProf):
         super().__init__(nome, cpf, senha)                              #Usando o fato de ser subclasse e herdando metodos e atributos da classe mãe
-        self.registroProfissional =  registroProfissional
+        self.regProf =  regProf
         self.profissao = profissao
-        self.registroProfissional =  registroProfissional
+        self.regProf =  regProf
         self.cep = cep
 
     def set_profissao(self, profissao):
         self.profissao = profissao
 
-    def set_registroProfissional(self, registroProfissional):
-        self.registroProfissional =  registroProfissional
+    def set_regProf(self, regProf):
+        self.regProf =  regProf
 
     def get_profissional(self):
         return (self.profissao)
 
-    def get_registroProfissional(self):
-        return(self.registroProfissional)
+    def get_regProf(self):
+        return(self.regProf)
 
 
 class Cliente(Usuário):                                              #Criando Clase profissional que é subclasse de Usuário
 
-    def __init__(self, nome, cpf, senha, precoConsulta, nomeResponsavel, cpfResponsavel, enderecoResponsavel, frequencia, diaDaSemana, horario):
+    def __init__(self, nome, cpf, senha, precoConsulta, nomeRes, cpfRes, enderecoResponsavel, frequencia, diaDaSemana, horario):
 
         super().__init__(nome, cpf, senha)                           #Usando o fato de ser subclasse e herdando metodos e atributos da classe mãe
         self.precoConsulta =  precoConsulta
-        self.nomeResponsavel = nomeResponsavel
-        self.cpfResponsavel = cpfResponsavel
+        self.nomeRes = nomeRes
+        self.cpfRes = cpfRes
         self.enderecoResponsavel = enderecoResponsavel
         self.diaDaSemana = diaDaSemana
         self.horario = horario
@@ -65,11 +65,11 @@ class Cliente(Usuário):                                              #Criando C
     def set_precoConsulta(self,precoConsulta):
         self.precoConsulta = precoConsulta
 
-    def set_nomeResponsavel(self, nomeResponsavel ):
-        self.nomeResponsavel = nomeResponsavel
+    def set_nomeRes(self, nomeRes ):
+        self.nomeRes = nomeRes
 
-    def set_cpfResponsavel(self, cpfResponsavel ):
-        self.cpfResponsavel = cpfResponsavel
+    def set_cpfRes(self, cpfRes ):
+        self.cpfRes = cpfRes
 
     def set_enderecoResponsavel(self, enderecoResponsavel ):
         self.enderecoResponsavel = enderecoResponsavel
@@ -83,11 +83,11 @@ class Cliente(Usuário):                                              #Criando C
     def get_precoConsulta(self):
         return(self.precoConsulta)
 
-    def get_nomeResponsavel(self):
-        return(self.nomeResponsavel)
+    def get_nomeRes(self):
+        return(self.nomeRes)
 
-    def get_cpfResponsavel(self):
-        return(self.cpfResponsavel)
+    def get_cpfRes(self):
+        return(self.cpfRes)
 
     def get_enderecoResponsavel(self):
         return(self.enderecoResponsavel)
@@ -99,14 +99,14 @@ class Cliente(Usuário):                                              #Criando C
         return(self.horario)
 
     def get_cliente(self):
-        return str(self.nome) + "," + str(self.cpf) + "," + str(self.nomeResponsavel) + "," + str(self.cpfResponsavel) + "," + str(self.senha) + "\n"
+        return str(self.nome) + "," + str(self.cpf) + "," + str(self.nomeRes) + "," + str(self.cpfRes) + "," + str(self.senha) + "\n"
 
 clientes = []
 clienteAtual = 0
 
-@app.route('/<nomeProfissional>/<registroProfissional>/<profissao>/<nome>/<cpf>/<precoConsulta>/<email>/<enderecoComercial>/<telefone>/<cep>')
-def pdf_template1(nomeProfissional, registroProfissional, profissao, nome, cpf, precoConsulta, email, enderecoComercial, telefone, cep):
-    rendered = render_template('pdf_template18+.html', nomeProfissional = nomeProfissional, registroProfissional = registroProfissional, profissao = profissao, nome = nome, cpf = cpf, precoConsulta = precoConsulta, email=email, enderecoComercial = enderecoComercial, telefone = telefone, cep = cep)
+@app.route('/<nomeProfissional>/<regProf>/<profissao>/<nome>/<cpf>/<precoConsulta>/<email>/<enderecoComercial>/<telefone>/<cep>')
+def pdf_template1(nomeProfissional, regProf, profissao, nome, cpf, precoConsulta, email, enderecoComercial, telefone, cep):
+    rendered = render_template('pdf_template18+.html', nomeProfissional = nomeProfissional, regProf = regProf, profissao = profissao, nome = nome, cpf = cpf, precoConsulta = precoConsulta, email=email, enderecoComercial = enderecoComercial, telefone = telefone, cep = cep)
     pdf = pdfkit.from_string(rendered, False)
 
     response =  make_response(pdf)
@@ -115,9 +115,9 @@ def pdf_template1(nomeProfissional, registroProfissional, profissao, nome, cpf, 
 
     return response
 
-@app.route('/<nomeProfissional>/<registroProfissional>/<profissao>/<nome>/<cpfResponsavel>/<nomeResponsavel>/<precoConsulta>/<email>/<enderecoComercial>/<telefone>/<cep>')
-def pdf_template2(nomeProfissional, registroProfissional, profissao, nome, cpfResponsavel, nomeResponsavel, precoConsulta, email, enderecoComercial, telefone, cep):
-    rendered = render_template('pdf_template18-.html', nomeProfissional = nomeProfissional, registroProfissional = registroProfissional, profissao = profissao, nome = nome, cpfResponsavel = cpfResponsavel, nomeResponsavel = nomeResponsavel, precoConsulta = precoConsulta, email=email, enderecoComercial = enderecoComercial, telefone = telefone, cep = cep)
+@app.route('/<nomeProfissional>/<regProf>/<profissao>/<nome>/<cpfRes>/<nomeRes>/<precoConsulta>/<email>/<enderecoComercial>/<telefone>/<cep>')
+def pdf_template2(nomeProfissional, regProf, profissao, nome, cpfRes, nomeRes, precoConsulta, email, enderecoComercial, telefone, cep):
+    rendered = render_template('pdf_template18-.html', nomeProfissional = nomeProfissional, regProf = regProf, profissao = profissao, nome = nome, cpfRes = cpfRes, nomeRes = nomeRes, precoConsulta = precoConsulta, email=email, enderecoComercial = enderecoComercial, telefone = telefone, cep = cep)
     pdf = pdfkit.from_string(rendered, False)
 
     response =  make_response(pdf)
@@ -144,9 +144,9 @@ def cadastro():
             complemento = request.form["complemento"]
             cidade = request.form["cidade"]
             estado = request.form["estado"]
-            if nome=='' or data_de_nascimento=='' or cpf=='' or telefone=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':    
+            if nome=='' or data_de_nascimento=='' or cpf=='' or telefone=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
                 error = 'Preencha todos os campos!'
-            elif controler.verifica_cpf(cpf, 'clientes'): 
+            elif controler.verifica_cpf(cpf, 'clientes'):
                error = 'Usuário Cadastrado!'
             else:
                 if controler.verifica_idade(data_de_nascimento)==False:
@@ -159,7 +159,7 @@ def cadastro():
                     cpf_responsavel = request.form["cpfRes"]
                     if nome_responsavel or cpf_responsavel =='':
                         error = 'Preencha todos os campos!'
-                    else:                
+                    else:
                         controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
                         return redirect("http://127.0.0.1:5000/")
 
