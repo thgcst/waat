@@ -150,6 +150,8 @@ def cadastro():
                 if controler.verifica_idade(data_de_nascimento)==False:
                     nome_responsavel = '-'
                     cpf_responsavel = '-'
+                    controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
+                    return redirect("http://127.0.0.1:5000/")
                 else:
                     nome_responsavel = request.form["nomeRes"]
                     cpf_responsavel = request.form["cpfRes"]
