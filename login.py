@@ -146,6 +146,8 @@ def cadastro():
             estado = request.form["estado"]
             if nome=='' or data_de_nascimento=='' or cpf=='' or telefone=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':    
                 error = 'Preencha todos os campos!'
+            elif controler.verifica_cpf(cpf, 'clientes'): 
+               error = 'Usuário Cadastrado!'
             else:
                 if controler.verifica_idade(data_de_nascimento)==False:
                     nome_responsavel = '-'
@@ -180,8 +182,11 @@ def cadastro():
             if nome=='' or cpf=='' or profissao=='' or registro_profissional=='' or telefone=='' or data_de_nascimento=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
                 error = 'Preencha todos os campos!'
             else:
-                controler.cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado)
-                return redirect("http://127.0.0.1:5000/")
+                if controler.verifica_cpf(cpf, 'profissionais'):
+                    error = 'Usuário Cadastrado!'
+                else:
+                    controler.cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado)
+                    return redirect("http://127.0.0.1:5000/")
     return render_template('create.html', error=error)
 
 
