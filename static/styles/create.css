@@ -83,6 +83,7 @@ body{
 
 .input:focus {
   outline: none;
+  height: 60px;
   box-shadow: 2px 2px 20px #ddd;
 }
 

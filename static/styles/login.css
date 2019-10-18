@@ -118,20 +118,20 @@ body{
 
 .txt2 {
   font-size: 14px;
-  line-height: 1.7;
   color: #666666;
-  margin: 0px;
   transition: all 0.4s;
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
 }
 
-.txt2:focus {
+/* .txt2:focus {
   outline: none !important;
-}
+} */
 
 .txt2:hover {
   color: #57b846;
+  cursor: pointer;
 }
+
 
