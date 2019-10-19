@@ -10,7 +10,7 @@ html {
   font-family: sans-serif;
 }
 
-body{
+body {
   background: #69acd8;
   background: -webkit-linear-gradient(-135deg, #2179b4, #69acd8);
   background: -o-linear-gradient(-135deg, #2179b4, #69acd8);
@@ -19,7 +19,6 @@ body{
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
-
 
 .container-login100 {
   width: 100%;
@@ -87,8 +86,8 @@ body{
   box-shadow: 2px 2px 20px #ddd;
 }
 
-.cpfError{
-  color: rgb(221, 57, 57)
+.cpfError {
+  color: rgb(221, 57, 57);
 }
 
 .botao {
@@ -150,7 +149,69 @@ body{
   background-color: #239c55;
 }
 
-.table{
+.table {
   display: flex;
   flex-direction: row;
+}
+
+.dropzoneB4 {
+  width: 300px;
+  height: 120px;
+  border: 2px dashed #ccc;
+  color: #ccc;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 10px;
+  border-radius: 20px;
+}
+
+.dropzoneAfter {
+  width: 300px;
+  height: 120px;
+  border: 2px dashed #ccc;
+  color: #ccc;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-top: 10px;
+  border-radius: 20px;
+  border-color: #239c55;
+}
+
+.dropzoneB4.dragover {
+  border-color: #000;
+  color: #000;
+}
+
+.foto {
+  height: 110px;
+  width: 110px;
+  object-fit: cover;
+  border-radius: 20px;
+  margin-left: 5px;
+}
+
+.boxNome {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 110px;
+  width: 180px;
+}
+
+.fas{
+  padding-top: 5px;
+  font-size: 30px;
+  color:  #ccc;
+}
+
+.fas:hover{
+  color: rgb(221, 57, 57);
+  cursor: pointer;
 }
