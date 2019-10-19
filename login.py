@@ -164,20 +164,20 @@ def cadastro():
                         return redirect("http://127.0.0.1:5000/")
 
         if request.form["radio"] == '1': #profissional
-            nome = request.form["nome"]
-            cpf = controler.limpa_cpf(request.form["cpf"])
-            profissao = request.form["profissao"]
+            nome = request.form["nomePro"]
+            cpf = controler.limpa_cpf(request.form["cpfPro"])
+            profissao = request.form["profissaoPro"]
             registro_profissional = request.form["regProf"]
-            telefone = controler.limpa_telefone(request.form["telefone"])
-            data_de_nascimento = request.form["nascimento"]
-            email = request.form["email"]
-            senha = request.form["senha"]
-            cep=request.form["cep"]
-            endereco = request.form["endereco"]
-            numero = request.form["numero"]
-            complemento = request.form["complemento"]
-            cidade = request.form["cidade"]
-            estado = request.form["estado"]
+            telefone = controler.limpa_telefone(request.form["telefonePro"])
+            data_de_nascimento = request.form["nascimentoPro"]
+            email = request.form["emailPro"]
+            senha = request.form["senhaPro"]
+            cep=request.form["cepPro"]
+            endereco = request.form["enderecoPro"]
+            numero = request.form["numeroPro"]
+            complemento = request.form["complementoPro"]
+            cidade = request.form["cidadePro"]
+            estado = request.form["estadoPro"]
 
             if nome=='' or cpf=='' or profissao=='' or registro_profissional=='' or telefone=='' or data_de_nascimento=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
                 error = 'Preencha todos os campos!'
