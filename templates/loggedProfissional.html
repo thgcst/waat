@@ -24,10 +24,67 @@
             <button class="botao">Recibos</button>
             <button class="botao">Configurações</button>
         </div>
-        <button class="sair" onclick="window.location.href='{{ url_for( 'login')}}'">Sair</button>            
+        <button class="sair" onclick="window.location.href='{{ url_for( 'login')}}'">Sair</button>
+
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <h2>Deseja realmente sair?</h2>
+                <div style="margin-top: 20px;">
+                    <button class="escolha" style="background: rgb(221, 57, 57)" id="close">Não</button>
+                    <button class="escolha" style="background: #2ecc71"
+                        onclick="window.location.href='{{ url_for( 'login')}}'">Sim</button>
+                </div>
+            </div>
+    
+        </div>
     </div>
 
 
 </body>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    var body = document.body;
+    var div = document.getElementsByClassName("container-login100")[0];
+    console.log(div);
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("btnSair");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementById("close");
+
+    // When the user clicks the button, open the modal 
+    btn.onclick = function () {
+        modal.style.animationName = "fadeIn";
+        modal.style.display = "flex";
+        div.style.animationName = "blur";
+        div.style.filter = "blur(10px)";
+
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.animationName = "fadeOut";
+        modal.style.display = "none";
+        div.style.animationName = "unblur";
+        div.style.filter = "blur(0px)";
+        
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        event.preventDefault();
+        if (event.target == modal) {
+            modal.style.animationName = "fadeOut";
+            modal.style.display = "none";
+            div.style.animationName = "unblur";
+            div.style.filter = "blur(0px)";
+        }
+    }
+</script>
 
 </html>
