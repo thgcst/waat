@@ -86,7 +86,7 @@ function deletePic() {
   while (dropzone.hasChildNodes()) {
     dropzone.removeChild(dropzone.firstChild);
   }
-  dropzone.innerHTML = "Arraste uma foto de sua<br>assinatura aqui";
+  dropzone.innerHTML = "Arraste uma foto de sua assinatura<br> para gerar boletos automáticos";
 
   dropzone.className = "dropzoneB4";
 }

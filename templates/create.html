@@ -73,7 +73,7 @@
                             <div style="padding: 0 30px 0 0" id="divMeio">
                                 <!--CEP-->
                                 <div class="inputBox"><input type="tel" name="cep" id="cep" placeholder="CEP"
-                                        onblur="APIrua()" value="{{request.form.cep }}" class="input" maxlength="9"
+                                        onblur="APIrua(0)" value="{{request.form.cep }}" class="input" maxlength="9"
                                         oninput="this.value = CEP(this.value, event)" />
                                 </div>
                                 <!--endereco-->
@@ -114,10 +114,10 @@
                                 </div>
                                 <!--cpf-->
                                 <div class="inputBox">
-                                    <input type="tel" name="cpf" id="cpf" placeholder="CPF"
+                                    <input type="tel" name="cpf" id="cpfPro" placeholder="CPF"
                                         value="{{ request.form.cpf }}" class="input" maxlength="14"
-                                        onblur="validarCPF(`cpf`)"
-                                        oninput="this.value = CPF(`cpf`, this.value, event)" />
+                                        onblur="validarCPF('cpfPro')"
+                                        oninput="this.value = CPF(`cpfPro`, this.value, event)" />
                                 </div>
                                 <!--profissao-->
                                 <div class="inputBox">
@@ -147,12 +147,12 @@
                             </div>
                             <div style="padding: 0 30px 0 0" id="divMeio">
                                 <!--CEP-->
-                                <div class="inputBox"><input type="tel" name="cep" id="cep" placeholder="CEP"
-                                        onblur="APIrua()" value="{{request.form.cep }}" class="input" maxlength="9"
+                                <div class="inputBox"><input type="tel" name="cep" id="cepPro" placeholder="CEP"
+                                        onblur="APIrua(1)" value="{{request.form.cep }}" class="input" maxlength="9"
                                         oninput="this.value = CEP(this.value, event)" />
                                 </div>
                                 <!--endereco-->
-                                <div class="inputBox"> <input type="text" name="endereco" id="endereco"
+                                <div class="inputBox"> <input type="text" name="endereco" id="enderecoPro"
                                         placeholder="Endereço" value="{{ request.form.endereco }}" class="input" />
                                 </div>
                                 <!--numero-->
@@ -162,12 +162,12 @@
                                 <div class="inputBox"> <input type="text" name="complemento" placeholder="Complemento"
                                         value="{{ request.form.complemento }}" class="input" /> </div>
                                 <!--cidade-->
-                                <div class="inputBox"> <input type="text" name="cidade" id="cidade" placeholder="Cidade"
+                                <div class="inputBox"> <input type="text" name="cidade" id="cidadePro" placeholder="Cidade"
                                         value="{{ request.form.cidade }}" class="input" /> </div>
                                 <!--estado-->
-                                <div class="inputBox"> <input type="text" name="estado" id="estado" placeholder="Estado"
+                                <div class="inputBox"> <input type="text" name="estado" id="estadoPro" placeholder="Estado"
                                         value="{{ request.form.estado }}" class="input" /> </div>
-                                <div class="dropzoneB4" id="dropzone">Arraste uma foto de sua<br>assinatura aqui</div>
+                                <div class="dropzoneB4" id="dropzone">Arraste uma foto de sua assinatura<br> para gerar boletos automáticos</div>
                             </div>
                         </div>
                     </div>
@@ -247,14 +247,14 @@
             return newValue.split('').map((v, i) => aux(i) ? v + '.' : (i == 8 ? v + '-' : v)).join('');
         };
 
-        function APIrua() {
-            var cep = document.getElementById("cep").value;
-            var endereco = document.getElementById("endereco");
-            var cidade = document.getElementById("cidade");
-            var estado = document.getElementById("estado");
+        function APIrua(i) {
+            var aux = i ? "Pro" : "";
+            var cep = document.getElementById("cep" + aux).value;
+            var endereco = document.getElementById("endereco" + aux);
+            var cidade = document.getElementById("cidade" + aux);
+            var estado = document.getElementById("estado" + aux);
 
             console.log(cep);
-            // getJSONP('https://viacep.com.br/ws/22775-053/json/',console.log(data));
             fetch(
                 "https://viacep.com.br/ws/" + cep + "/json/",
                 {
