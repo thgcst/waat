@@ -48,6 +48,8 @@ function create(htmlStr) {
 function showUploadedImage(foto, nome) {
   var box = document.getElementById("dropzone");
 
+  box.removeChild(box.firstChild); 
+  box.removeChild(box.firstChild);
   box.removeChild(box.firstChild);
   var img = document.createElement("img");
   att = document.createAttribute("src");
