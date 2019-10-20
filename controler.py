@@ -3,10 +3,10 @@ import mysql.connector
 from datetime import date
 
 config = {
-  'user': 'sql10308309',
-  'password': 'rPgCW78Vu7',
+  'user': 'sql10309123',
+  'password': 'amsv6YKy6N',
   'host': 'sql10.freesqldatabase.com',
-  'database': 'sql10308309',
+  'database': 'sql10309123',
   'port': '3306'}
 
 con = mysql.connector.connect(**config)
