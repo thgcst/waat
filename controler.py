@@ -34,9 +34,9 @@ def insert(values, table, fields =None):
 def update(sets, table, where=None):
     global cursor,  con
     query = "UPDATE " +table
-    query += " SET " + ",".join([field+ " = " + value +"'" for field, value in sets.item()])
+    query += " SET " + ",".join([field+ " = '" + value + "'" for field, value in sets.items()])
     if (where):
-        query += " WHERE " + where  
+        query += " WHERE " + where
     cursor.execute(query)
     con.commit()
     
