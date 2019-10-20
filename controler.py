@@ -106,6 +106,17 @@ def valida_cpf(cpf):
 
     return True
 
+def verifica_id_cliente(id):
+    """retorna True se o id_cliente já está cadastrado e False c.c."""
+    id = "id_cliente="+str(id)
+    id_no_bd = bool(len(select("id_cliente", 'clientes', id)))
+    return id_no_bd
+
+def verifica_id_profissional(id):
+    """retorna True se o id_profissional já está cadastrado e False c.c."""
+    id = "id_profissional="+str(id)
+    id_no_bd = bool(len(select("id_profissional", 'profissionais', id)))
+    return id_no_bd
 
 def verifica_cpf(cpf, tabela):
     """retorna True se o cpf já está cadastrado e False c.c."""
@@ -128,30 +139,17 @@ def verifica_idade(data_de_nascimento):
     else:
         return False
 
-def gera_id_cliente():
-    id_gerado = random.randint(1,100000)
-    id = "id_cliente="+str(id_gerado)
-    id_na_bd = bool(len(select("id_cliente", "clientes", id)))
-    while id_na_bd:        
-        id_gerado = random.randint(1,100000)
-        id = "id_cliente="+str(id_gerado)
-        id_na_bd = bool(len(select("id_cliente", "clientes", id)))
-    return id_gerado
-
-
-def gera_id_profissional():
-    id_gerado = random.randint(1,100000)
-    id = "id_profissional="+str(id_gerado)
-    id_na_bd = bool(len(select("id_profissional", "profissionais", id)))
-    while id_na_bd:        
-        id_gerado = random.randint(1,100000)
-        id = "id_profissional="+str(id_gerado)
-        id_na_bd = bool(len(select("id_profissional", "profissionais", id)))
+def gera_id():
+    id_gerado = random.randint(1,100)
+    id_no_bd = (verifica_id_cliente(id_gerado) and verifica_id_profissional(id_gerado))
+    while id_no_bd:        
+        id_gerado = random.randint(1,100)
+        id_no_bd = (verifica_id_cliente(id_gerado) and verifica_id_profissional(id_gerado))
     return id_gerado
 
 
 def cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel):
-    id_cliente = gera_id_cliente()
+    id_cliente = gera_id()
     sql = "INSERT INTO clientes (id_cliente, nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     data = (id_cliente, nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
     cursor.execute(sql, data)
@@ -159,7 +157,7 @@ def cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep,
 
 
 def cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado):
-    id_profissional = gera_id_profissional()
+    id_profissional = gera_id()
     sql = "INSERT INTO profissionais (id_profissional, nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     data = (id_profissional, nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado)
     cursor.execute(sql, data)
