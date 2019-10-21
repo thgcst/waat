@@ -123,6 +123,8 @@ body{
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
+  cursor: pointer;
+  transform: translate(0,200px)
 }
 
 /* .txt2:focus {
@@ -132,6 +134,7 @@ body{
 .txt2:hover {
   color: #57b846;
   cursor: pointer;
+
 }
 
 .botoes {
@@ -156,7 +159,9 @@ body{
 }
 
 .sair:hover {
-  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.199);
+
+  color: #57b846;
+  cursor: pointer;
 }
 .modal {
   display: none; /* Hidden by default */
