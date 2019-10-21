@@ -134,4 +134,117 @@ body{
   cursor: pointer;
 }
 
+.botoes {
+  position: absolute;
+}
 
+.greetings{
+  color: #fff;
+  font-size: 35px;
+  transform: translate(0,-200px)
+}
+
+.sair{
+  font-size: 14px;
+  color: #666666;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  cursor: pointer;
+  transform: translate(0,200px)
+}
+
+.sair:hover {
+  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.199);
+}
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  -webkit-animation-name: fadeIn; /* Fade in the background */
+  -webkit-animation-duration: 0.5s;
+  animation-name: fadeIn;
+  animation-duration: 0.5s;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal Content */
+.modal-content {
+  position: fixed;
+  background-color: #fff;
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  padding: 30px;
+  flex-wrap: wrap;
+
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s
+}
+
+.escolha {
+  border-radius: 20px;
+  border-width: 0;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  margin: 15px;
+  color: #fff;
+  transition-duration: 0.2s;
+  -webkit-transition-duration: 0.2s;
+  cursor: pointer;
+}
+
+.escolha:hover{
+  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.199);
+}
+
+/* Add Animation */
+
+@keyframes fadeIn {
+  from {opacity: 0}
+  to {opacity: 1}
+}
+
+@keyframes fadeOut {
+  from {opacity: 1}
+  to {opacity: 0}
+}
+
+@keyframes blur {
+  from {
+    -webkit-filter: blur(0px);
+    -moz-filter: blur(0px);
+    -o-filter: blur(0px);
+    -ms-filter: blur(0px);
+  }
+  to {
+    -webkit-filter: blur(10px);
+    -moz-filter: blur(10px);
+    -o-filter: blur(10px);
+    -ms-filter: blur(10px);
+  }
+}
+
+@keyframes unblur {
+  from {
+    -webkit-filter: blur(10px);
+    -moz-filter: blur(10px);
+    -o-filter: blur(10px);
+    -ms-filter: blur(10px);
+  }
+  to {
+    -webkit-filter: blur(0px);
+    -moz-filter: blur(0px);
+    -o-filter: blur(0px);
+    -ms-filter: blur(0px);
+  }
+}
