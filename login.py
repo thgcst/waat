@@ -1,9 +1,15 @@
-from flask import Flask, render_template, redirect, url_for, request, make_response
+from flask import Flask, render_template, redirect, url_for, request, make_response, session
 import pdfkit
 import controler
 
 app = Flask(__name__)
+<<<<<<< HEAD
 
+=======
+app.secret_key = "PipocaSalgada"
+
+"""
+>>>>>>> 4c4dfe912e63c3930eff1c8a46f9db95c0ad4dc8
 #Criando super classe usuario, que possui os atributos que sao comuns ao profissional ou cliente que vai usar a plataforma
 class Usuário():
     def __init__(self, nome, cpf, senha ):
@@ -103,6 +109,44 @@ class Cliente(Usuário):                                              #Criando C
 
 clientes = []
 clienteAtual = 0
+<<<<<<< HEAD
+=======
+"""
+class Cliente:
+
+    def __init__(self, id):
+        self.id = str(id)
+        self.nome = controler.select('nome', 'clientes', 'id_cliente='+self.id)[0][0]
+        self.cpf = controler.select('cpf', 'clientes', 'id_cliente='+self.id)[0][0]
+        self.senha = controler.select('senha', 'clientes', 'id_cliente='+self.id)[0][0]
+        self.nomeRes = controler.select('nome_responsavel', 'clientes', 'id_cliente='+self.id)[0][0]
+        self.cpfRes = controler.select('cpf_responsavel', 'clientes', 'id_cliente='+self.id)[0][0]
+        self.endereco = controler.select('endereco', 'clientes', 'id_cliente='+self.id)[0][0]
+
+    def set_nome(self, nome):
+        controler.update({'nome':nome}, 'clientes', 'id_cliente='+self.id)
+        self.nome = controler.select('nome', 'clientes', 'id_cliente='+self.id)[0][0]
+              
+    def set_senha(self, senha):
+        controler.update({'senha':senha}, 'clientes', 'id_cliente='+self.id)
+        self.nome = controler.select('senha', 'clientes', 'id_cliente='+self.id)[0][0]
+>>>>>>> 4c4dfe912e63c3930eff1c8a46f9db95c0ad4dc8
+
+class Profissional:
+
+    def __init__(self, id):
+        self.id = str(id)
+        self.nome = controler.select('nome', 'profissionais', 'id_profissional='+self.id)[0][0]
+        self.cpf = controler.select('cpf', 'profissionais', 'id_profissional='+self.id)[0][0]
+        self.senha = controler.select('senha', 'profissionais', 'id_profissional='+self.id)[0][0]
+
+    def set_nome(self, nome):
+        controler.update({'nome':nome}, 'profissionais', 'id_profissional='+self.id)
+        self.nome = controler.select('nome', 'profissionais', 'id_profissional='+self.id)[0][0]
+        
+    def set_senha(self, senha):
+        controler.update({'senha':senha}, 'profissionais', 'id_profissional='+self.id)
+        self.nome = controler.select('senha', 'profissionais', 'id_profissional='+self.id)[0][0]
 
 @app.route('/<nomeProfissional>/<regProf>/<profissao>/<nome>/<cpf>/<precoConsulta>/<email>/<enderecoComercial>/<telefone>/<cep>')
 def pdf_template1(nomeProfissional, regProf, profissao, nome, cpf, precoConsulta, email, enderecoComercial, telefone, cep):
@@ -131,7 +175,7 @@ def pdf_template2(nomeProfissional, regProf, profissao, nome, cpfRes, nomeRes, p
 def cadastro():
     error = None
     if request.method == "POST":
-        if request.form["radio"] == '0': #cliente
+        if request.form["radio"] == '0':
             nome = request.form["nome"]
             data_de_nascimento = request.form["nascimento"]
             cpf = controler.limpa_cpf(request.form["cpf"])
@@ -153,7 +197,7 @@ def cadastro():
                     nome_responsavel = '-'
                     cpf_responsavel = '-'
                     controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
-                    return redirect("http://127.0.0.1:5000/")
+                    return redirect(url_for('login'))
                 else:
                     nome_responsavel = request.form["nomeRes"]
                     cpf_responsavel = request.form["cpfRes"]
@@ -161,7 +205,7 @@ def cadastro():
                         error = 'Preencha todos os campos!'
                     else:
                         controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
-                        return redirect("http://127.0.0.1:5000/")
+                        return redirect(url_for('login'))
 
         if request.form["radio"] == '1': #profissional
             nome = request.form["nomePro"]
@@ -186,7 +230,7 @@ def cadastro():
                     error = 'Usuário Cadastrado!'
                 else:
                     controler.cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado)
-                    return redirect("http://127.0.0.1:5000/")
+                    return redirect(url_for('login'))
     return render_template('create.html', error=error)
 
 
@@ -197,47 +241,74 @@ def login():
         cpf_inserido = controler.limpa_cpf(request.form["cpf"])
         senha_inserida = request.form["senha"]
 
-#### A mudança pra pessoa que tem conta cliente e profissional vai ser aqui. Algo do tipo
-# if cpf in clientes and cpf in profissionais:
-# redirect pra uma pagina "logged", intermediária
-# nessa página a pessoa decide em qual conta vai entrar
-        if controler.verifica_cpf(cpf_inserido, "clientes"): # ta na bd
-            if senha_inserida==controler.cpf_senha(cpf_inserido, "clientes"):
-                id_cliente = controler.select("id_cliente","clientes", "cpf="+cpf_inserido)[0][0]
-                return redirect(url_for('loggedCliente', id_cliente=id_cliente))
+        if controler.verifica_cpf(cpf_inserido, "clientes") and controler.verifica_cpf(cpf_inserido, "profissionais"): # ta na bd
+            """A mudança pra pessoa que tem conta cliente e profissional vai ser aqui. Algo do tipo
+            if cpf in clientes and cpf in profissionais: redirect pra uma pagina "logged", intermediária
+            nessa página a pessoa decide em qual conta vai entrar"""
+            pass
+
+        elif controler.verifica_cpf(cpf_inserido, "clientes"): # ta na bd
+            user = Cliente(controler.cpf_id(cpf_inserido, 'clientes'))
+
+            if senha_inserida==user.senha:
+                session['login'] = True
+                session['id'] = user.id
+                return redirect(url_for('loggedCliente'))
+
             else:
                 error = "Senha incorreta!"
 
         elif controler.verifica_cpf(cpf_inserido, "profissionais"): # ta na bd
-            if senha_inserida==controler.cpf_senha(cpf_inserido, "profissionais"):
-                id_profissional = controler.select("id_profissional","profissionais", "cpf="+cpf_inserido)[0][0]
-                return redirect(url_for('loggedProfissional', id_profissional=id_profissional))
+            user = Profissional(controler.cpf_id(cpf_inserido, 'profissionais'))
+
+            if senha_inserida==user.senha:
+                session['login'] = True
+                session['id'] = user.id
+                return redirect(url_for('loggedProfissional'))
             else:
                 error = "Senha incorreta!"
-
         else:
             error = "Usuário não cadastrado"
 
     return render_template('login.html', error=error)
 
 
-@app.route('/loggedProfissional/<id_profissional>')
-def loggedProfissional(id_profissional):
-    nome = controler.select("nome","profissionais", "id_profissional="+str(id_profissional))[0][0]
-    return render_template("loggedProfissional.html", profissional=nome)
+@app.route('/loggedCliente')
+def loggedCliente():
+    if 'login' in session:
+        user = Cliente(session['id'])
+        return render_template("loggedCliente.html", cliente=user.nome)
+    return redirect(url_for('login'))
 
 
+@app.route('/loggedProfissional')
+def loggedProfissional():
+    if 'login' in session:
+        user = Profissional(session['id'])
+        return render_template("loggedProfissional.html", profissional=user.nome)
+    return redirect(url_for('login'))
+
+
+<<<<<<< HEAD
 @app.route('/loggedCliente/<id_cliente>')
 def loggedCliente(id_cliente):
     nome = controler.select("nome","clientes", "id_cliente="+str(id_cliente))[0][0]
     return render_template("loggedCliente.html", cliente=nome)
+=======
+@app.route('/logout')
+def logout():
+    if 'login' in session:
+        session.pop('login', None)
+        session.pop('id', None)
+    return redirect(url_for('login'))
+
+>>>>>>> 4c4dfe912e63c3930eff1c8a46f9db95c0ad4dc8
 
 @app.route('/sobreNos', methods=['GET', 'POST'])
 def sobreNos():
     error = None
     if request.method =='POST':
         return redirect(url_for('cadastro'))
-
     return render_template('sobreNos.html', error=error)
 
 

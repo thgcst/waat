@@ -138,6 +138,16 @@ def verifica_idade(data_de_nascimento):
         return True
     else:
         return False
+        
+def cpf_id(cpf, tabela):
+    """Retorna a senha correspondente ao cpf"""
+    cpf = "cpf="+str(cpf)
+    if tabela == 'clientes':
+        id = select("id_cliente", tabela, cpf)
+        return id[0][0]
+    else:
+        id = select("id_profissional", tabela, cpf)
+        return id[0][0]
 
 def gera_id():
     id_gerado = random.randint(1,100)
