@@ -1,9 +1,9 @@
 from flask import Flask, render_template, redirect, url_for, request, make_response, session
 import pdfkit
 import controler
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
-
 
 
 app.secret_key = "PipocaSalgada"
@@ -302,6 +302,49 @@ def sobreNos():
         return redirect(url_for('cadastro'))
     return render_template('sobreNos.html', error=error)
 
+#CONFIGURAÇÃO DO EMAIL
+app.config['DEBUG']=True
+app.config['TESTING']=False
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT']=587
+app.config['MAIL_USE_TLS']=True
+app.config['MAIL_USE_SSL']=False
+#app.config['MAIL_DEBUG']=True
+app.config['MAIL_USERNAME']='waat.ufrj@gmail.com'
+app.config['MAIL_PASSWORD']='PipocaSalgada!'
+app.config['MAIL_DEFAULT_SENDER']=('Equipe WAAT', 'waat.ufrj@gmail.com')
+app.config['MAIL_MAX_EMAILS']=3 #NÃO MEXAM AQUI
+#app.config['MAIL_SUPRESS_SEND']=False
+app.config['MAIL_ASCII_ATTACHMENTS']=True
 
+mail = Mail(app)
+
+@app.route('/email_recuperar_senha/')
+def email_recuperacao_senha():
+    msg = Message("Recuperação de Senha", recipients=['aadottori@gmail.com', 'anderson.avvd@gmail.com','thiagodias2708@gmail.com', 'wesley.jupter@poli.ufrj.br'])
+    msg.html= render_template('RecuperarSenha.html', senha = 'Pega aqui')
+    mail.send(msg)
+    return 'Senha enviada'
+
+@app.route('/enviaEmail/')
+def enviaEmail():
+    msg = Message("Recibo", recipients=['aadottori@gmail.com', 'anderson.avvd@gmail.com','thiagodias2708@gmail.com', 'wesley.jupter@poli.ufrj.br'])
+    msg.body= "Segue em anexo o recibo referente à sua consulta."
+
+    with app.open_resource("recibo_teste.pdf") as recibo:
+        msg.attach("recibo_teste.pdf", "application/pdf", recibo.read())
+    mail.send(msg)
+    return 'Email enviado'
+
+@app.route('/bulk')
+def bulk(): #essa função é pra quando precisarmos mandar um email pra todo mundo que é usuário. CUIDADO COM ELA, PODE CRASHAR UMA CAIXA DE EMAILS PRA SEMPRE
+    usuarios = [{'name': 'Alguem', 'email': 'email@email.com'}]
+
+    with mail.connect() as conn:
+        for usuario in usuarios:
+            msg = Message('Bulk!', recipients=[usuario.email])
+            msg.body = "Você está sendo bulkado"
+            conn.send(msg)
+            
 if __name__ == '__main__':
     app.run(debug=True)
