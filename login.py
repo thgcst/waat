@@ -3,7 +3,7 @@ import pdfkit
 import controler
 
 app = Flask(__name__)
-"""
+
 #Criando super classe usuario, que possui os atributos que sao comuns ao profissional ou cliente que vai usar a plataforma
 class Usuário():
     def __init__(self, nome, cpf, senha ):
@@ -33,7 +33,7 @@ class Profissional(Usuário):
     def __init__(self, nome, cpf, senha, profissao, regProf):
         super().__init__(nome, cpf, senha)                              #Usando o fato de ser subclasse e herdando metodos e atributos da classe mãe
         self.regProf =  regProf
-        self.profissao = profissao
+        self.profissao = profissao  
         self.regProf =  regProf
         self.cep = cep
 
@@ -103,29 +103,6 @@ class Cliente(Usuário):                                              #Criando C
 
 clientes = []
 clienteAtual = 0
-"""
-class Cliente:
-
-    def __init__(self, id):
-        self.id = str(id)
-        self.nome = controler.select('nome', 'clientes', 'id_cliente='+self.id)[0][0]
-        self.cpf = controler.select('cpf', 'clientes', 'id_cliente='+self.id)[0][0]
-        self.senha = controler.select('senha', 'clientes', 'id_cliente='+self.id)[0][0]
-        self.nomeRes = controler.select('nome_responsavel', 'clientes', 'id_cliente='+self.id)[0][0]
-        self.cpfRes = controler.select('cpf_responsavel', 'clientes', 'id_cliente='+self.id)[0][0]
-        self.endereco = controler.select('endereco', 'clientes', 'id_cliente='+self.id)[0][0]
-
-    def set_nome(self, nome):
-        controler.update({'nome':nome}, 'clientes', 'id_cliente='+self.id)
-        self.nome = controler.select('nome', 'clientes', 'id_cliente='+self.id)[0][0]
-        
-    def set_cpf(self, cpf):
-        controler.update({'cpf':cpf}, 'clientes', 'id_cliente='+self.id)
-        self.nome = controler.select('cpf', 'clientes', 'id_cliente='+self.id)[0][0]
-        
-    def set_senha(self, senha):
-        controler.update({'senha':senha}, 'clientes', 'id_cliente='+self.id)
-        self.nome = controler.select('senha', 'clientes', 'id_cliente='+self.id)[0][0]
 
 @app.route('/<nomeProfissional>/<regProf>/<profissao>/<nome>/<cpf>/<precoConsulta>/<email>/<enderecoComercial>/<telefone>/<cep>')
 def pdf_template1(nomeProfissional, regProf, profissao, nome, cpf, precoConsulta, email, enderecoComercial, telefone, cep):
@@ -148,6 +125,7 @@ def pdf_template2(nomeProfissional, regProf, profissao, nome, cpfRes, nomeRes, p
     response.headers['Content-Disposition'] =   'inline; filename = recibo.pdf'
 
     return response
+
 
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
@@ -251,8 +229,8 @@ def loggedProfissional(id_profissional):
 
 @app.route('/loggedCliente/<id_cliente>')
 def loggedCliente(id_cliente):
-    user = Cliente(id_cliente)
-    return render_template("loggedCliente.html", cliente=user.nome)
+    nome = controler.select("nome","clientes", "id_cliente="+str(id_cliente))[0][0]
+    return render_template("loggedCliente.html", cliente=nome)
 
 @app.route('/sobreNos', methods=['GET', 'POST'])
 def sobreNos():
