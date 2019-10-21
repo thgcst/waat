@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 app.secret_key = "PipocaSalgada"
 
-
+"""
 #Criando super classe usuario, que possui os atributos que sao comuns ao profissional ou cliente que vai usar a plataforma
 class Usuário():
     def __init__(self, nome, cpf, senha ):
@@ -108,6 +108,7 @@ class Cliente(Usuário):                                              #Criando C
 
 clientes = []
 clienteAtual = 0
+"""
 
 class Cliente:
 
