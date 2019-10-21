@@ -3,13 +3,12 @@ import pdfkit
 import controler
 
 app = Flask(__name__)
-<<<<<<< HEAD
 
-=======
+
+
 app.secret_key = "PipocaSalgada"
 
-"""
->>>>>>> 4c4dfe912e63c3930eff1c8a46f9db95c0ad4dc8
+
 #Criando super classe usuario, que possui os atributos que sao comuns ao profissional ou cliente que vai usar a plataforma
 class Usuário():
     def __init__(self, nome, cpf, senha ):
@@ -39,7 +38,7 @@ class Profissional(Usuário):
     def __init__(self, nome, cpf, senha, profissao, regProf):
         super().__init__(nome, cpf, senha)                              #Usando o fato de ser subclasse e herdando metodos e atributos da classe mãe
         self.regProf =  regProf
-        self.profissao = profissao  
+        self.profissao = profissao
         self.regProf =  regProf
         self.cep = cep
 
@@ -109,9 +108,7 @@ class Cliente(Usuário):                                              #Criando C
 
 clientes = []
 clienteAtual = 0
-<<<<<<< HEAD
-=======
-"""
+
 class Cliente:
 
     def __init__(self, id):
@@ -126,7 +123,7 @@ class Cliente:
     def set_nome(self, nome):
         controler.update({'nome':nome}, 'clientes', 'id_cliente='+self.id)
         self.nome = controler.select('nome', 'clientes', 'id_cliente='+self.id)[0][0]
-              
+
     def set_senha(self, senha):
         controler.update({'senha':senha}, 'clientes', 'id_cliente='+self.id)
         self.nome = controler.select('senha', 'clientes', 'id_cliente='+self.id)[0][0]
@@ -143,7 +140,7 @@ class Profissional:
     def set_nome(self, nome):
         controler.update({'nome':nome}, 'profissionais', 'id_profissional='+self.id)
         self.nome = controler.select('nome', 'profissionais', 'id_profissional='+self.id)[0][0]
-        
+
     def set_senha(self, senha):
         controler.update({'senha':senha}, 'profissionais', 'id_profissional='+self.id)
         self.nome = controler.select('senha', 'profissionais', 'id_profissional='+self.id)[0][0]
@@ -289,12 +286,12 @@ def loggedProfissional():
     return redirect(url_for('login'))
 
 
-<<<<<<< HEAD
+
 @app.route('/loggedCliente/<id_cliente>')
 def loggedCliente(id_cliente):
     nome = controler.select("nome","clientes", "id_cliente="+str(id_cliente))[0][0]
     return render_template("loggedCliente.html", cliente=nome)
-=======
+
 @app.route('/logout')
 def logout():
     if 'login' in session:
@@ -302,7 +299,7 @@ def logout():
         session.pop('id', None)
     return redirect(url_for('login'))
 
->>>>>>> 4c4dfe912e63c3930eff1c8a46f9db95c0ad4dc8
+
 
 @app.route('/sobreNos', methods=['GET', 'POST'])
 def sobreNos():
