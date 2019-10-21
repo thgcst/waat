@@ -127,7 +127,7 @@ class Cliente:
     def set_senha(self, senha):
         controler.update({'senha':senha}, 'clientes', 'id_cliente='+self.id)
         self.nome = controler.select('senha', 'clientes', 'id_cliente='+self.id)[0][0]
->>>>>>> 4c4dfe912e63c3930eff1c8a46f9db95c0ad4dc8
+
 
 class Profissional:
 
