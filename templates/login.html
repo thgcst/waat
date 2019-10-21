@@ -41,7 +41,14 @@
                             style="font-size: 18px;">
                             Crie sua conta
                         </a>
+
                         <div style="height: 30px;"></div>
+
+                        <a   <button class="sair" id="btnSenha"style="font-size: 15px">Esqueci minha senha</button>
+                        </a>
+
+                        <div style="height: 10px;"></div>
+
                         <a class="txt2" onclick="window.location.href='{{ url_for( 'sobreNos')}}';"
                             style="font-size: 14px">
                             Sobre nós
@@ -49,6 +56,20 @@
                     </div>
             </form>
         </div>
+    </div>
+
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <h2>Esqueceu a senha né seu arrombado?</h2>
+            <div style="margin-top: 20px;">
+                <button class="escolha" style="background: rgb(221, 57, 57)" id="close">Não</button>
+                <button class="escolha" style="background: #2ecc71"
+                    onclick="window.location.href='{{ url_for( 'login')}}'">Sim</button>
+            </div>
+        </div>
+
     </div>
 
     <!-- <script>
@@ -69,6 +90,50 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/login.js') }}"></script>
 
 </body>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    var body = document.body;
+    var div = document.getElementsByClassName("container-login100")[0];
+    console.log(div);
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("btnSenha");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementById("close");
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function () {
+        modal.style.animationName = "fadeIn";
+        modal.style.display = "flex";
+        div.style.animationName = "blur";
+        div.style.filter = "blur(10px)";
+
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.animationName = "fadeOut";
+        modal.style.display = "none";
+        div.style.animationName = "unblur";
+        div.style.filter = "blur(0px)";
+
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        event.preventDefault();
+        if (event.target == modal) {
+            modal.style.animationName = "fadeOut";
+            modal.style.display = "none";
+            div.style.animationName = "unblur";
+            div.style.filter = "blur(0px)";
+        }
+    }
+</script>
+
 
 
 
