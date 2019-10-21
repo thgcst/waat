@@ -287,19 +287,12 @@ def loggedProfissional():
     return redirect(url_for('login'))
 
 
-
-@app.route('/loggedCliente/<id_cliente>')
-def loggedCliente(id_cliente):
-    nome = controler.select("nome","clientes", "id_cliente="+str(id_cliente))[0][0]
-    return render_template("loggedCliente.html", cliente=nome)
-
 @app.route('/logout')
 def logout():
     if 'login' in session:
         session.pop('login', None)
         session.pop('id', None)
     return redirect(url_for('login'))
-
 
 
 @app.route('/sobreNos', methods=['GET', 'POST'])
