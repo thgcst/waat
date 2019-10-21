@@ -90,24 +90,27 @@ def cadastro():
             cidade = request.form["cidade"]
             estado = request.form["estado"]
 
-            if nome=='' or data_de_nascimento=='' or cpf=='' or telefone=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
-                error = 'Preencha todos os campos!'
-            elif controler.verifica_cpf(cpf, 'clientes'):
-                error = 'Usuário Cadastrado!'
-            else:
-                if controler.verifica_idade(data_de_nascimento)==False:
-                    nome_responsavel = '-'
-                    cpf_responsavel = '-'
-                    controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
-                    return redirect(url_for('login'))
+            try:
+                if nome=='' or data_de_nascimento=='' or cpf=='' or telefone=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
+                    error = 'Preencha todos os campos!'
+                elif controler.verifica_cpf(cpf, 'clientes'):
+                    error = 'Usuário Cadastrado!'
                 else:
-                    nome_responsavel = request.form["nomeRes"]
-                    cpf_responsavel = request.form["cpfRes"]
-                    if nome_responsavel or cpf_responsavel =='':
-                        error = 'Preencha todos os campos!'
-                    else:
+                    if controler.verifica_idade(data_de_nascimento)==False:
+                        nome_responsavel = '-'
+                        cpf_responsavel = '-'
                         controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
                         return redirect(url_for('login'))
+                    else:
+                        nome_responsavel = request.form["nomeRes"]
+                        cpf_responsavel = request.form["cpfRes"]
+                        if nome_responsavel or cpf_responsavel =='':
+                            error = 'Preencha todos os campos!'
+                        else:
+                            controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
+                            return redirect(url_for('login'))
+            except:
+                error = 'Verifique se está tudo certinho!'
 
         if request.form["radio"] == '1': #profissional
             nome = request.form["nomePro"]
