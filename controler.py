@@ -124,11 +124,18 @@ def verifica_cpf(cpf, tabela):
     cpf_no_db = bool(len(select("cpf", tabela, cpf)))
     return cpf_no_db
 
-def verifica_email(email, tabela):
-    """retorna True se o email já está cadastrado e False c.c."""
-    email = "email="+str(email)
-    email_no_db = bool(len(select("email", tabela, email)))
-    return email_no_db
+#def verifica_email(email, tabela):
+#    user = separa_email(email)[0]
+#    domain = separa_email(email)[1]
+#  essa busca da próxima linha no sql devolve 0 se não estiver lá e 1 se já estiver cadastrado. como a gente faz
+#  essa linha funcionar aqui? 
+#    sql = "select count("user_mail") from"+ tabela +" where user_mail = "user" and domain_mail = "domain" 
+#
+
+def separa_email(email):
+    user_mail = email.split('@')[0]
+    domain_mail = email.split('@')[1]
+    return user_mail, domain_mail
     
 def cpf_senha(cpf, tabela):
     """Retorna a senha correspondente ao cpf"""
@@ -166,16 +173,20 @@ def gera_id():
 
 def cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel):
     id_cliente = gera_id()
-    sql = "INSERT INTO clientes (id_cliente, nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-    data = (id_cliente, nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
+    user_mail = separa_email(email)[0]
+    domain_mail = separa_email(email)[1]
+    sql = "INSERT INTO clientes (id_cliente, nome, data_de_nascimento, cpf, telefone, email, user_mail, domain_mail, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    data = (id_cliente, nome, data_de_nascimento, cpf, telefone, email, user_mail, domain_mail, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
     cursor.execute(sql, data)
     con.commit()
 
 
 def cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado):
     id_profissional = gera_id()
-    sql = "INSERT INTO profissionais (id_profissional, nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-    data = (id_profissional, nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado)
+    user_mail = separa_email(email)[0]
+    domain_mail = separa_email(email)[1]
+    sql = "INSERT INTO profissionais (id_profissional, nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, user_mail, domain_mail, senha, cep, endereco, numero, complemento, cidade, estado) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    data = (id_profissional, nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, user_mail, domain_mail, senha, cep, endereco, numero, complemento, cidade, estado)
     cursor.execute(sql, data)
     con.commit()
 
