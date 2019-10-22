@@ -1,21 +1,31 @@
 from flask import Flask, render_template, redirect, url_for, request, make_response, session
 import pdfkit
-import controler
+import controler, teste 
 from flask_mail import Mail, Message
 
 app = Flask(__name__)
 
 app.secret_key = "PipocaSalgada"
+
 class Cliente:
 
     def __init__(self, id):
         self.id = str(id)
-        self.nome = controler.select('nome', 'clientes', 'id_cliente='+self.id)[0][0]
-        self.cpf = controler.select('cpf', 'clientes', 'id_cliente='+self.id)[0][0]
-        self.senha = controler.select('senha', 'clientes', 'id_cliente='+self.id)[0][0]
-        self.nomeRes = controler.select('nome_responsavel', 'clientes', 'id_cliente='+self.id)[0][0]
-        self.cpfRes = controler.select('cpf_responsavel', 'clientes', 'id_cliente='+self.id)[0][0]
-        self.endereco = controler.select('endereco', 'clientes', 'id_cliente='+self.id)[0][0]
+        dados = controler.select_CursorDict('*', 'clientes', 'id_cliente='+self.id)[0]
+        self.nome = dados['nome']
+        self.data_de_nascimento = dados['data_de_nascimento']
+        self.cpf = dados['cpf']
+        self.telefone = dados['telefone']
+        self.email = dados['email']
+        self.senha = dados['senha']
+        self.cep = dados['cep']
+        self.endereco = dados['endereco']
+        self.numero = dados['numero']
+        self.complemento = dados['complemento']
+        self.cidade = dados['cidade']
+        self.estado = dados['estado']
+        self.nome_responsavel = dados['nome_responsavel']
+        self.cpf_responsavel = dados['cpf_responsavel']
 
     def set_nome(self, nome):
         controler.update({'nome':nome}, 'clientes', 'id_cliente='+self.id)
@@ -29,9 +39,21 @@ class Cliente:
 class Profissional:
     def __init__(self, id):
         self.id = str(id)
-        self.nome = controler.select('nome', 'profissionais', 'id_profissional='+self.id)[0][0]
-        self.cpf = controler.select('cpf', 'profissionais', 'id_profissional='+self.id)[0][0]
-        self.senha = controler.select('senha', 'profissionais', 'id_profissional='+self.id)[0][0]
+        dados = controler.select_CursorDict('*', 'profissionais', 'id_profissional='+self.id)[0]
+        self.nome = dados['nome']
+        self.profissao = dados['profissao']
+        self.registro_profissional = dados['registro_profissional']
+        self.cpf = dados['cpf']
+        self.telefone = dados['telefone']
+        self.data_de_nascimento = dados['data_de_nascimento']
+        self.email = dados['email']
+        self.senha = dados['senha']
+        self.cep = dados['cep']
+        self.endereco = dados['endereco']
+        self.numero = dados['numero']
+        self.complemento = dados['complemento']
+        self.cidade = dados['cidade']
+        self.estado = dados['estado']
 
     def set_nome(self, nome):
         controler.update({'nome':nome}, 'profissionais', 'id_profissional='+self.id)
@@ -71,7 +93,7 @@ def cadastro():
         if request.form["radio"] == '0':
             nome = request.form["nome"]
             data_de_nascimento = request.form["nascimento"]
-            cpf = controler.limpa_cpf(request.form["cpf"])
+            cpf = request.form["cpf"]
             telefone = controler.limpa_telefone(request.form["telefone"])
             email = request.form["email"]
             senha = request.form["senha"]
@@ -82,14 +104,16 @@ def cadastro():
             cidade = request.form["cidade"]
             estado = request.form["estado"]
 
-            try:
-                if nome=='' or data_de_nascimento=='' or cpf=='' or telefone=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
-                    error = 'Preencha todos os campos!'
-                elif controler.verifica_cpf(cpf, 'clientes'):
+            if nome=='' or data_de_nascimento=='' or cpf=='' or telefone=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
+                error = 'Preencha todos os campos!'
+            elif cpf == "CPF Inválido":
+                error = 'Verifique seu CPF!'
+            elif endereco =="CEP não encontrado":
+                error = 'Verifique seu CEP!'
+            else:
+                cpf = controler.limpa_cpf(request.form["cpf"])
+                if controler.verifica_cpf(cpf, 'clientes'):
                     error = 'Este CPF já está cadastrado!'
-                elif controler.verifica_email(email, 'clientes'):
-                    error = 'Este email já está cadastrado'
-
                 else:
                     if controler.verifica_idade(data_de_nascimento)==False:
                         nome_responsavel = '-'
@@ -104,12 +128,10 @@ def cadastro():
                         else:
                             controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
                             return redirect(url_for('login'))
-            except:
-                error = 'Verifique se está tudo certinho!'
 
         if request.form["radio"] == '1': #profissional
             nome = request.form["nomePro"]
-            cpf = controler.limpa_cpf(request.form["cpfPro"])
+            cpf = request.form["cpfPro"]
             profissao = request.form["profissaoPro"]
             registro_profissional = request.form["regProf"]
             telefone = controler.limpa_telefone(request.form["telefonePro"])
@@ -123,19 +145,19 @@ def cadastro():
             cidade = request.form["cidadePro"]
             estado = request.form["estadoPro"]
 
-            try:
-                if nome=='' or cpf=='' or profissao=='' or registro_profissional=='' or telefone=='' or data_de_nascimento=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
-                    error = 'Preencha todos os campos!'
-                elif controler.verifica_cpf(cpf, 'profissionais'):
+            if nome=='' or cpf=='' or profissao=='' or registro_profissional=='' or telefone=='' or data_de_nascimento=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
+                error = 'Preencha todos os campos!'
+            elif cpf == "CPF Inválido":
+                error = 'Verifique seu CPF!'
+            elif endereco =="CEP não encontrado":
+                error = 'Verifique seu CEP!'
+            else:
+                cpf = controler.limpa_cpf(request.form["cpfPro"])
+                if controler.verifica_cpf(cpf, 'profissionais'):
                     error = 'Este CPF já está cadastrado!'
-                elif controler.verifica_email(email, 'profissionais'):
-                    error = 'Este email já está cadastrado'
                 else:
                     controler.cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado)
                     return redirect(url_for('login'))
-            except:
-                error = 'Verifique se está tudo certinho!'
-
     return render_template('create.html', error=error)
 
 

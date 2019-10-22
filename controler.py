@@ -178,3 +178,13 @@ def cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone,
     data = (id_profissional, nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado)
     cursor.execute(sql, data)
     con.commit()
+
+def select_CursorDict(fields, tables, where = None):
+    cursor = con.cursor(dictionary = True) 
+
+    query = "SELECT " + fields + " FROM " +tables
+
+    if (where):
+        query += " WHERE " + where
+    cursor.execute(query)
+    return cursor.fetchall()
