@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/sobreNos.css') }}">
 
 
@@ -15,12 +15,16 @@
 </head>
 
 <body>
+    <i class="fa icon" onclick="window.location.href='{{ url_for( 'login')}}'">&#xf0a8;</i>
     <div class="container-login100">
         <div class="wrap-login100">
             <h1 style="text-align: center">Olá!</h1>
             <p class="texto">&nbsp;O WAAT é uma plataforma idealizada e desenvolvida por alunos da UFRJ.</p>
-            <p style="text-align: justify; font-size: 20px; margin-top: 10px;">&nbsp;Nosso intuito é facilitar a relação entre profissionais liberais e seus clientes. Por aqui você pode ter acesso a recibos, relatórios, laudos e outros documentos vinculados a serviços que você prestou ou recebeu.</p>
-            <p style="text-align: justify; font-size: 20px; margin-top: 20px;">&nbsp;Agora é só se <a class="link" onclick="window.location.href='{{ url_for( 'cadastro')}}';">cadastar</a> e começar a usar!</p>
+            <p style="text-align: justify; font-size: 20px; margin-top: 10px;">&nbsp;Nosso intuito é facilitar a relação
+                entre profissionais liberais e seus clientes. Por aqui você pode ter acesso a recibos, relatórios,
+                laudos e outros documentos vinculados a serviços que você prestou ou recebeu.</p>
+            <p style="text-align: justify; font-size: 20px; margin-top: 20px;">&nbsp;Agora é só se <a class="link"
+                    onclick="window.location.href='{{ url_for( 'cadastro')}}';">cadastar</a> e começar a usar!</p>
 
         </div>
     </div>

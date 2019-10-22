@@ -205,13 +205,25 @@ body {
   width: 180px;
 }
 
-.fas{
+.fa-times-circle{
   padding-top: 5px;
   font-size: 30px;
   color:  #ccc;
 }
 
-.fas:hover{
+.fa-times-circle:hover{
   color: rgb(221, 57, 57);
+  cursor: pointer;
+}
+
+.icon {
+  position: absolute;
+  font-size: 40px;
+  margin: 15px;
+  color: white;
+}
+
+.icon:hover{
+  color: rgb(218, 218, 218);
   cursor: pointer;
 }

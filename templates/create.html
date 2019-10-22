@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script src="https://kit.fontawesome.com/yourcode.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/create.css') }}">
     <!-- <link rel="stylesheet" type="text/css" href="../static/styles/create.css"> -->
 
@@ -15,6 +15,7 @@
 </head>
 
 <body>
+    <i class="fa icon" onclick="window.location.href='{{ url_for( 'login')}}'">&#xf0a8;</i>
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
@@ -109,8 +110,8 @@
                             <div style="padding: 0 20px 0 30px">
                                 <!--nome-->
                                 <div class="inputBox">
-                                    <input type="text" name="nomePro" placeholder="Nome" value="{{ request.form.nomePro }}"
-                                        class="input" />
+                                    <input type="text" name="nomePro" placeholder="Nome"
+                                        value="{{ request.form.nomePro }}" class="input" />
                                 </div>
                                 <!--cpf-->
                                 <div class="inputBox">
@@ -159,15 +160,19 @@
                                 <div class="inputBox"> <input type="tel" name="numeroPro" placeholder="Número"
                                         value="{{ request.form.numeroPro }}" class="input" /> </div>
                                 <!--complemento-->
-                                <div class="inputBox"> <input type="text" name="complementoPro" placeholder="Complemento"
-                                        value="{{ request.form.complementoPro }}" class="input" /> </div>
+                                <div class="inputBox"> <input type="text" name="complementoPro"
+                                        placeholder="Complemento" value="{{ request.form.complementoPro }}"
+                                        class="input" /> </div>
                                 <!--cidade-->
-                                <div class="inputBox"> <input type="text" name="cidadePro" id="cidadePro" placeholder="Cidade"
-                                        value="{{ request.form.cidadePro }}" class="input" /> </div>
+                                <div class="inputBox"> <input type="text" name="cidadePro" id="cidadePro"
+                                        placeholder="Cidade" value="{{ request.form.cidadePro }}" class="input" />
+                                </div>
                                 <!--estado-->
-                                <div class="inputBox"> <input type="text" name="estadoPro" id="estadoPro" placeholder="Estado"
-                                        value="{{ request.form.estadoPro }}" class="input" /> </div>
-                                <div class="dropzoneB4" id="dropzone">Arraste uma foto de sua assinatura<br> para gerarmos recibos automaticamente</div>
+                                <div class="inputBox"> <input type="text" name="estadoPro" id="estadoPro"
+                                        placeholder="Estado" value="{{ request.form.estadoPro }}" class="input" />
+                                </div>
+                                <div class="dropzoneB4" id="dropzone">Arraste uma foto de sua assinatura<br> para
+                                    gerarmos recibos automaticamente</div>
                             </div>
                         </div>
                     </div>
@@ -207,7 +212,7 @@
             //     list.removeChild(list.firstChild);
             // }
             // list.innerHTML = '<div style="padding: 0 20px 0 30px"> <div class="inputBox"> <input type="text" name="nome" placeholder="Nome" value="{{ request.form.nome }}" class="input" /> </div> <div class="inputBox"> <input type="tel" name="nascimento" placeholder="Data de nascimento" value="{{request.form.nascimento }}" class="input" oninput="this.value = DDMMYYYY(this.value, event)" maxlength="10" id="nascimento" onblur="addCampo()" /> </div> <div class="inputBox"> <input type="tel" name="cpf" id="cpf" placeholder="CPF" value="{{ request.form.cpf }}" class="input" maxlength="14" onblur="validarCPF(`cpf`)" oninput="this.value = CPF(`cpf`, this.value, event)" /> </div> <div class="inputBox" id="telefone"> <input type="tel" name="telefone" placeholder="Telefone" value="{{ request.form.telefone }}" class="input" maxlength="14" oninput="this.value = TEL(this.value, event)" /> </div> <div class="inputBox"> <input type="email" name="email" placeholder="E-mail" value="{{ request.form.email }}" class="input" /> </div> <div class="inputBox"> <input type="password" name="senha" placeholder="Senha" value="{{ request.form.senha }}" class="input" /> </div> </div> <div style="padding: 0 30px 0 0" id="divMeio"> <div class="inputBox"><input type="tel" name="cep" id="cep" placeholder="CEP" onblur="APIrua()" value="{{request.form.cep }}" class="input" maxlength="9" oninput="this.value = CEP(this.value, event)" /> </div> <div class="inputBox"> <input type="text" name="endereco" id="endereco" placeholder="Endereço" value="{{ request.form.endereco }}" class="input" /> </div> <div class="inputBox"> <input type="tel" name="numero" placeholder="Número" value="{{ request.form.numero }}" class="input" /> </div> <div class="inputBox"> <input type="text" name="complemento" placeholder="Complemento" value="{{ request.form.complemento }}" class="input" /> </div> <div class="inputBox"> <input type="text" name="cidade" id="cidade" placeholder="Cidade" value="{{ request.form.cidade }}" class="input" /> </div> <div class="inputBox"> <input type="text" name="estado" id="estado" placeholder="Estado" value="{{ request.form.estado }}" class="input" /> </div> </div>';
-            
+
             document.getElementById("divCliente").removeAttribute("hidden");
             document.getElementById("divProfissional").setAttribute("hidden", "true");
         }
