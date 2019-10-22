@@ -164,7 +164,7 @@ def cadastro():
 @app.route('/', methods=['GET', 'POST'])
 def login():
     error = None
-    if request.method == 'POST' and request.form["cpf"] != "" and request.form["senha"] != "":
+    if request.method == 'POST':
         cpf_inserido = controler.limpa_cpf(request.form["cpf"])
         senha_inserida = request.form["senha"]
 
@@ -196,7 +196,6 @@ def login():
                 error = "Senha incorreta!"
         else:
             error = "Usuário não cadastrado"
-
     return render_template('login.html', error=error)
 
 
