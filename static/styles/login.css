@@ -10,7 +10,7 @@ html {
   font-family: sans-serif;
 }
 
-body{
+body {
   background: #69acd8;
   background: -webkit-linear-gradient(-135deg, #2179b4, #69acd8);
   background: -o-linear-gradient(-135deg, #2179b4, #69acd8);
@@ -44,7 +44,7 @@ body{
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
-
+  position: absolute;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -53,6 +53,11 @@ body{
   flex-wrap: wrap;
   justify-content: center;
   width: 400px;
+
+  -webkit-animation-name: none; /* Fade in the background */
+  -webkit-animation-duration: 0.5s;
+  animation-name: none;
+  animation-duration: 0.5s;
 }
 
 .inputBox {
@@ -96,7 +101,7 @@ body{
   font-size: 20px;
   padding: 0px 15px 0px 15px;
   color: #fff;
-
+  cursor: pointer;
   transition: all 0.2s;
   -webkit-transition: all 0.2s;
   -o-transition: all 0.2s;
@@ -123,8 +128,6 @@ body{
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
-  cursor: pointer;
-  transform: translate(0,200px)
 }
 
 /* .txt2:focus {
@@ -134,122 +137,73 @@ body{
 .txt2:hover {
   color: #57b846;
   cursor: pointer;
-
 }
 
-.botoes {
-  position: absolute;
-}
-
-.greetings{
-  color: #fff;
-  font-size: 35px;
-  transform: translate(0,-200px)
-}
-
-.sair{
-  font-size: 14px;
-  color: #666666;
-  transition: all 0.4s;
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-  cursor: pointer;
-  transform: translate(0,200px)
-}
-
-.sair:hover {
-
-  color: #57b846;
-  cursor: pointer;
-}
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  -webkit-animation-name: fadeIn; /* Fade in the background */
-  -webkit-animation-duration: 0.5s;
-  animation-name: fadeIn;
-  animation-duration: 0.5s;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Modal Content */
-.modal-content {
-  position: fixed;
-  background-color: #fff;
-  width: 400px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background: #fff;
   border-radius: 10px;
-  padding: 30px;
+  overflow: hidden;
+  position: absolute;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  width: 400px;
+  padding: 20px;
 
+  bottom: 200px;
+  opacity: 0;
+
+  -webkit-animation-name: none; /* Fade in the background */
   -webkit-animation-duration: 0.5s;
-  animation-duration: 0.5s
+  animation-name: none;
+  animation-duration: 0.5s;
 }
 
-.escolha {
-  border-radius: 20px;
-  border-width: 0;
-  font-size: 20px;
-  padding: 10px 20px 10px 20px;
-  margin: 15px;
-  color: #fff;
-  transition-duration: 0.2s;
-  -webkit-transition-duration: 0.2s;
-  cursor: pointer;
-}
-
-.escolha:hover{
-  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.199);
-}
-
-/* Add Animation */
-
-@keyframes fadeIn {
-  from {opacity: 0}
-  to {opacity: 1}
-}
-
-@keyframes fadeOut {
-  from {opacity: 1}
-  to {opacity: 0}
-}
-
-@keyframes blur {
+@keyframes modal {
   from {
-    -webkit-filter: blur(0px);
-    -moz-filter: blur(0px);
-    -o-filter: blur(0px);
-    -ms-filter: blur(0px);
+    opacity: 0;
+    bottom: 200px;
   }
   to {
-    -webkit-filter: blur(10px);
-    -moz-filter: blur(10px);
-    -o-filter: blur(10px);
-    -ms-filter: blur(10px);
+    opacity: 1;
+    bottom: 280px;
+    width: 400px;
   }
 }
 
-@keyframes unblur {
+@keyframes undoModal {
   from {
-    -webkit-filter: blur(10px);
-    -moz-filter: blur(10px);
-    -o-filter: blur(10px);
-    -ms-filter: blur(10px);
+    opacity: 1;
+    bottom: 280px;
   }
   to {
-    -webkit-filter: blur(0px);
-    -moz-filter: blur(0px);
-    -o-filter: blur(0px);
-    -ms-filter: blur(0px);
+    opacity: 0;
+    bottom: 200px;
+  }
+}
+
+@keyframes wrap {
+  from {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  to {
+    transform: translate(0, -200px);
+    opacity: 0.75;
+  }
+}
+
+@keyframes undoWrap {
+  from {
+    transform: translate(0, -200px);
+    opacity: 0.75;
+  }
+  to {
+    transform: translate(0, 0);
+    opacity: 1;
   }
 }

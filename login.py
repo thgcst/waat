@@ -142,7 +142,7 @@ def cadastro():
 @app.route('/', methods=['GET', 'POST'])
 def login():
     error = None
-    if request.method =='POST':
+    if request.method == 'POST' and request.form["cpf"] != "" and request.form["senha"] != "":
         cpf_inserido = controler.limpa_cpf(request.form["cpf"])
         senha_inserida = request.form["senha"]
 
