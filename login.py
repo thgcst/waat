@@ -5,14 +5,7 @@ from flask_mail import Mail, Message
 
 app = Flask(__name__)
 
-
 app.secret_key = "PipocaSalgada"
-
-
-#Criando super classe usuario, que possui os atributos que sao comuns ao profissional ou cliente que vai usar a plataforma
-
-
-
 class Cliente:
 
     def __init__(self, id):
@@ -34,7 +27,6 @@ class Cliente:
 
 
 class Profissional:
-
     def __init__(self, id):
         self.id = str(id)
         self.nome = controler.select('nome', 'profissionais', 'id_profissional='+self.id)[0][0]
@@ -94,7 +86,10 @@ def cadastro():
                 if nome=='' or data_de_nascimento=='' or cpf=='' or telefone=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
                     error = 'Preencha todos os campos!'
                 elif controler.verifica_cpf(cpf, 'clientes'):
-                    error = 'Usuário Cadastrado!'
+                    error = 'Este CPF já está cadastrado!'
+                elif controler.verifica_email(email, 'clientes'):
+                    error = 'Este email já está cadastrado'
+
                 else:
                     if controler.verifica_idade(data_de_nascimento)==False:
                         nome_responsavel = '-'
@@ -128,13 +123,18 @@ def cadastro():
             cidade = request.form["cidadePro"]
             estado = request.form["estadoPro"]
 
-            if nome=='' or cpf=='' or profissao=='' or registro_profissional=='' or telefone=='' or data_de_nascimento=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
-                error = 'Preencha todos os campos!'
-            elif controler.verifica_cpf(cpf, 'profissionais'):
-                error = 'Usuário Cadastrado!'
-            else:
-                controler.cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado)
-                return redirect(url_for('login'))
+            try:
+                if nome=='' or cpf=='' or profissao=='' or registro_profissional=='' or telefone=='' or data_de_nascimento=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
+                    error = 'Preencha todos os campos!'
+                elif controler.verifica_cpf(cpf, 'profissionais'):
+                    error = 'Este CPF já está cadastrado!'
+                elif controler.verifica_email(email, 'profissionais'):
+                    error = 'Este email já está cadastrado'
+                else:
+                    controler.cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado)
+                    return redirect(url_for('login'))
+            except:
+                error = 'Verifique se está tudo certinho!'
 
     return render_template('create.html', error=error)
 
@@ -242,16 +242,6 @@ def enviaEmail():
         msg.attach("recibo_teste.pdf", "application/pdf", recibo.read())
     mail.send(msg)
     return 'Email enviado'
-
-@app.route('/bulk')
-def bulk(): #essa função é pra quando precisarmos mandar um email pra todo mundo que é usuário. CUIDADO COM ELA, PODE CRASHAR UMA CAIXA DE EMAILS PRA SEMPRE
-    usuarios = [{'name': 'Alguem', 'email': 'email@email.com'}]
-
-    with mail.connect() as conn:
-        for usuario in usuarios:
-            msg = Message('Bulk!', recipients=[usuario.email])
-            msg.body = "Você está sendo bulkado"
-            conn.send(msg)
             
 if __name__ == '__main__':
     app.run(debug=True)

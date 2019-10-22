@@ -167,7 +167,7 @@
                                 <!--estado-->
                                 <div class="inputBox"> <input type="text" name="estadoPro" id="estadoPro" placeholder="Estado"
                                         value="{{ request.form.estadoPro }}" class="input" /> </div>
-                                <div class="dropzoneB4" id="dropzone">Arraste uma foto de sua assinatura<br> para gerar boletos automáticos</div>
+                                <div class="dropzoneB4" id="dropzone">Arraste uma foto de sua assinatura<br> para gerarmos recibos automaticamente</div>
                             </div>
                         </div>
                     </div>
@@ -229,7 +229,7 @@
 
         function CPF(id, value, event) {
             document.getElementById(id).className = 'input'
-            if (value == "CPF Inválid") {
+            if (value == "CPF Inválido") {
                 if (!event.data) {
                     return '';
                 }
