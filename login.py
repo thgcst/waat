@@ -110,6 +110,8 @@ def cadastro():
                 error = 'Verifique seu CPF!'
             elif endereco =="CEP não encontrado":
                 error = 'Verifique seu CEP!'
+            elif controler.verifica_email(email,'clientes'):
+                error = 'Ops! Email já cadastrado.'
             else:
                 cpf = controler.limpa_cpf(request.form["cpf"])
                 if controler.verifica_cpf(cpf, 'clientes'):
@@ -151,6 +153,8 @@ def cadastro():
                 error = 'Verifique seu CPF!'
             elif endereco =="CEP não encontrado":
                 error = 'Verifique seu CEP!'
+            elif controler.verifica_email(email,'profissionais'):
+                error = 'Ops! Email já cadastrado.'
             else:
                 cpf = controler.limpa_cpf(request.form["cpfPro"])
                 if controler.verifica_cpf(cpf, 'profissionais'):
@@ -164,7 +168,7 @@ def cadastro():
 @app.route('/', methods=['GET', 'POST'])
 def login():
     error = None
-    if request.method == 'POST':
+    if request.method == 'POST' and request.form['senha']!='' and request.form['cpf']!='':
         cpf_inserido = controler.limpa_cpf(request.form["cpf"])
         senha_inserida = request.form["senha"]
 

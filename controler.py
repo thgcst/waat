@@ -199,3 +199,12 @@ def select_CursorDict(fields, tables, where = None):
         query += " WHERE " + where
     cursor.execute(query)
     return cursor.fetchall()
+
+def verifica_email(email, table):
+    lista_DomainUser = str.split(email, '@')
+    user_mail = "'"+ lista_DomainUser[0] +"'"
+    domain_mail = "'" +lista_DomainUser[1]+"'"
+    query = "select count(user_mail) from {} where domain_mail = {} and user_mail = {} ;".format(table, domain_mail, user_mail)
+    cursor.execute(query)
+    return bool(cursor.fetchall()[0][0])
+
