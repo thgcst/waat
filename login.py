@@ -270,7 +270,7 @@ def enviaEmail():
     return 'Email enviado'
 
 @app.route('/Recibos', methods=['GET', 'POST'])
-def Recibos():
+def RecibosProfissional():
     return render_template('RecibosProfissional.html')
 
 if __name__ == '__main__':
