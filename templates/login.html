@@ -87,7 +87,7 @@
                     modal.style.animationName = "undoModal";
                     modal.style.opacity = "0";
                     modal.style.bottom = "200px";
-                    setTimeout(function () { container.removeChild(container.lastChild); }, 500);
+                    setTimeout(function () { container.removeChild(document.getElementById("modal")); }, 500);
                     wrap.style.animationName = "undoWrap";
                     wrap.style.transform = "translate(0,0)";
                     wrap.style.opacity = "1";
