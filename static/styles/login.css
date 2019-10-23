@@ -60,6 +60,18 @@ body {
   animation-duration: 0.5s;
 }
 
+.welcome {
+  cursor: default;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  text-align: center;
+  padding-top: 30px;
+}
+
 .inputBox {
   padding: 10px;
 }
