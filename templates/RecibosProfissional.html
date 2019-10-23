@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/RecibosProfissional.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="../static/styles/login.css"> -->
+
+
+    <title>Recibos</title>
+</head>
+
+<body>
+    <div class="container-login100" id="container">
+        <div class="wrap-login100" id="wrap">
+            <form method="POST" id="form" style="text-align: center">
+
+
+                <h1  class="inputBox" style="padding-bottom: 15px;" align="right">
+                    <button class="botao" type="submit">Filtrar</button>
+                </h1>
+                <table>
+    <tr>
+    <th>Data</th>
+    <th>Recibos</th>
+    <th>Clientes</th>
+    </tr>
+
+    <tr>
+    <td>10/09/2019</td>
+    <td><a class="txt2" onclick="window.location.href='{{ url_for( 'sobreNos')}}';"
+            style="font-size: 17px">
+            Baixar Recibo
+        </a>
+    </td>
+    <td>Joaozin</td>
+    </tr>
+
+    <tr>
+    <td>18/06/2019</td>
+    <td><a class="txt2" onclick="window.location.href='{{ url_for( 'sobreNos')}}';"
+            style="font-size: 17px">
+            Baixar Recibo
+        </a>
+    </td>
+    <td>Mariazinha</td>
+
+    </tr>
+    <tr>
+    <td>25/04/2019</td>
+    <td><a class="txt2" onclick="window.location.href='{{ url_for( 'sobreNos')}}';"
+            style="font-size: 17px">
+            Baixar Recibo
+        </a>
+    </td>
+    <td>Josezin</td>
+
+    </tr>
+    <tr>
+    <td>22/01/2019</td>
+    <td><a class="txt2" onclick="window.location.href='{{ url_for( 'sobreNos')}}';"
+            style="font-size: 17px">
+            Baixar Recibo
+        </a>
+    </td>
+    <td>Malandro me ajuda</td>
+    </tr>
+  </table>
+
+                    <h1  class="inputBox" style="padding-bottom: 15px;" align="right">
+                        <button class="botao" type="submit">Gerar novos recibos</button>
+                    </h1>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+
+
+</html>

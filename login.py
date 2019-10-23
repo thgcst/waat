@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, make_response, session
 import pdfkit
-import controler, teste 
+import controler, teste
 from flask_mail import Mail, Message
 from werkzeug import generate_password_hash, check_password_hash
 
@@ -166,7 +166,7 @@ def cadastro():
                     controler.cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, hashed_password, cep, endereco, numero, complemento, cidade, estado)
                     return redirect(url_for('login'))
     return render_template('create.html', error=error)
- 
+
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -268,6 +268,10 @@ def enviaEmail():
         msg.attach("recibo_teste.pdf", "application/pdf", recibo.read())
     mail.send(msg)
     return 'Email enviado'
-            
+
+@app.route('/Recibos', methods=['GET', 'POST'])
+def Recibos():
+    return render_template('RecibosProfissional.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -21,8 +21,8 @@
         <div class="botoes">
             <button class="botao">Informações de cadastro</button>
             <button class="botao">Meus Clientes</button>
-            <button class="botao">Recibos</button>
-            <button class="botao">Configurações</button>
+            <button class="botao" onclick="window.location.href='{{ url_for( 'RecibosProfissional')}}'">Recibos</button>
+
         </div>
         <button class="sair" onclick="window.location.href='{{ url_for( 'login')}}'">Sair</button>
 
@@ -37,7 +37,7 @@
                         onclick="window.location.href='{{ url_for( 'login')}}'">Sim</button>
                 </div>
             </div>
-    
+
         </div>
     </div>
 
@@ -57,7 +57,7 @@
     // Get the <span> element that closes the modal
     var span = document.getElementById("close");
 
-    // When the user clicks the button, open the modal 
+    // When the user clicks the button, open the modal
     btn.onclick = function () {
         modal.style.animationName = "fadeIn";
         modal.style.display = "flex";
@@ -72,7 +72,7 @@
         modal.style.display = "none";
         div.style.animationName = "unblur";
         div.style.filter = "blur(0px)";
-        
+
     }
 
     // When the user clicks anywhere outside of the modal, close it
