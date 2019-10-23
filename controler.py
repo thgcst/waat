@@ -164,10 +164,10 @@ def cpf_id(cpf, tabela):
 
 def gera_id():
     id_gerado = random.randint(1,100)
-    id_no_bd = (verifica_id_cliente(id_gerado) and verifica_id_profissional(id_gerado))
+    id_no_bd = (verifica_id_cliente(id_gerado) or verifica_id_profissional(id_gerado))
     while id_no_bd:        
         id_gerado = random.randint(1,100)
-        id_no_bd = (verifica_id_cliente(id_gerado) and verifica_id_profissional(id_gerado))
+        id_no_bd = (verifica_id_cliente(id_gerado) or verifica_id_profissional(id_gerado))
     return id_gerado
 
 

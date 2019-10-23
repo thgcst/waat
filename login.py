@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, make_respo
 import pdfkit
 import controler, teste 
 from flask_mail import Mail, Message
+from werkzeug import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
@@ -104,7 +105,7 @@ def cadastro():
             cidade = request.form["cidade"]
             estado = request.form["estado"]
 
-            if nome=='' or data_de_nascimento=='' or cpf=='' or telefone=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
+            if nome=='' or data_de_nascimento=='' or cpf=='' or telefone=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or cidade=='' or estado=='':
                 error = 'Preencha todos os campos!'
             elif cpf == "CPF Inválido":
                 error = 'Verifique seu CPF!'
@@ -117,10 +118,11 @@ def cadastro():
                 if controler.verifica_cpf(cpf, 'clientes'):
                     error = 'Este CPF já está cadastrado!'
                 else:
+                    hashed_password = generate_password_hash(senha)
                     if controler.verifica_idade(data_de_nascimento)==False:
                         nome_responsavel = '-'
                         cpf_responsavel = '-'
-                        controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
+                        controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, hashed_password, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
                         return redirect(url_for('login'))
                     else:
                         nome_responsavel = request.form["nomeRes"]
@@ -128,7 +130,7 @@ def cadastro():
                         if nome_responsavel or cpf_responsavel =='':
                             error = 'Preencha todos os campos!'
                         else:
-                            controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
+                            controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, hashed_password, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
                             return redirect(url_for('login'))
 
         if request.form["radio"] == '1': #profissional
@@ -147,7 +149,7 @@ def cadastro():
             cidade = request.form["cidadePro"]
             estado = request.form["estadoPro"]
 
-            if nome=='' or cpf=='' or profissao=='' or registro_profissional=='' or telefone=='' or data_de_nascimento=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or complemento=='' or cidade=='' or estado=='':
+            if nome=='' or cpf=='' or profissao=='' or registro_profissional=='' or telefone=='' or data_de_nascimento=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or cidade=='' or estado=='':
                 error = 'Preencha todos os campos!'
             elif cpf == "CPF Inválido":
                 error = 'Verifique seu CPF!'
@@ -160,10 +162,11 @@ def cadastro():
                 if controler.verifica_cpf(cpf, 'profissionais'):
                     error = 'Este CPF já está cadastrado!'
                 else:
-                    controler.cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado)
+                    hashed_password = generate_password_hash(senha)
+                    controler.cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, hashed_password, cep, endereco, numero, complemento, cidade, estado)
                     return redirect(url_for('login'))
     return render_template('create.html', error=error)
-
+ 
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -180,8 +183,7 @@ def login():
 
         elif controler.verifica_cpf(cpf_inserido, "clientes"): # ta na bd
             user = Cliente(controler.cpf_id(cpf_inserido, 'clientes'))
-
-            if senha_inserida==user.senha:
+            if check_password_hash(user.senha,senha_inserida):
                 session['login'] = True
                 session['id'] = user.id
                 return redirect(url_for('loggedCliente'))
@@ -191,8 +193,7 @@ def login():
 
         elif controler.verifica_cpf(cpf_inserido, "profissionais"): # ta na bd
             user = Profissional(controler.cpf_id(cpf_inserido, 'profissionais'))
-
-            if senha_inserida==user.senha:
+            if check_password_hash(user.senha,senha_inserida):
                 session['login'] = True
                 session['id'] = user.id
                 return redirect(url_for('loggedProfissional'))
