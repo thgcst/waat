@@ -62,6 +62,9 @@ body{
 
 .botoes {
   position: absolute;
+  flex-wrap: wrap;
+  border: 1px solid red;
+
 }
 
 .greetings{

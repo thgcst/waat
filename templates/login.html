@@ -7,9 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/login.css') }}">
-    <!-- <link rel="stylesheet" type="text/css" href="../static/styles/login.css"> -->
 
 
     <title>Login</title>
@@ -64,36 +63,18 @@
         var wrap = document.getElementById("wrap");
         var btn = document.getElementById("esqueci");
         var container = document.getElementById("container");
-        var elem = create('<form method="POST" id="form2"> <h2 style="text-align: center">Esqueci minha senha</h2> <div class="inputBox" id="divForgot" style="padding-top: 40px"> <input type="text" name="cpfForgot" id="inputForgot" placeholder="Insira seu CPF" value="{{ request.form.cpfForgot }}" class="input" maxlength="14" oninput="this.value = CPF(this.value, event)" /> </div> <div class="inputBox" id="divForgot2" style="padding-bottom: 10px; padding-top: 30px"> <button class="botao" id="btnForgot" onclick="document.getElementById(`formForgot`).submit()" type="submit">Enviar</button> </div> </form>');
+        var elem = create('<div style="width: 400px"><i id="back" onclick="back()" class="fa icon">&#xf0a8;</i></div><form method="POST" id="form2"> <h2 class="welcome" style="text-align: center; padding-top: 0">Esqueci minha senha</h2> <div class="inputBox" id="divForgot" style="padding-top: 40px"> <input type="text" name="cpfForgot" id="inputForgot" placeholder="Insira seu CPF" value="{{ request.form.cpfForgot }}" class="input" maxlength="14" oninput="this.value = CPF(this.value, event)" /> </div> <div class="inputBox" id="divForgot2" style="padding-bottom: 10px; padding-top: 30px"> <button class="botao" id="btnForgot" onclick="document.getElementById(`formForgot`).submit()" type="submit">Enviar</button> </div> </form>');
         var body = document.body;
 
         btn.onclick = function () {
+            wrap.style.display = "none";
             container.appendChild(elem);
-            var modal = document.getElementById("modal");
-            modal.style.animationName = "modal";
-            modal.style.opacity = "1";
-            modal.style.bottom = "280px";
-            wrap.style.animationName = "wrap";
-            wrap.style.transform = "translate(0,-200px)";
-            wrap.style.opacity = "0.75";
-            wrap.style.pointerEvents = "none";
-
         }
 
-        window.onclick = function (event) {
+        function back() {
             var modal = document.getElementById("modal");
-            event.preventDefault();
-                if (event.target.id != "modal" && event.target != btn && event.target.tagName != "H2" && event.target.id != "form2" && event.target.id != "inputForgot" && event.target.id != "btnForgot" && event.target.id != "divForgot" && event.target.id != "divForgot2") {
-                    modal.style.animationName = "undoModal";
-                    modal.style.opacity = "0";
-                    modal.style.bottom = "200px";
-                    setTimeout(function () { container.removeChild(document.getElementById("modal")); }, 500);
-                    wrap.style.animationName = "undoWrap";
-                    wrap.style.transform = "translate(0,0)";
-                    wrap.style.opacity = "1";
-                    wrap.style.pointerEvents = "";
-
-                }
+            container.removeChild(document.getElementById("modal"));
+            wrap.style.display = "flex";
         }
     </script>
 

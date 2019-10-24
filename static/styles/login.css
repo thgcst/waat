@@ -45,19 +45,10 @@ body {
   border-radius: 10px;
   overflow: hidden;
   position: absolute;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   width: 400px;
-
-  -webkit-animation-name: none; /* Fade in the background */
-  -webkit-animation-duration: 0.5s;
-  animation-name: none;
-  animation-duration: 0.5s;
 }
 
 .welcome {
@@ -156,66 +147,22 @@ body {
   border-radius: 10px;
   overflow: hidden;
   position: absolute;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   width: 400px;
-  padding: 20px;
-
-  bottom: 200px;
-  opacity: 0;
-
-  -webkit-animation-name: none; /* Fade in the background */
-  -webkit-animation-duration: 0.5s;
-  animation-name: none;
-  animation-duration: 0.5s;
+  padding-bottom: 20px;
 }
 
-@keyframes modal {
-  from {
-    opacity: 0;
-    bottom: 200px;
-  }
-  to {
-    opacity: 1;
-    bottom: 280px;
-    width: 400px;
-  }
+.icon {
+  align-content: flex-start;
+  font-size: 40px;
+  margin: 5px;
+  padding: 10px 0 0 10px;
+  color: rgb(180, 180, 180);
 }
 
-@keyframes undoModal {
-  from {
-    opacity: 1;
-    bottom: 280px;
-  }
-  to {
-    opacity: 0;
-    bottom: 200px;
-  }
-}
-
-@keyframes wrap {
-  from {
-    transform: translate(0, 0);
-    opacity: 1;
-  }
-  to {
-    transform: translate(0, -200px);
-    opacity: 0.75;
-  }
-}
-
-@keyframes undoWrap {
-  from {
-    transform: translate(0, -200px);
-    opacity: 0.75;
-  }
-  to {
-    transform: translate(0, 0);
-    opacity: 1;
-  }
+.icon:hover{
+  color: rgb(29, 29, 29);
+  cursor: pointer;
 }
