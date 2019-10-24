@@ -11,7 +11,6 @@ html {
 }
 
 body {
-
   background: #69acd8;
   background: -webkit-linear-gradient(-135deg, #2179b4, #69acd8);
   background: -o-linear-gradient(-135deg, #2179b4, #69acd8);
@@ -23,7 +22,7 @@ body {
 
 .container-login100 {
   width: 100%;
-  min-height: 70vh;
+  min-height: 100vh;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -43,7 +42,7 @@ body {
 .wrap-login100 {
   /* width: 960px; */
   background: #fff;
-  border-radius: 20px;
+  border-radius: 10px;
   overflow: hidden;
   position: absolute;
   display: -webkit-box;
@@ -53,7 +52,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 1050px;
+  width: 400px;
 
   -webkit-animation-name: none; /* Fade in the background */
   -webkit-animation-duration: 0.5s;
@@ -61,20 +60,30 @@ body {
   animation-duration: 0.5s;
 }
 
+.welcome {
+  cursor: default;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  text-align: center;
+  padding-top: 30px;
+}
+
 .inputBox {
-  padding: 18px;
-
-
+  padding: 10px;
 }
 
 .input {
   background: #e7e7e7;
-  border-radius: 20px;
+  border-radius: 100px;
   border-width: 0;
   height: 50px;
-  width: 950px;
+  width: 300px;
   font-size: 20px;
-  padding: 0px 50px 0px 20px;
+  padding: 0px 20px 0px 20px;
 
   transition: all 0.2s;
   -webkit-transition: all 0.2s;
@@ -84,34 +93,15 @@ body {
 
 .input:focus {
   background: #e7e7e7;
-  border-radius: 20px;
+  border-radius: 100px;
   border-width: 0;
   height: 50px;
-  width: 950px;
+  width: 300px;
   font-size: 20px;
   padding: 0px 20px 0px 20px;
   outline: none;
 
   box-shadow: 2px 2px 20px #eee;
-}
-
-table {
-  border-collapse: collapse;
-  border-radius: 20px;
-  width: 100%;
-
-}
-
-th, td {
-  width: 330px;
-  text-align: center;
-  padding: 15px;
-}
-
-tr:nth-child(even) {background-color: #f2f2f2;}
-th {
-  background-color: #2ecc71;
-  color: white;
 }
 
 .botao {
@@ -159,4 +149,73 @@ th {
 .txt2:hover {
   color: #57b846;
   cursor: pointer;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  position: absolute;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 400px;
+  padding: 20px;
+
+  bottom: 200px;
+  opacity: 0;
+
+  -webkit-animation-name: none; /* Fade in the background */
+  -webkit-animation-duration: 0.5s;
+  animation-name: none;
+  animation-duration: 0.5s;
+}
+
+@keyframes modal {
+  from {
+    opacity: 0;
+    bottom: 200px;
+  }
+  to {
+    opacity: 1;
+    bottom: 280px;
+    width: 400px;
+  }
+}
+
+@keyframes undoModal {
+  from {
+    opacity: 1;
+    bottom: 280px;
+  }
+  to {
+    opacity: 0;
+    bottom: 200px;
+  }
+}
+
+@keyframes wrap {
+  from {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  to {
+    transform: translate(0, -200px);
+    opacity: 0.75;
+  }
+}
+
+@keyframes undoWrap {
+  from {
+    transform: translate(0, -200px);
+    opacity: 0.75;
+  }
+  to {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
 }

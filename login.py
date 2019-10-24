@@ -273,5 +273,10 @@ def enviaEmail():
 def RecibosProfissional():
     return render_template('RecibosProfissional.html')
 
+@app.route('/Cadastrar_atendimentos', methods=['GET', 'POST'])
+def CadastrarAtendimentos():
+    return render_template('CadastrarAtendimentos.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
