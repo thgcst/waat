@@ -1,8 +1,8 @@
-from flask import Flask, render_template, redirect, url_for, request, make_response, session, g
+from flask import Flask, render_template, redirect, url_for, request, make_response, session
 import pdfkit
 import controler, teste
 from flask_mail import Mail, Message
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
@@ -184,7 +184,7 @@ def login():
         elif controler.verifica_cpf(cpf_inserido, "clientes"): # ta na bd
             user = Cliente(controler.cpf_id(cpf_inserido, 'clientes'))
             if check_password_hash(user.senha,senha_inserida):
-                session['user'] = True
+                session['login'] = True
                 session['id'] = user.id
                 return redirect(url_for('loggedCliente'))
 
@@ -194,7 +194,7 @@ def login():
         elif controler.verifica_cpf(cpf_inserido, "profissionais"): # ta na bd
             user = Profissional(controler.cpf_id(cpf_inserido, 'profissionais'))
             if check_password_hash(user.senha,senha_inserida):
-                session['user'] = True
+                session['login'] = True
                 session['id'] = user.id
                 return redirect(url_for('loggedProfissional'))
             else:
@@ -203,22 +203,18 @@ def login():
             error = "Usuário não cadastrado"
     return render_template('login.html', error=error)
 
-@app.before_request
-def before_request():
-    g.user = None
-    if g.user in session:
-        g.user = session['user']
 
-@app.route('/loggedCliente', methods = ['GET', 'POST'])
+@app.route('/loggedCliente')
 def loggedCliente():
-    if 'user' in session:
+    if 'login' in session:
         user = Cliente(session['id'])
-    return render_template("loggedCliente.html", cliente=user.nome)
-    
+        return render_template("loggedCliente.html", cliente=user.nome)
+    return redirect(url_for('login'))
+
 
 @app.route('/loggedProfissional')
 def loggedProfissional():
-    if 'user' in session:
+    if 'login' in session:
         user = Profissional(session['id'])
         return render_template("loggedProfissional.html", profissional=user.nome)
     return redirect(url_for('login'))
@@ -226,8 +222,8 @@ def loggedProfissional():
 
 @app.route('/logout')
 def logout():
-    if 'user' in session:
-        session.pop('user', None)
+    if 'login' in session:
+        session.pop('login', None)
         session.pop('id', None)
     return redirect(url_for('login'))
 
