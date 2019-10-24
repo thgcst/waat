@@ -61,16 +61,16 @@ body{
 }
 
 .botoes {
-  position: absolute;
+  position: relative;
   flex-wrap: wrap;
-  border: 1px solid red;
-
+  display: flex;
+  justify-content: center;
 }
 
 .greetings{
   color: #fff;
   font-size: 35px;
-  transform: translate(0,-200px)
+  transform: translate(0,-150px)
 }
 
 .sair{
@@ -88,7 +88,7 @@ body{
   transition-duration: 0.2s;
   -webkit-transition-duration: 0.2s;
   cursor: pointer;
-  transform: translate(0,200px)
+  transform: translate(0,150px)
 }
 
 .sair:hover {

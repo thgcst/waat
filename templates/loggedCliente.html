@@ -33,8 +33,7 @@
             <h2>Deseja realmente sair?</h2>
             <div style="margin-top: 20px;">
                 <button class="escolha" style="background: rgb(221, 57, 57)" id="close">Não</button>
-                <button class="escolha" style="background: #2ecc71"
-                    onclick="window.location.href='{{ url_for( 'login')}}'">Sim</button>
+                <button type="submit" class="escolha" style="background: #2ecc71" name="quitButton" value="0">Sim</button>
             </div>
         </div>
 
@@ -48,7 +47,6 @@
     var modal = document.getElementById("myModal");
     var body = document.body;
     var div = document.getElementsByClassName("container-login100")[0];
-    console.log(div);
 
     // Get the button that opens the modal
     var btn = document.getElementById("btnSair");
@@ -84,6 +82,18 @@
             div.style.filter = "blur(0px)";
         }
     }
+</script>
+
+<script>
+    var quitButton = document.getElementsByName("quitButton")[0];
+
+    quitButton.addEventListener("mousedown", function(){
+        quitButton.value = "1";
+    });
+    
+    quitButton.addEventListener("mouseup", function(){
+        quitButton.value = "0";
+    })
 </script>
 
 </html>
