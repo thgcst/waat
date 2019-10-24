@@ -33,7 +33,8 @@
             <h2>Deseja realmente sair?</h2>
             <div style="margin-top: 20px;">
                 <button class="escolha" style="background: rgb(221, 57, 57)" id="close">Não</button>
-                <button type="submit" class="escolha" style="background: #2ecc71" name="quitButton" value="0">Sim</button>
+                <button class="escolha" style="background: #2ecc71"
+                    onclick="window.location.href='{{ url_for( 'logout')}}'">Sim</button>
             </div>
         </div>
 
@@ -84,16 +85,5 @@
     }
 </script>
 
-<script>
-    var quitButton = document.getElementsByName("quitButton")[0];
-
-    quitButton.addEventListener("mousedown", function(){
-        quitButton.value = "1";
-    });
-    
-    quitButton.addEventListener("mouseup", function(){
-        quitButton.value = "0";
-    })
-</script>
 
 </html>

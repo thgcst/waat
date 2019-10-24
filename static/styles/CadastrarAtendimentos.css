@@ -76,6 +76,10 @@ body {
   padding: 10px;
 }
 
+.cpfError {
+  color: rgb(221, 57, 57);
+}
+
 .input {
   background: #e7e7e7;
   border-radius: 100px;
@@ -151,71 +155,15 @@ body {
   cursor: pointer;
 }
 
-.modal {
-  background: #fff;
-  border-radius: 10px;
-  overflow: hidden;
+
+.icon {
   position: absolute;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 400px;
-  padding: 20px;
-
-  bottom: 200px;
-  opacity: 0;
-
-  -webkit-animation-name: none; /* Fade in the background */
-  -webkit-animation-duration: 0.5s;
-  animation-name: none;
-  animation-duration: 0.5s;
+  font-size: 40px;
+  margin: 15px;
+  color: white;
 }
 
-@keyframes modal {
-  from {
-    opacity: 0;
-    bottom: 200px;
-  }
-  to {
-    opacity: 1;
-    bottom: 280px;
-    width: 400px;
-  }
-}
-
-@keyframes undoModal {
-  from {
-    opacity: 1;
-    bottom: 280px;
-  }
-  to {
-    opacity: 0;
-    bottom: 200px;
-  }
-}
-
-@keyframes wrap {
-  from {
-    transform: translate(0, 0);
-    opacity: 1;
-  }
-  to {
-    transform: translate(0, -200px);
-    opacity: 0.75;
-  }
-}
-
-@keyframes undoWrap {
-  from {
-    transform: translate(0, -200px);
-    opacity: 0.75;
-  }
-  to {
-    transform: translate(0, 0);
-    opacity: 1;
-  }
+.icon:hover{
+  color: rgb(218, 218, 218);
+  cursor: pointer;
 }
