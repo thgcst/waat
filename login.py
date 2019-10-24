@@ -213,11 +213,6 @@ def before_request():
 def loggedCliente():
     if 'user' in session:
         user = Cliente(session['id'])
-    """   
-    if request.method == 'POST':
-        if request.form["quitButton"] == '0':
-            redirect(url_for('logout'))
-    """
     return render_template("loggedCliente.html", cliente=user.nome)
     
 
