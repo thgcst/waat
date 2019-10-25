@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/Informacoes_cadastro.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="../static/styles/create.css"> -->
+
+    <title>Informaçoes de Cadastro</title>
+</head>
+
+<body>
+    <i class="fa icon" onclick="window.location.href='{{ url_for( 'loggedProfissional')}}'">&#xf0a8;</i>
+    <div class="limiter">
+        <div class="container-login100" id="container">
+            <div class="wrap-login100" id="wrap">
+                <form method="POST" style="display: flex; flex-direction: column; justify-content: center">
+                    <h1 style="text-align: center; padding-top: 30px"><strong>Informações de Cadastro</strong></h1>
+
+                    <div style="height: 20px"></div>
+
+
+                        <div id="table" class="table">
+                            <div style="padding: 0 20px 0 30px">
+                                <!--nome-->
+                                <div class="inputBox" >
+                                    <text type="text"  class="input" >Nome: Wesley Jupter &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="txt2" id="esqueci"
+                                            style="font-size: 17px">
+                                            Alterar
+                                        </a></text>
+                                </div>
+                                <!--cpf-->
+                                <div class="inputBox" >
+                                    <text type="text"  class="input" >CPF: 154.555.797-13 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="txt2"
+                                            style="font-size: 17px">
+                                            Alterar
+                                        </a></text>
+                                </div>
+                                <!--profissao-->
+                                <div class="inputBox" >
+                                    <text type="text" class="input" >Profissao: Modelo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="txt2"
+                                            style="font-size: 17px">
+                                            Alterar
+                                        </a></text>
+                                </div>
+                                <!--Registro Profissional-->
+                                <div class="inputBox" >
+                                    <text type="text"  class="input"> Registro Profissional: 2222-1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="txt2"
+                                            style="font-size: 17px">
+                                            Alterar
+                                        </a></text>
+                                </div>
+                                <!--telefone-->
+                                <div class="inputBox" >
+                                    <text type="text" class="input" >Telefone: (21)99999-2222 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="txt2"
+                                            style="font-size: 17px">
+                                            Alterar
+                                        </a></text>
+                                </div>
+                                <!--nascimento-->
+                                <div class="inputBox" >
+                                    <text type="text" class="input" >Data de Nascimento: 09/01/2001&nbsp;&nbsp;&nbsp;
+                                        <a class="txt2"
+                                            style="font-size: 17px">
+                                            Alterar
+                                        </a></text>
+                                </div>
+                                <!--email-->
+                                <div class="inputBox" >
+                                    <text type="text" class="input" >Email: wesley@gostoso.com &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="txt2"
+                                            style="font-size: 17px">
+                                            Alterar
+                                        </a></text>
+                                </div>
+
+                            </div>
+                            <div style="padding: 0 30px 0 0" id="divMeio">
+                                <!--CEP-->
+                                <div class="inputBox" >
+                                    <text type="text" class="input" >CEP: 21341-190 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="txt2"
+                                            style="font-size: 17px">
+                                            Alterar
+                                        </a></text>
+                                </div>
+                                <!--endereco-->
+                                <div class="inputBox" >
+                                    <text type="text" class="input" >Endereço: Localiza aí &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="txt2"
+                                            style="font-size: 17px">
+                                            Alterar
+                                        </a></text>
+                                </div>
+                                <!--numero-->
+                                <div class="inputBox" >
+                                    <text type="text" class="input" >Numero: 61 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="txt2"
+                                            style="font-size: 17px">
+                                            Alterar
+                                        </a></text>
+                                </div>
+                                <!--complemento-->
+                                <div class="inputBox" >
+                                    <text type="text" class="input" >complemento: sala 203 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="txt2"
+                                            style="font-size: 17px">
+                                            Alterar
+                                        </a></text>
+                                </div>
+                                <!--cidade-->
+                                <div class="inputBox" >
+                                    <text type="text" class="input" >Cidade: Rio de Janeiro &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="txt2"
+                                            style="font-size: 17px">
+                                            Alterar
+                                        </a></text>
+                                </div>
+                                <!--estado-->
+                                <div class="inputBox" >
+                                    <text type="text" class="input" >Estado: RJ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="txt2"
+                                            style="font-size: 17px">
+                                            Alterar
+                                        </a></text>
+                                </div>
+
+                                <div class="inputBox" >
+                                    <text type="text" class="input" >
+                                        <a class="txt2" text-align="center"
+                                            style="font-size: 17px">
+                                            Alterar senha
+                                        </a></text>
+                                </div>
+
+                        </div>
+
+                    {% if error %}
+                    <p class="error" style="text-align: center; color: #e74c3c; font-size: 14px"> {{ error }}
+                        {% endif %}
+
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script>
+        document.getElementById("profissional").addEventListener("click", profissional);
+
+        function profissional() {
+            document.getElementById("divProfissional").removeAttribute("hidden");
+            document.getElementById("divCliente").setAttribute("hidden", "true");
+        }
+
+        document.getElementById("cliente").addEventListener("click", cliente);
+
+        function cliente() {
+            document.getElementById("divCliente").removeAttribute("hidden");
+            document.getElementById("divProfissional").setAttribute("hidden", "true");
+        }
+    </script>
+
+    <script>
+        function DDMMYYYY(value, event) {
+            let newValue = value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
+
+            const dayOrMonth = (index) => index % 2 === 1 && index < 4;
+
+            // on delete key.
+            if (!event.data) {
+                return value;
+            }
+
+            return newValue.split('').map((v, i) => dayOrMonth(i) ? v + '/' : v).join('');
+        };
+
+        function CPF(id, value, event) {
+            document.getElementById(id).className = 'input'
+            if (value == "CPF Inválid") {
+                if (!event.data) {
+                    return '';
+                }
+            }
+            let newValue = value.replace(/[^0-9]/g, '');
+
+
+            const aux = (index) => index == 2 || index == 5;
+
+            // on delete key.
+            if (!event.data) {
+                return value;
+            }
+
+            return newValue.split('').map((v, i) => aux(i) ? v + '.' : (i == 8 ? v + '-' : v)).join('');
+        };
+
+        function APIrua(i) {
+            var aux = i ? "Pro" : "";
+            var cep = document.getElementById("cep" + aux).value;
+            var endereco = document.getElementById("endereco" + aux);
+            var cidade = document.getElementById("cidade" + aux);
+            var estado = document.getElementById("estado" + aux);
+
+            console.log(cep);
+            fetch(
+                "https://viacep.com.br/ws/" + cep + "/json/",
+                {
+                    method: "GET"
+                }
+            )
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    }
+                })
+                .then(serverResponse => {
+                    var resposta = JSON.parse(serverResponse);
+                    if (resposta.logradouro != undefined) {
+                        endereco.value = resposta.logradouro;
+                        cidade.value = resposta.localidade;
+                        estado.value = resposta.uf;
+                    } else {
+                        endereco.value = "CEP não encontrado"
+                    }
+                    console.log(endereco);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        };
+
+        function CEP(value, event) {
+            let newValue = value.replace(/[^0-9]/g, '');
+
+            // on delete key.
+            if (!event.data) {
+                return value;
+            }
+
+            return newValue.split('').map((v, i) => i == 4 ? v + "-" : v).join('');
+        };
+
+        function TEL(value, event) {
+            let newValue = value.replace(/[^0-9]/g, '');
+
+            // on delete key.
+            if (!event.data) {
+                return value;
+            }
+
+            newValue = "(" + newValue;
+
+            if (newValue.split('').length > 11) {
+                return newValue.split('').map((v, i) => i == 2 ? v + ")" : (i == 7 ? v + "-" : v)).join('');
+            } else {
+                return newValue.split('').map((v, i) => i == 2 ? v + ")" : (i == 6 ? v + "-" : v)).join('');
+            }
+            // return newValue;
+        };
+
+
+        function maiorDeIdade() {
+            let nascimento = {
+                fulldate: document.getElementById("nascimento").value,
+                dia: function () {
+                    return this.fulldate[0] + this.fulldate[1];
+                },
+                mes: function () {
+                    return this.fulldate[3] + this.fulldate[4];
+                },
+                ano: function () {
+                    return this.fulldate[6] + this.fulldate[7] + this.fulldate[8] + this.fulldate[9];
+                }
+            };
+
+            hoje = new Date();
+
+            if (hoje.getFullYear() - Number(nascimento.ano()) > 18) {
+                return true;
+            }
+            else if (hoje.getFullYear() - Number(nascimento.ano()) < 18) {
+                return false;
+            }
+            else if (hoje.getFullYear() - Number(nascimento.ano()) == 18) {
+                if (hoje.getMonth() + 1 > Number(nascimento.mes())) {
+                    return true;
+                }
+                else if (hoje.getMonth() + 1 < Number(nascimento.mes())) {
+                    return false;
+                }
+                else if (hoje.getMonth() + 1 == Number(nascimento.mes())) {
+                    return hoje.getDate() >= Number(nascimento.dia());
+                }
+            }
+        };
+
+        function create(htmlStr) {
+            var elem = document.createElement('div');
+            elem.innerHTML = htmlStr;
+            return elem;
+        }
+
+        function addCampo() {
+            var table = document.getElementById("table");
+
+            if (maiorDeIdade() || document.getElementById("nascimento").value == "") {
+                if (table.childNodes.length == 6) {
+                    table.removeChild(table.lastChild);
+                }
+            }
+            else {
+                if (table.childNodes.length != 6) {
+                    // table.insertBefore(create('<h4 style="padding-left: 15px" id="cliente">Cliente</h4>'), table.childNodes[0]);
+                    // table.appendChild(create('<h4 style="padding: 20px 0 0 15px">Responsável</h4>'));
+                    table.appendChild(create('<div style="padding: 0 30px 0 0px"><div class="inputBox"><input type="text" name="nomeRes" placeholder="Nome do responsável" value="{{ request.form.nomeRes }}" class="input" /></div><div class="inputBox"><input type="tel" id="cpfRes" name="cpfRes" placeholder="CPF do responsável" onblur="validarCPF(`cpfRes`)" value="{{request.form.cpfRes }}" class="input" maxlength="14" oninput="this.value = CPF(`cpfRes`, this.value, event)" /></div></div>'));
+                    document.getElementById("divMeio").style = "padding: 0 20px 0 0";
+                }
+            }
+        };
+
+        function validarCPF(id) {
+            var cpf = document.getElementById(id).value
+            if (cpf.length == 14) {
+                function valida() {
+                    cpf = cpf.replace(/[^\d]+/g, '');
+                    if (cpf == '') return false;
+                    // Elimina CPFs invalidos conhecidos
+                    if (cpf.length != 11 ||
+                        cpf == "00000000000" ||
+                        cpf == "11111111111" ||
+                        cpf == "22222222222" ||
+                        cpf == "33333333333" ||
+                        cpf == "44444444444" ||
+                        cpf == "55555555555" ||
+                        cpf == "66666666666" ||
+                        cpf == "77777777777" ||
+                        cpf == "88888888888" ||
+                        cpf == "99999999999")
+                        return false;
+                    // Valida 1o digito
+                    add = 0;
+                    for (i = 0; i < 9; i++)
+                        add += parseInt(cpf.charAt(i)) * (10 - i);
+                    rev = 11 - (add % 11);
+                    if (rev == 10 || rev == 11)
+                        rev = 0;
+                    if (rev != parseInt(cpf.charAt(9)))
+                        return false;
+                    // Valida 2o digito
+                    add = 0;
+                    for (i = 0; i < 10; i++)
+                        add += parseInt(cpf.charAt(i)) * (11 - i);
+                    rev = 11 - (add % 11);
+                    if (rev == 10 || rev == 11)
+                        rev = 0;
+                    if (rev != parseInt(cpf.charAt(10)))
+                        return false;
+                    return true
+                }
+
+                if (!valida()) {
+                    document.getElementById(id).value = "CPF Inválido";
+                    document.getElementById(id).className = "input cpfError";
+                }
+            }
+        }
+
+
+    </script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/drop.js') }}"></script>
+    <script>
+
+        var wrap = document.getElementById("wrap");
+        var btn = document.getElementById("esqueci");
+        var container = document.getElementById("container");
+        var elem = create('<div style="width: 400px"></div><form method="POST" id="form2">  <div class="inputBox" id="divForgot" style="padding-top: 40px"> <input type="text" name="cpfForgot" id="inputForgot" placeholder="Insira seu novo nome" value="{{ request.form.cpfForgot }}" class="input" oninput="this.value = CPF(this.value, event)" /> </div> <div class="inputBox" id="divForgot2" style="padding-bottom: 10px; padding-top: 30px"> <button class="botao" id="btnForgot" onclick="document.getElementById(`formForgot`).submit()" type="submit">Atualizar</button> </div> </form>');
+        var body = document.body;
+
+        btn.onclick = function () {
+            wrap.style.display = "none";
+            container.appendChild(elem);
+        }
+
+        function back() {
+            var modal = document.getElementById("modal");
+            container.removeChild(document.getElementById("modal"));
+            wrap.style.display = "flex";
+        }
+    </script>
+
+
+</body>
+
+</html>

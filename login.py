@@ -215,7 +215,7 @@ def loggedCliente():
     if 'user' in session:
         user = Cliente(session['id'])
     return render_template("loggedCliente.html", cliente=user.nome)
-    
+
 
 @app.route('/loggedProfissional')
 def loggedProfissional():
@@ -291,6 +291,9 @@ def CadastrarAtendimentos():
 
     return render_template('CadastrarAtendimentos.html')
 
+@app.route('/Informaçoes de cadastro', methods=['GET', 'POST'])
+def Informacoes_cadastro():
+    return render_template('Informacoes_cadastro.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
