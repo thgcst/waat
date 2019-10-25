@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/Informacoes_cadastro.css') }}">
+    <!-- <link rel="stylesheet" type="div/css" href="../static/styles/create.css"> -->
+
+    <title>Informaçoes de Cadastro</title>
+</head>
+
+<body>
+    <i class="fa icon" onclick="window.location.href='{{ url_for( 'loggedProfissional')}}'">&#xf0a8;</i>
+    <div class="limiter">
+        <div class="container-login100" id="container">
+            <div class="wrap-login100" id="wrap">
+                <form method="POST" style="display: flex; flex-direction: column; justify-content: center">
+                    <h1 style="text-align: center; padding-top: 30px"><strong>Informações de Cadastro</strong></h1>
+
+                    <div style="height: 20px"></div>
+
+
+                    <div id="table" class="table">
+                        <div style="padding: 0 20px 0 30px">
+                            <!--nome-->
+                            <div class="inputBox">
+                                <div type="div" class="input"><strong>Nome:&nbsp;</strong> {{nome}}
+
+                                </div>
+                                <div class="txt" style="font-size: 17px">
+                                    Alterar
+                                </div>
+                            </div>
+                            <!--cpf-->
+                            <div class="inputBox">
+                                <div type="div" class="input"><strong>CPF:&nbsp;</strong> {{cpf}}
+
+                                </div>
+                                <div class="txt" style="font-size: 17px">
+                                    Alterar
+                                </div>
+                            </div>
+                            <!--profissao-->
+                            <div class="inputBox">
+                                <div type="div" class="input"><strong>Profissão:&nbsp;</strong> {{profissao}}
+
+                                </div>
+                                <div class="txt" style="font-size: 17px">
+                                    Alterar
+                                </div>
+                            </div>
+                            <!--Registro Profissional-->
+                            <div class="inputBox">
+                                <div type="div" class="input"><strong>Registro Profissional:&nbsp;</strong> {{registro}}
+
+                                </div>
+                                <div class="txt" style="font-size: 17px">
+                                    Alterar
+                                </div>
+                            </div>
+                            <!--telefone-->
+                            <div class="inputBox">
+                                <div type="div" class="input"><strong>Telefone:&nbsp;</strong> {{telefone}}
+
+                                </div>
+                                <div class="txt" style="font-size: 17px">
+                                    Alterar
+                                </div>
+                            </div>
+                            <!--nascimento-->
+                            <div class="inputBox">
+                                <div type="div" class="input"><strong>Data de nascimento:&nbsp;</strong> {{nascimento}}
+                                </div>
+                                <div class="txt" style="font-size: 17px">
+                                    Alterar
+                                </div>
+                            </div>
+                            <!--email-->
+                            <div class="inputBox">
+                                <div type="div" class="input"><strong>Email:&nbsp;</strong> {{email}}
+                                </div>
+                                <div class="txt" style="font-size: 17px">
+                                    Alterar
+                                </div>
+                            </div>
+
+                        </div>
+                        <div style="padding: 0 30px 0 0" id="divMeio">
+                            <!--CEP-->
+                            <div class="inputBox">
+                                <div type="div" class="input"><strong>CEP:&nbsp;</strong> {{cep}}
+                                </div>
+                                <div class="txt" style="font-size: 17px">
+                                    Alterar
+                                </div>
+                            </div>
+                            <!--endereco-->
+                            <div class="inputBox">
+                                <div type="div" class="input"><strong>Endereço:&nbsp;</strong> {{endereco}}
+                                </div>
+                                <div class="txt" style="font-size: 17px">
+                                    Alterar
+                                </div>
+                            </div>
+                            <!--numero-->
+                            <div class="inputBox">
+                                <div type="div" class="input"><strong>Número:&nbsp;</strong> {{numero}}
+                                </div>
+                                <div class="txt" style="font-size: 17px">
+                                    Alterar
+                                </div>
+                            </div>
+                            <!--complemento-->
+                            <div class="inputBox">
+                                <div type="div" class="input"><strong>Complemento:&nbsp;</strong> {{complemento}}
+                                </div>
+                                <div class="txt" style="font-size: 17px">
+                                    Alterar
+                                </div>
+                            </div>
+                            <!--cidade-->
+                            <div class="inputBox">
+                                <div type="div" class="input"><strong>Cidade:&nbsp;</strong> {{cidade}}
+                                </div>
+                                <div class="txt" style="font-size: 17px">
+                                    Alterar
+                                </div>
+                            </div>
+                            <!--estado-->
+                            <div class="inputBox">
+                                <div type="div" class="input"><strong>Estado:&nbsp;</strong> {{estado}}
+                                </div>
+                                <div class="txt" style="font-size: 17px">
+                                    Alterar
+                                </div>
+                            </div>
+
+                            <div class="inputBox">
+                                <div type="div" class="input">
+                                </div>
+                                <div class="txt" style="font-size: 17px; opacity: 1;">
+                                    Alterar senha
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {% if error %}
+                        <p class="error" style="text-align: center; color: #e74c3c; font-size: 14px"> {{ error }}
+                            {% endif %}
+
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+
+    <script>
+        // window.onmouseover = function (e) {
+        //     if (e.target.className == "input") {
+        //         console.log("hoverou")
+        //         e.target.className = "input2";
+        //         e.target.onmouseleave = function (e) {
+        //             console.log("saiu");
+        //             e.target.className = "input";
+
+        //         }
+        //     }
+        // };
+    </script>
+
+
+</body>
+
+</html>

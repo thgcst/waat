@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <i class="fa icon" onclick="window.location.href='{{ url_for( 'loggedProfissional')}}'">&#xf0a8;</i>
+    <i class="fa icon" onclick="window.location.href='{{ url_for( 'loggedCliente')}}'">&#xf0a8;</i>
     <div class="limiter">
         <div class="container-login100" id="container">
             <div class="wrap-login100" id="wrap">
@@ -32,7 +32,7 @@
                                 <div type="div" class="input"><strong>Nome:&nbsp;</strong> {{nome}}
 
                                 </div>
-                                <div class="txt" id="esqueci" style="font-size: 17px">
+                                <div class="txt" style="font-size: 17px">
                                     Alterar
                                 </div>
                             </div>
@@ -46,23 +46,8 @@
                                 </div>
                             </div>
                             <!--profissao-->
-                            <div class="inputBox">
-                                <div type="div" class="input"><strong>Profissão:&nbsp;</strong> {{profissao}}
-
-                                </div>
-                                <div class="txt" style="font-size: 17px">
-                                    Alterar
-                                </div>
-                            </div>
                             <!--Registro Profissional-->
-                            <div class="inputBox">
-                                <div type="div" class="input"><strong>Registro Profissional:&nbsp;</strong> {{registro}}
 
-                                </div>
-                                <div class="txt" style="font-size: 17px">
-                                    Alterar
-                                </div>
-                            </div>
                             <!--telefone-->
                             <div class="inputBox">
                                 <div type="div" class="input"><strong>Telefone:&nbsp;</strong> {{telefone}}
@@ -88,9 +73,6 @@
                                     Alterar
                                 </div>
                             </div>
-
-                        </div>
-                        <div style="padding: 0 30px 0 0" id="divMeio">
                             <!--CEP-->
                             <div class="inputBox">
                                 <div type="div" class="input"><strong>CEP:&nbsp;</strong> {{cep}}
@@ -99,6 +81,10 @@
                                     Alterar
                                 </div>
                             </div>
+
+                        </div>
+                        <div style="padding: 0 30px 0 0" id="divMeio">
+
                             <!--endereco-->
                             <div class="inputBox">
                                 <div type="div" class="input"><strong>Endereço:&nbsp;</strong> {{endereco}}

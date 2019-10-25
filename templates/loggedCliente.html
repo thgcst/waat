@@ -19,9 +19,9 @@
     <div class="container-login100">
         <strong class="greetings">Bem vindo, {{ cliente.split()[0] }}!</strong>
         <div class="botoes">
-            <button class="botao">Informações de cadastro</button>
+            <button class="botao"  onclick="window.location.href='{{ url_for( 'Informacoes_cadastroCliente')}}'">Informações de cadastro</button>
             <button class="botao">Recibos</button>
-            <button class="botao">Configurações</button>
+
         </div>
         <button class="sair" id="btnSair">Sair</button>
     </div>
@@ -55,7 +55,7 @@
     // Get the <span> element that closes the modal
     var span = document.getElementById("close");
 
-    // When the user clicks the button, open the modal 
+    // When the user clicks the button, open the modal
     btn.onclick = function () {
         modal.style.animationName = "fadeIn";
         modal.style.display = "flex";
