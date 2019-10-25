@@ -293,7 +293,12 @@ def CadastrarAtendimentos():
 
 @app.route('/Informaçoes de cadastro', methods=['GET', 'POST'])
 def Informacoes_cadastro():
-    return render_template('Informacoes_cadastro.html')
+    telefone = Profissional(session['id']).telefone
+    if len(telefone) == 11:
+        telefone = '({}) {}-{}'.format(telefone[0:2],telefone[2:7], telefone[7:])
+    else:
+        telefone = '({}) {}-{}'.format(telefone[0:2],telefone[2:6], telefone[6:])
+    return render_template('Informacoes_cadastro.html', nome=Profissional(session['id']).nome, cpf=Profissional(session['id']).cpf, profissao=Profissional(session['id']).profissao, registro=Profissional(session['id']).registro_profissional, telefone=telefone, nascimento=Profissional(session['id']).data_de_nascimento, email=Profissional(session['id']).email, cep=Profissional(session['id']).cep, endereco=Profissional(session['id']).endereco, numero=Profissional(session['id']).numero, complemento=Profissional(session['id']).complemento, cidade=Profissional(session['id']).cidade, estado=Profissional(session['id']).estado)
 
 if __name__ == '__main__':
     app.run(debug=True)

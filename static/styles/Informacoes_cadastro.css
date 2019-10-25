@@ -62,30 +62,70 @@ body {
 }
 
 .inputBox {
-  padding: 20px 0px;
-
+  padding: 10px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .input {
   background: #e7e7e7;
   border-radius: 100px;
   border-width: 0;
-  height: 50px;
-  width: 300px;
+  min-height: 70px;
+  width: 400px;
   font-size: 20px;
-  padding: 10px 50px 10px 50px;
-
-  transition: all 0.2s;
-  -webkit-transition: all 0.2s;
-  -o-transition: all 0.2s;
-  -moz-transition: all 0.2s;
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  cursor: default;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -moz-transition: all 0.3s;
 }
 
-.input:focus {
+.input:hover {
   outline: none;
-  height: 60px;
   box-shadow: 2px 2px 20px #ddd;
+  color: rgba(0, 0, 0, 0);
 }
+
+.txt {
+  position: absolute;
+  font-size: 14px;
+  color: #666666;
+  transition: all 0.4s;
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  opacity: 0;
+}
+
+.txt:hover{
+  color: #57b846;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.input:hover + .txt {
+  color: #57b846;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.txt:hover .input {
+  outline: none;
+  box-shadow: 2px 2px 20px #ddd;
+  color: rgba(0, 0, 0, 0);
+}
+
 
 .cpfError {
   color: rgb(221, 57, 57);
@@ -120,119 +160,9 @@ body {
   box-shadow: 2px 2px 20px #dadada;
 }
 
-.txt2 {
-  font-size: 14px;
-  color: #666666;
-  transition: all 0.4s;
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-}
-
-/* .txt2:focus {
-  outline: none !important;
-} */
-
-.txt2:hover {
-  color: #57b846;
-  cursor: pointer;
-}
-
-.container {
-  cursor: pointer;
-  font-size: 18px;
-}
-
-/* Hide the browser's default radio button */
-.container input {
-  visibility: hidden;
-  /* opacity: 0; */
-  /* cursor: pointer; */
-  padding: 0px 0px;
-}
-
-/* Create a custom radio button */
-.checkmark {
-  padding: 5px 15px;
-  background-color: #eee;
-  border-radius: 200px;
-}
-
-/* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
-  background-color: #ccc;
-}
-
-/* When the radio button is checked, add a green background */
-.container input:checked ~ .checkmark {
-  background-color: #239c55;
-}
-
 .table {
   display: flex;
   flex-direction: row;
-}
-
-.dropzoneB4 {
-  width: 300px;
-  height: 120px;
-  border: 2px dashed #ccc;
-  color: #ccc;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin-top: 10px;
-  border-radius: 20px;
-}
-
-.dropzoneAfter {
-  width: 300px;
-  height: 120px;
-  border: 2px dashed #ccc;
-  color: #ccc;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  margin-top: 10px;
-  border-radius: 20px;
-  border-color: #239c55;
-}
-
-.dropzoneB4.dragover {
-  border-color: #000;
-  color: #000;
-}
-
-.foto {
-  height: 110px;
-  width: 110px;
-  object-fit: cover;
-  border-radius: 17px;
-  margin-left: 3px;
-}
-
-.boxNome {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  height: 110px;
-  width: 180px;
-}
-
-.fa-times-circle{
-  padding-top: 5px;
-  font-size: 30px;
-  color:  #ccc;
-}
-
-.fa-times-circle:hover{
-  color: rgb(221, 57, 57);
-  cursor: pointer;
 }
 
 .icon {
@@ -240,21 +170,13 @@ body {
   font-size: 40px;
   margin: 15px;
   color: white;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -moz-transition: all 0.3s;
 }
 
-.icon:hover{
+.icon:hover {
   color: rgb(218, 218, 218);
   cursor: pointer;
-}
-
-.modal {
-  background: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-  position: absolute;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 400px;
-  padding-bottom: 20px;
 }
