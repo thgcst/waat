@@ -302,8 +302,13 @@ def Informacoes_cadastroPro():
 
 @app.route('/Informaçoes de cadastro do Cliente', methods=['GET', 'POST'])
 def Informacoes_cadastroCliente():
+    telefone = Cliente(session['id']).telefone
+    if len(telefone) == 11:
+        telefone = '({}) {}-{}'.format(telefone[0:2],telefone[2:7], telefone[7:])
+    else:
+        telefone = '({}) {}-{}'.format(telefone[0:2],telefone[2:6], telefone[6:])
 
-    return render_template('Informacoes_cadastroCliente.html')
+    return render_template('Informacoes_cadastroCliente.html', nome=Cliente(session['id']).nome, cpf=Cliente(session['id']).cpf, telefone=telefone, nascimento=Cliente(session['id']).data_de_nascimento, email=Cliente(session['id']).email, cep=Cliente(session['id']).cep, endereco=Cliente(session['id']).endereco, numero=Cliente(session['id']).numero, complemento=Cliente(session['id']).complemento, cidade=Cliente(session['id']).cidade, estado=Cliente(session['id']).estado)
 
 if __name__ == '__main__':
     app.run(debug=True)
