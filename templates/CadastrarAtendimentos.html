@@ -13,7 +13,7 @@
     <!-- <link rel="stylesheet" type="text/css" href="../static/styles/login.css"> -->
 
 
-    <title>Cadastro_atendimentos</title>
+    <title>Cadastro atendimentos</title>
 </head>
 
 <body>
@@ -21,10 +21,10 @@
     <div class="container-login100" id="container">
         <div class="wrap-login100" id="wrap">
             <form method="POST" style="text-align: center">
-                <h1 class="welcome">Criar recibo</h1>
+                <h1 class="welcome">Cadastrar atendimento</h1>
                 <!--CPF do cliente -->
                 <div class="inputBox">
-                    <input type="tel" name="cpf" id="cpf" placeholder="CPF do cliente" value="{{ request.form.cpf }}"
+                    <input type="tel" name="cpfCliente" id="cpf" placeholder="CPF do cliente" value="{{ request.form.cpfCliente }}"
                         class="input" maxlength="14" onblur="validarCPF('cpf')"
                         oninput="this.value = CPF(`cpf`, this.value, event)" />
                 </div>
@@ -45,7 +45,7 @@
                 </div>
                 <!-- Data do atendimento -->
                 <div class="inputBox">
-                    <input type="tel" name="data" placeholder="Data do atendimento" value="{{request.form.nascimento }}"
+                    <input type="tel" name="dataConsulta" placeholder="Data do atendimento" value="{{request.form.dataConsulta }}"
                         class="input" oninput="this.value = DDMMYYYY(this.value, event)" maxlength="10" id="nascimento"/>
                 </div>
                 <!-- Valor do atendimento -->
@@ -56,7 +56,7 @@
                 <!-- Submit -->
                 <div class="inputBox" style="padding-top: 30px; padding-bottom: 30px;">
                     <button class="botao" type="submit"
-                        onclick="document.getElementById('form').submit()">Entrar</button>
+                        onclick="document.getElementById('form').submit()">Cadastrar</button>
                 </div>
             </form>
         </div>

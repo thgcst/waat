@@ -118,6 +118,12 @@ def verifica_id_profissional(id):
     id_no_bd = bool(len(select("id_profissional", 'profissionais', id)))
     return id_no_bd
 
+def verifica_id_atendimento(id):
+    """retorna True se o atendimento já está cadastrado e False c.c."""
+    id = "id_atendimento="+str(id)
+    id_no_bd = bool(len(select("id_atendimento", 'atendimentos', id)))
+    return id_no_bd
+
 def verifica_cpf(cpf, tabela):
     """retorna True se o cpf já está cadastrado e False c.c."""
     cpf = "cpf="+str(cpf)
@@ -164,10 +170,10 @@ def cpf_id(cpf, tabela):
 
 def gera_id():
     id_gerado = random.randint(1,100)
-    id_no_bd = (verifica_id_cliente(id_gerado) or verifica_id_profissional(id_gerado))
+    id_no_bd = (verifica_id_cliente(id_gerado) or verifica_id_profissional(id_gerado) or verifica_id_atendimento(id_gerado))
     while id_no_bd:        
         id_gerado = random.randint(1,100)
-        id_no_bd = (verifica_id_cliente(id_gerado) or verifica_id_profissional(id_gerado))
+        id_no_bd = (verifica_id_cliente(id_gerado) or verifica_id_profissional(id_gerado) or verifica_id_atendimento(id_gerado))
     return id_gerado
 
 
@@ -187,6 +193,14 @@ def cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone,
     domain_mail = separa_email(email)[1]
     sql = "INSERT INTO profissionais (id_profissional, nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, user_mail, domain_mail, senha, cep, endereco, numero, complemento, cidade, estado) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     data = (id_profissional, nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, user_mail, domain_mail, senha, cep, endereco, numero, complemento, cidade, estado)
+    cursor.execute(sql, data)
+    con.commit()
+
+def cadastra_atendimento(cpfProfissional, cpfCliente, dataConsulta, dataGerado, valor):
+    '''(cpfProfissional, cpfCliente, dataConsulta, dataGerado, valor)'''
+    id_atendimento = gera_id()
+    sql = "INSERT INTO atendimentos (id_atendimento, cpfProfissional, cpfCliente, dataConsulta, dataGerado, valor) VALUES(%s,%s,%s,%s,%s,%s)"
+    data = (id_atendimento, cpfProfissional, cpfCliente, dataConsulta, dataGerado, valor)
     cursor.execute(sql, data)
     con.commit()
 

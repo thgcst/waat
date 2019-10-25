@@ -3,6 +3,7 @@ import pdfkit
 import controler, teste
 from flask_mail import Mail, Message
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import date
 
 app = Flask(__name__)
 
@@ -279,6 +280,15 @@ def RecibosProfissional():
 
 @app.route('/Cadastrar_atendimentos', methods=['GET', 'POST'])
 def CadastrarAtendimentos():
+    if request.method == "POST":
+        cpfProfissional = Profissional(session['id']).cpf
+        cpfCliente = controler.limpa_cpf(request.form["cpfCliente"])
+        dataConsulta = request.form["dataConsulta"]
+        dataGerado = date.today().strftime("%d/%m/%Y")
+        valor = request.form["valor"]
+        controler.cadastra_atendimento(cpfProfissional, cpfCliente, dataConsulta, dataGerado, valor)
+        redirect(url_for('RecibosProfissional'))
+
     return render_template('CadastrarAtendimentos.html')
 
 
