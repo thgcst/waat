@@ -17,17 +17,19 @@
 </head>
 
 <body>
-    <i class="fa icon" style="font-size: 40px;" onclick="window.location.href='{{ url_for( 'RecibosProfissional')}}'">&#xf0a8;</i>
+    <i class="fa icon" style="font-size: 40px;"
+        onclick="window.location.href='{{ url_for( 'RecibosProfissional')}}'">&#xf0a8;</i>
     <div class="container-login100" id="container">
         <div class="wrap-login100" id="wrap">
             <form method="POST" id="form" style="text-align: center">
                 <h1 class="welcome">Cadastrar atendimento</h1>
                 <!--CPF do cliente -->
-                <form class="inputBox" method="POST" id="cpfForm">
-                    <input type="tel" name="cpfCliente" id="cpf" placeholder="CPF do cliente" value="{{ request.form.cpfCliente }}"
-                        class="input" maxlength="14" onblur="validarCPF('cpf');document.getElementById('cpfForm').submit()"
+                <div class="inputBox">
+                    <input type="tel" name="cpfCliente" id="cpf" placeholder="CPF do cliente"
+                        value="{{ request.form.cpfCliente }}" class="input" maxlength="14"
+                        onblur="validarCPF('cpf');document.getElementById('cpfForm').submit()"
                         oninput="this.value = CPF(`cpf`, this.value, event)" />
-                </form>
+                </div>
                 <!-- Nome do cliente -->
                 <div class="inputBox">
                     <input type="text" name="nome" placeholder="Nome do cliente" value="{{
@@ -45,13 +47,14 @@
                 </div>
                 <!-- Data do atendimento -->
                 <div class="inputBox">
-                    <input type="tel" name="dataConsulta" placeholder="Data do atendimento" value="{{request.form.dataConsulta }}"
-                        class="input" oninput="this.value = DDMMYYYY(this.value, event)" maxlength="10" id="nascimento"/>
+                    <input type="tel" name="dataConsulta" placeholder="Data do atendimento"
+                        value="{{request.form.dataConsulta }}" class="input"
+                        oninput="this.value = DDMMYYYY(this.value, event)" maxlength="10" id="dataConsulta" />
                 </div>
                 <!-- Valor do atendimento -->
                 <div class="inputBox" id="telefone">
                     <input type="tel" name="valor" id="valor" placeholder="Valor do atendimento" value="{{
-                request.form.valor }}" class="input"  oninput="this.value = DINHEIRO(this.value, event)" />
+                request.form.valor }}" class="input" oninput="this.value = DINHEIRO(this.value, event)" />
                 </div>
                 <!-- Submit -->
                 <div class="inputBox" style="padding-top: 30px; padding-bottom: 30px;">
@@ -179,7 +182,7 @@
 
         console.log(len);
 
-        return newValue.split('').map((v, i) => len-i == 3 && len >= 4 ? v + "," : v).join('');
+        return newValue.split('').map((v, i) => len - i == 3 && len >= 4 ? v + "," : v).join('');
     };
 </script>
 

@@ -286,6 +286,7 @@ def CadastrarAtendimentos():
         dataConsulta = request.form["dataConsulta"]
         dataGerado = date.today().strftime("%d/%m/%Y")
         valor = request.form["valor"]
+        app.logger.info([cpfProfissional, cpfCliente, dataConsulta, dataGerado, valor])
         controler.cadastra_atendimento(cpfProfissional, cpfCliente, dataConsulta, dataGerado, valor)
         redirect(url_for('RecibosProfissional'))
 
@@ -307,8 +308,10 @@ def Informacoes_cadastroCliente():
         telefone = '({}) {}-{}'.format(telefone[0:2],telefone[2:7], telefone[7:])
     else:
         telefone = '({}) {}-{}'.format(telefone[0:2],telefone[2:6], telefone[6:])
+    cpf = Cliente(session['id']).cpf
+    cpf = '{}.{}.{}-{}'.format(cpf[0:3],cpf[3:6],cpf[6:9],cpf[9:])
 
-    return render_template('Informacoes_cadastroCliente.html', nome=Cliente(session['id']).nome, cpf=Cliente(session['id']).cpf, telefone=telefone, nascimento=Cliente(session['id']).data_de_nascimento, email=Cliente(session['id']).email, cep=Cliente(session['id']).cep, endereco=Cliente(session['id']).endereco, numero=Cliente(session['id']).numero, complemento=Cliente(session['id']).complemento, cidade=Cliente(session['id']).cidade, estado=Cliente(session['id']).estado)
+    return render_template('Informacoes_cadastroCliente.html', nome=Cliente(session['id']).nome, cpf=cpf, telefone=telefone, nascimento=Cliente(session['id']).data_de_nascimento, email=Cliente(session['id']).email, cep=Cliente(session['id']).cep, endereco=Cliente(session['id']).endereco, numero=Cliente(session['id']).numero, complemento=Cliente(session['id']).complemento, cidade=Cliente(session['id']).cidade, estado=Cliente(session['id']).estado)
 
 if __name__ == '__main__':
     app.run(debug=True)

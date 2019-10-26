@@ -45,9 +45,6 @@
                                     Alterar
                                 </div>
                             </div>
-                            <!--profissao-->
-                            <!--Registro Profissional-->
-
                             <!--telefone-->
                             <div class="inputBox">
                                 <div type="div" class="input"><strong>Telefone:&nbsp;</strong> {{telefone}}
@@ -151,17 +148,16 @@
 
 
     <script>
-        // window.onmouseover = function (e) {
-        //     if (e.target.className == "input") {
-        //         console.log("hoverou")
-        //         e.target.className = "input2";
-        //         e.target.onmouseleave = function (e) {
-        //             console.log("saiu");
-        //             e.target.className = "input";
+        function trocaTag(){
+            var elem = document.querySelectorAll(".input");
+            for(var i = 0; i < elem.length; i++){
+                console.log(elem[i].tagName);
+                document.renameNode(elem[i], null, "input");
+                console.log(elem[i].tagName);
+            }
+        }
 
-        //         }
-        //     }
-        // };
+        trocaTag();
     </script>
 
 
