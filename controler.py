@@ -159,7 +159,7 @@ def verifica_idade(data_de_nascimento):
         return False
         
 def cpf_id(cpf, tabela):
-    """Retorna a senha correspondente ao cpf"""
+    """Retorna o id correspondente ao cpf"""
     cpf = "cpf="+str(cpf)
     if tabela == 'clientes':
         id = select("id_cliente", tabela, cpf)
@@ -196,11 +196,9 @@ def cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone,
     cursor.execute(sql, data)
     con.commit()
 
-def cadastra_atendimento(cpfProfissional, cpfCliente, dataConsulta, dataGerado, valor):
-    '''(cpfProfissional, cpfCliente, dataConsulta, dataGerado, valor)'''
-    id_atendimento = gera_id()
-    sql = "INSERT INTO atendimentos (id_atendimento, cpfProfissional, cpfCliente, dataConsulta, dataGerado, valor) VALUES(%s,%s,%s,%s,%s,%s)"
-    data = (id_atendimento, cpfProfissional, cpfCliente, dataConsulta, dataGerado, valor)
+def cadastra_atendimento(id_profissional, id_cliente, valor ,data_consulta, data_gerado):
+    sql = "INSERT INTO atendimentos (id_atendimento, id_profissional, id_cliente, valor, data_consulta, data_gerado) VALUES(%s,%s,%s,%s,%s,%s)"
+    data = ('DEFAULT', id_profissional, id_cliente, valor, data_consulta, data_gerado)
     cursor.execute(sql, data)
     con.commit()
 
