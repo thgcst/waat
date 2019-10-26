@@ -17,7 +17,8 @@
 </head>
 
 <body>
-    <i class="fa icon" style="font-size: 40px;" onclick="window.location.href='{{ url_for( 'RecibosProfissional')}}valor'">&#xf0a8;</i>
+    <i class="fa icon" style="font-size: 40px;"
+        onclick="window.location.href='{{ url_for( 'RecibosProfissional')}}valor'">&#xf0a8;</i>
     <div class="container-login100" id="container">
         <div class="wrap-login100" id="wrap">
             <form method="POST" id="form" style="text-align: center">
@@ -26,23 +27,20 @@
                 <div class="inputBox">
                     <input type="tel" name="cpfCliente" id="cpf" placeholder="CPF do cliente"
                         value="{{ request.form.cpfCliente }}" class="input" maxlength="14"
-                        onblur="validarCPF('cpf');document.getElementById('cpfForm').submit()"
+                        onblur="validarCPF('cpf')"
                         oninput="this.value = CPF(`cpf`, this.value, event)" />
                 </div>
                 <!-- Nome do cliente -->
                 <div class="inputBox">
-                    <input type="text" name="nome" placeholder="Nome do cliente" value="{{
-                request.form.nome }}" class="input" />
+                    <input type="text" name="nome" placeholder="Nome do cliente" value="{{ nome and nome or request.form.nome }}" class="input" />
                 </div>
                 <!-- Email do cliente -->
                 <div class="inputBox">
-                    <input type="email" name="email" placeholder="E-mail do cliente" value="{{
-                request.form.email }}" class="input" />
+                    <input type="email" name="email" placeholder="E-mail do cliente" value="{{ email and email or request.form.email }}" class="input" />
                 </div>
                 <!-- Telefone do cliente -->
                 <div class="inputBox" id="telefone">
-                    <input type="tel" name="telefone" placeholder="Telefone do cliente" value="{{
-                request.form.telefone }}" class="input" maxlength="14" oninput="this.value = TEL(this.value, event)" />
+                    <input type="tel" name="telefone" placeholder="Telefone do cliente" value="{{ telefone and telefone or request.form.telefone }}" class="input" maxlength="14" oninput="this.value = TEL(this.value, event)" />
                 </div>
                 <!-- Data do atendimento -->
                 <div class="inputBox">
@@ -57,7 +55,7 @@
                 </div>
                 <!-- Submit -->
                 <div class="inputBox" style="padding-top: 30px; padding-bottom: 30px;">
-                    <button class="botao" type="submit"
+                    <button class="botao" type="submit" id="botaoSubmit"
                         onclick="document.getElementById('form').submit()">Cadastrar</button>
                 </div>
             </form>
@@ -147,6 +145,12 @@
                 document.getElementById(id).value = "CPF Inválido";
                 document.getElementById(id).className = "input cpfError";
             }
+            else{
+                document.getElementById('botaoSubmit').click();
+            }
+        }
+        else{
+            document.getElementById(id).className = "input cpfError";
         }
     }
 
