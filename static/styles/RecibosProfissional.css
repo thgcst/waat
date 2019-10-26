@@ -23,6 +23,7 @@ body {
 
 .container-login100 {
   width: 100%;
+  height: 100%;
   min-height: 70vh;
   display: -webkit-box;
   display: -webkit-flex;
@@ -30,6 +31,7 @@ body {
   display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 15px;
@@ -42,10 +44,10 @@ body {
 
 .wrap-login100 {
   /* width: 960px; */
-  background: #fff;
+  background: none;
   border-radius: 20px;
   overflow: hidden;
-  position: absolute;
+  position: relative;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -53,7 +55,6 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 90%;
   max-width: 1050px;
 
   -webkit-animation-name: none; /* Fade in the background */
@@ -63,9 +64,7 @@ body {
 }
 
 .inputBox {
-  padding: 18px;
-
-
+  margin-bottom: 20px
 }
 
 .input {
@@ -99,8 +98,7 @@ body {
 table {
   border-collapse: collapse;
   border-radius: 20px;
-  width: 100%;
-
+  /* width: 100%; */
 }
 
 th, td {

@@ -276,7 +276,14 @@ def enviaEmail():
 
 @app.route('/Recibos', methods=['GET', 'POST'])
 def RecibosProfissional():
-    return render_template('RecibosProfissional.html')
+    id_profissional = session['id']
+    recibos = controler.select("*", "atendimentos", "id_profissional="+id_profissional)
+    recibosNew = []
+    for recibo in recibos:
+        recibo = list(recibo)
+        recibo.append(controler.select("nome", "clientes", "id_cliente=" + str(recibo[1]))[0][0])
+        recibosNew.append(recibo)
+    return render_template('RecibosProfissional.html', recibos=recibosNew)
 
 @app.route('/Cadastrar_atendimentos', methods=['GET', 'POST'])
 def CadastrarAtendimentos():
