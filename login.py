@@ -274,7 +274,7 @@ def enviaEmail():
     mail.send(msg)
     return 'Email enviado'
 
-@app.route('/RecibosProfissional', methods=['GET', 'POST'])
+@app.route('/recibos profissional', methods=['GET', 'POST'])
 def RecibosProfissional():
     id_profissional = session['id']
     recibos = controler.select("*", "atendimentos", "id_profissional="+id_profissional)
@@ -285,14 +285,26 @@ def RecibosProfissional():
         recibosNew.append(recibo)
     return render_template('RecibosProfissional.html', recibos=recibosNew)
 
-@app.route('/Cadastrar_atendimentos', methods=['GET', 'POST'])
+@app.route('/recibos cliente', methods=['GET', 'POST'])
+def RecibosCliente():
+    id_cliente = session['id']
+    recibos = controler.select("*", "atendimentos", "id_cliente="+id_cliente)
+    recibosNew = []
+    for recibo in recibos:
+        recibo = list(recibo)
+        recibo.append(controler.select("nome", "profissionais", "id_profissional=" + str(recibo[2]))[0][0])
+        recibo.append(controler.select("profissao", "profissionais", "id_profissional=" + str(recibo[2]))[0][0])
+        recibosNew.append(recibo)
+    return render_template('RecibosCliente.html', recibos=recibosNew)
+
+@app.route('/cadastrar atendimentos', methods=['GET', 'POST'])
 def CadastrarAtendimentos():
     nome = None
     email = None
     telefone = None
     if request.method == 'POST':
 
-        if request.form["nome"] != controler.select("nome","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]:
+        if request.form["nome"] != controler.select("nome","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]: #Essa sequência de 3 if's é pra completar o preencher automaticamente
             nome = controler.select("nome","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]
         if request.form["email"] != controler.select("email","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]:
             email = controler.select("email","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]
@@ -303,14 +315,13 @@ def CadastrarAtendimentos():
             else:
                 telefone = '({}){}-{}'.format(telefone[0:2],telefone[2:6], telefone[6:])
         
-
-        # id_profissional = session['id']
-        # id_cliente = controler.cpf_id(controler.limpa_cpf(request.form['cpfCliente']), 'clientes')
-        # data_consulta = request.form['dataConsulta']
-        # data_gerado = date.today().strftime("%d/%m/%Y")
-        # valor = request.form['valor']
-        # controler.cadastra_atendimento(id_profissional, id_cliente, valor, data_consulta, data_gerado)
-        # return redirect(url_for('RecibosProfissional'))
+        id_profissional = session['id']
+        id_cliente = controler.cpf_id(controler.limpa_cpf(request.form['cpfCliente']), 'clientes')
+        data_consulta = request.form['dataConsulta']
+        data_gerado = date.today().strftime("%d/%m/%Y")
+        valor = request.form['valor']
+        controler.cadastra_atendimento(id_profissional, id_cliente, valor, data_consulta, data_gerado)
+        return redirect(url_for('RecibosProfissional'))
     return render_template('CadastrarAtendimentos.html', nome=nome, email=email, telefone=telefone)
 
 @app.route('/Informaçoes de cadastro do Profissional', methods=['GET', 'POST'])

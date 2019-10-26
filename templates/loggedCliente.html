@@ -19,9 +19,8 @@
     <div class="container-login100">
         <strong class="greetings">Bem vindo, {{ cliente.split()[0] }}!</strong>
         <div class="botoes">
-            <button class="botao"  onclick="window.location.href='{{ url_for( 'Informacoes_cadastroCliente')}}'">Informações de cadastro</button>
-            <button class="botao">Recibos</button>
-
+            <button class="botao" onclick="window.location.href='{{ url_for( 'Informacoes_cadastroCliente')}}'">Informações de cadastro</button>
+            <button class="botao"  onclick="window.location.href='{{ url_for( 'RecibosCliente')}}'">Recibos</button>
         </div>
         <button class="sair" id="btnSair">Sair</button>
     </div>

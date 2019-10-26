@@ -16,21 +16,17 @@
 </head>
 
 <body>
-    <i class="fa icon" onclick="window.location.href='{{ url_for( 'loggedProfissional')}}'">&#xf0a8;</i>
+    <i class="fa icon" onclick="window.location.href='{{ url_for( 'loggedCliente')}}'">&#xf0a8;</i>
 
     <div class="container-login100" id="container">
-        <div style="width: 90%; max-width: 1050px;" align="right">
-            <div class="inputBox" style="padding-bottom: 0px;">
-                <button class="botao" type="submit"
-                    onclick="window.location.href='{{ url_for( 'CadastrarAtendimentos')}}';">Cadastrar novo
-                    antendimento</button>
-            </div>
+        <div style="width: 90%; max-width: 1050px;">
             <div class="wrap-login100" id="wrap">
                 <table id="table">
                     <tr>
                         <th>Data do atendimento</th>
                         <th>Recibo</th>
-                        <th>Cliente</th>
+                        <th>Profissional</th>
+                        <th>Área</th>
                         <th>Valor</th>
                     </tr>
                 </table>
@@ -44,6 +40,7 @@
                                 </a>
                             </td>
                             <td>{{recibo[7]}}</td>
+                            <td>{{recibo[8]}}</td>
                             <td>{{recibo[4]}}</td>
 
                         </tr>
