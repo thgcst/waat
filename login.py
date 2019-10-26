@@ -280,15 +280,14 @@ def RecibosProfissional():
 
 @app.route('/Cadastrar_atendimentos', methods=['GET', 'POST'])
 def CadastrarAtendimentos():
-    if request.method == "POST":
-        cpfProfissional = Profissional(session['id']).cpf
-        cpfCliente = controler.limpa_cpf(request.form["cpfCliente"])
-        dataConsulta = request.form["dataConsulta"]
-        dataGerado = date.today().strftime("%d/%m/%Y")
-        valor = request.form["valor"]
-        controler.cadastra_atendimento(cpfProfissional, cpfCliente, dataConsulta, dataGerado, valor)
-        redirect(url_for('RecibosProfissional'))
-
+    if request.method == 'POST':
+        id_profissional = session['id']
+        id_cliente = controler.cpf_id(controler.limpa_cpf(request.form['cpfCliente']), 'clientes')
+        data_consulta = request.form['dataConsulta']
+        data_gerado = date.today().strftime("%d/%m/%Y")
+        valor = request.form['valor']
+        controler.cadastra_atendimento(id_profissional, id_cliente, valor, data_consulta, data_gerado)
+        return redirect(url_for('RecibosProfissional'))
     return render_template('CadastrarAtendimentos.html')
 
 @app.route('/Informaçoes de cadastro do Profissional', methods=['GET', 'POST'])
