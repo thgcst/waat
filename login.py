@@ -274,7 +274,7 @@ def enviaEmail():
     mail.send(msg)
     return 'Email enviado'
 
-@app.route('/Recibos', methods=['GET', 'POST'])
+@app.route('/RecibosProfissional', methods=['GET', 'POST'])
 def RecibosProfissional():
     id_profissional = session['id']
     recibos = controler.select("*", "atendimentos", "id_profissional="+id_profissional)
