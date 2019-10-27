@@ -276,6 +276,15 @@ def enviaEmail():
 
 @app.route('/recibos profissional', methods=['GET', 'POST'])
 def RecibosProfissional():
+    def sortData(val):
+        data = val[5][6:] + val[5][3:5] + val[5][0:2]
+        app.logger.warning(data)
+        return int(data)
+    def sortNome(val): 
+        return val[7]
+    def sortValor(val): 
+        valor = val[4].replace("R$","").replace(",","")
+        return int(valor)
     id_profissional = session['id']
     recibos = controler.select("*", "atendimentos", "id_profissional="+id_profissional)
     recibosNew = []
@@ -283,13 +292,19 @@ def RecibosProfissional():
         recibo = list(recibo)
         recibo.append(controler.select("nome", "clientes", "id_cliente=" + str(recibo[1]))[0][0])
         recibosNew.append(recibo)
+    if request.method == "POST":
+        if "data" in request.form:
+            recibosNew.sort(key = sortData)
+        elif "nome" in request.form:
+            recibosNew.sort(key = sortNome)
+        elif "valor" in request.form:
+            recibosNew.sort(key = sortValor)
     return render_template('RecibosProfissional.html', recibos=recibosNew)
 
 @app.route('/recibos cliente', methods=['GET', 'POST'])
 def RecibosCliente():
     def sortData(val):
         data = val[5][6:] + val[5][3:5] + val[5][0:2]
-        app.logger.warning(data)
         return int(data)
     def sortNome(val): 
         return val[7]

@@ -19,11 +19,23 @@
     <i class="fa icon" onclick="window.location.href='{{ url_for( 'loggedProfissional')}}'">&#xf0a8;</i>
 
     <div class="container-login100" id="container">
-        <div style="width: 90%; max-width: 1050px;" align="right">
-            <div class="inputBox" style="padding-bottom: 0px;">
-                <button class="botao" type="submit"
-                    onclick="window.location.href='{{ url_for( 'CadastrarAtendimentos')}}';">Cadastrar novo
-                    antendimento</button>
+        <div style="width: 90%; max-width: 1050px;">
+            <div style="display: flex;flex-direction: row; justify-content: space-between;">
+                <div class="inputBox" style="padding-bottom: 0px;">
+                    <button class="botao" type="submit"
+                        onclick="window.location.href='{{ url_for( 'CadastrarAtendimentos')}}';">Cadastrar novo
+                        antendimento</button>
+                </div>
+                <div class="dropdown" style="margin-bottom: 15px">
+                    <button class="botao botao2">Ordenar por</button>
+                    <div class="dropdown-content">
+                        <form method="POST" id="form">
+                            <input type="submit" class="option" name="data" value="Data de atendimento" onclick="document.getElementById('form').submit()">
+                            <input type="submit" class="option" name="nome" value="Nome do cliente" onclick="document.getElementById('form').submit()">
+                            <input type="submit" class="option" name="valor" value="Valor" onclick="document.getElementById('form').submit()">
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="wrap-login100" id="wrap">
                 <table id="table">
