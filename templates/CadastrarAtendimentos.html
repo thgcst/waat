@@ -47,8 +47,8 @@
                 </div>
                 <!-- Data do atendimento -->
                 <div class="inputBox">
-                    <input type="tel" name="dataConsulta" placeholder="Data do atendimento"
-                        value="{{request.form.dataConsulta }}" class="input"
+                    <input type="tel" id="data" name="dataConsulta" placeholder="Data do atendimento"
+                        value="{{request.form.dataConsulta }}" class="input" onblur="validaData()"
                         oninput="this.value = DDMMYYYY(this.value, event)" maxlength="10" id="dataConsulta" />
                 </div>
                 <!-- Valor do atendimento -->
@@ -75,6 +75,8 @@
 
 <script>
     function DDMMYYYY(value, event) {
+        document.getElementById("data").className = "input";
+
         let newValue = value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
 
         const dayOrMonth = (index) => index % 2 === 1 && index < 4;
@@ -86,6 +88,13 @@
 
         return newValue.split('').map((v, i) => dayOrMonth(i) ? v + '/' : v).join('');
     };
+
+    function validaData(){
+        var data = document.getElementById("data").value;
+        if(data.length != 10){
+            document.getElementById("data").className = "input cpfError";
+        }
+    }
 
     function CPF(id, value, event) {
         document.getElementById(id).className = 'input'

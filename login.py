@@ -287,6 +287,17 @@ def RecibosProfissional():
 
 @app.route('/recibos cliente', methods=['GET', 'POST'])
 def RecibosCliente():
+    def sortData(val):
+        data = val[5][6:] + val[5][3:5] + val[5][0:2]
+        app.logger.warning(data)
+        return int(data)
+    def sortNome(val): 
+        return val[7]
+    def sortArea(val): 
+        return val[8]
+    def sortValor(val): 
+        valor = val[4].replace("R$","").replace(",","")
+        return int(valor)
     id_cliente = session['id']
     recibos = controler.select("*", "atendimentos", "id_cliente="+id_cliente)
     recibosNew = []
@@ -295,6 +306,15 @@ def RecibosCliente():
         recibo.append(controler.select("nome", "profissionais", "id_profissional=" + str(recibo[2]))[0][0])
         recibo.append(controler.select("profissao", "profissionais", "id_profissional=" + str(recibo[2]))[0][0])
         recibosNew.append(recibo)
+    if request.method == "POST":
+        if "data" in request.form:
+            recibosNew.sort(key = sortData)
+        elif "nome" in request.form:
+            recibosNew.sort(key = sortNome)
+        elif "area" in request.form:
+            recibosNew.sort(key = sortArea)
+        elif "valor" in request.form:
+            recibosNew.sort(key = sortValor)
     return render_template('RecibosCliente.html', recibos=recibosNew)
 
 @app.route('/cadastrar atendimentos', methods=['GET', 'POST'])
