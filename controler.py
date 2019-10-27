@@ -191,6 +191,8 @@ def cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone,
     id_profissional = gera_id()
     user_mail = separa_email(email)[0]
     domain_mail = separa_email(email)[1]
+    if registro_profissional == "":
+        registro_profissional = "-"
     sql = "INSERT INTO profissionais (id_profissional, nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, user_mail, domain_mail, senha, cep, endereco, numero, complemento, cidade, estado) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     data = (id_profissional, nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, user_mail, domain_mail, senha, cep, endereco, numero, complemento, cidade, estado)
     cursor.execute(sql, data)

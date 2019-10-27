@@ -46,6 +46,8 @@ function create(htmlStr) {
 }
 
 function showUploadedImage(foto, nome) {
+  document.getElementsByName("foto")[0].value = foto;
+
   var box = document.getElementById("dropzone");
 
   box.removeChild(box.firstChild); 

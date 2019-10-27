@@ -18,7 +18,7 @@
 
 <body>
     <i class="fa icon" style="font-size: 40px;"
-        onclick="window.location.href='{{ url_for( 'RecibosProfissional')}}valor'">&#xf0a8;</i>
+        onclick="window.location.href='{{ url_for( 'RecibosProfissional')}}'">&#xf0a8;</i>
     <div class="container-login100" id="container">
         <div class="wrap-login100" id="wrap">
             <form method="POST" id="form" style="text-align: center">
@@ -26,21 +26,24 @@
                 <!--CPF do cliente -->
                 <div class="inputBox">
                     <input type="tel" name="cpfCliente" id="cpf" placeholder="CPF do cliente"
-                        value="{{ request.form.cpfCliente }}" class="input" maxlength="14"
-                        onblur="validarCPF('cpf')"
+                        value="{{ request.form.cpfCliente }}" class="input" maxlength="14" onblur="validarCPF('cpf')"
                         oninput="this.value = CPF(`cpf`, this.value, event)" />
                 </div>
                 <!-- Nome do cliente -->
                 <div class="inputBox">
-                    <input type="text" name="nome" placeholder="Nome do cliente" value="{{ nome and nome or request.form.nome }}" class="input" />
+                    <input type="text" name="nome" placeholder="Nome do cliente"
+                        value="{{ nome and nome or request.form.nome }}" class="input" />
                 </div>
                 <!-- Email do cliente -->
                 <div class="inputBox">
-                    <input type="email" name="email" placeholder="E-mail do cliente" value="{{ email and email or request.form.email }}" class="input" />
+                    <input type="email" name="email" placeholder="E-mail do cliente"
+                        value="{{ email and email or request.form.email }}" class="input" />
                 </div>
                 <!-- Telefone do cliente -->
                 <div class="inputBox" id="telefone">
-                    <input type="tel" name="telefone" placeholder="Telefone do cliente" value="{{ telefone and telefone or request.form.telefone }}" class="input" maxlength="14" oninput="this.value = TEL(this.value, event)" />
+                    <input type="tel" name="telefone" placeholder="Telefone do cliente"
+                        value="{{ telefone and telefone or request.form.telefone }}" class="input" maxlength="14"
+                        oninput="this.value = TEL(this.value, event)" />
                 </div>
                 <!-- Data do atendimento -->
                 <div class="inputBox">
@@ -49,14 +52,17 @@
                         oninput="this.value = DDMMYYYY(this.value, event)" maxlength="10" id="dataConsulta" />
                 </div>
                 <!-- Valor do atendimento -->
-                <div class="inputBox" id="telefone">
+                <div class="inputBox">
                     <input type="tel" name="valor" id="valor" placeholder="Valor do atendimento" value="{{
                 request.form.valor }}" class="input" oninput="this.value = DINHEIRO(this.value, event)" />
                 </div>
+                {% if error %}
+                <p class="error" style="text-align: center; color: #e74c3c; font-size: 14px">{{ error }}
+                    {% endif %}
                 <!-- Submit -->
                 <div class="inputBox" style="padding-top: 30px; padding-bottom: 30px;">
-                    <button class="botao" type="submit" id="botaoSubmit"
-                        onclick="document.getElementById('form').submit()">Cadastrar</button>
+                    <input class="botao" type="submit" id="botao" name="botao" value="Enviar"
+                        onclick="document.getElementById('form').submit()">
                 </div>
             </form>
         </div>
@@ -103,7 +109,8 @@
 
     function validarCPF(id) {
         var cpf = document.getElementById(id).value
-        if (cpf.length == 14) {
+        var digitos = cpf.length
+        if (digitos == 14) {
             function valida() {
                 cpf = cpf.replace(/[^\d]+/g, '');
                 if (cpf == '') return false;
@@ -145,11 +152,14 @@
                 document.getElementById(id).value = "CPF Inválido";
                 document.getElementById(id).className = "input cpfError";
             }
-            else{
-                document.getElementById('botaoSubmit').click();
+            else {
+                if (digitos == 14) {
+                    // document.getElementById('botao').click()
+                    document.getElementById("form").submit();
+                };
             }
         }
-        else{
+        else {
             document.getElementById(id).className = "input cpfError";
         }
     }
@@ -182,8 +192,6 @@
         newValue = "R$" + newValue;
 
         var len = newValue.split('').length;
-
-        console.log(len);
 
         return newValue.split('').map((v, i) => len - i == 3 && len >= 4 ? v + "," : v).join('');
     };

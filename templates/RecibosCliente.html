@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/RecibosProfissional.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/RecibosCliente.css') }}">
     <!-- <link rel="stylesheet" type="text/css" href="../static/styles/login.css"> -->
 
 
@@ -20,6 +20,24 @@
 
     <div class="container-login100" id="container">
         <div style="width: 90%; max-width: 1050px;">
+            <div style="display: flex;flex-direction: row; justify-content: space-between;">
+                <div class="inputBox" style="padding-bottom: 0px;">
+                    <button class="botao" type="submit"
+                        onclick="window.location.href='{{ url_for( 'CadastrarAtendimentos')}}';">Cadastrar novo
+                        antendimento</button>
+                </div>
+                <div class="dropdown">
+                    <button class="botao botao2">Ordenar por</button>
+                    <div class="dropdown-content">
+                        <form method="POST">
+                            <a type="submit" name="data">Data de atendimento</a>
+                            <a type="submit" name="nome">Nome do profissional</a>
+                            <a type="submit" name="area">Área</a>
+                            <a type="submit" name="valor">Valor</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="wrap-login100" id="wrap">
                 <table id="table">
                     <tr>

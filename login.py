@@ -150,7 +150,7 @@ def cadastro():
             cidade = request.form["cidadePro"]
             estado = request.form["estadoPro"]
 
-            if nome=='' or cpf=='' or profissao=='' or registro_profissional=='' or telefone=='' or data_de_nascimento=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or cidade=='' or estado=='':
+            if nome=='' or cpf=='' or profissao=='' or telefone=='' or data_de_nascimento=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or cidade=='' or estado=='':
                 error = 'Preencha todos os campos!'
             elif cpf == "CPF Inválido":
                 error = 'Verifique seu CPF!'
@@ -302,27 +302,39 @@ def CadastrarAtendimentos():
     nome = None
     email = None
     telefone = None
+    error = None
     if request.method == 'POST':
+        if len(request.form["cpfCliente"]) == 14:
+            if controler.verifica_cpf(controler.limpa_cpf(request.form['cpfCliente']),"clientes"): #Se o cliente está cadastrado, puxa os dados dele
+                if request.form["nome"] != controler.select("nome","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]: #Essa sequência de 3 if's é pra completar o preencher automaticamente
+                    nome = controler.select("nome","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]
+                if request.form["email"] != controler.select("email","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]:
+                    email = controler.select("email","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]
+                if request.form["telefone"] != controler.select("telefone","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]:
+                    telefone = controler.select("telefone","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]
+                    if len(telefone) == 11:
+                        telefone = '({}){}-{}'.format(telefone[0:2],telefone[2:7], telefone[7:])
+                    else:
+                        telefone = '({}){}-{}'.format(telefone[0:2],telefone[2:6], telefone[6:])
 
-        if request.form["nome"] != controler.select("nome","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]: #Essa sequência de 3 if's é pra completar o preencher automaticamente
-            nome = controler.select("nome","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]
-        if request.form["email"] != controler.select("email","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]:
-            email = controler.select("email","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]
-        if request.form["telefone"] != controler.select("telefone","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]:
-            telefone = controler.select("telefone","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]
-            if len(telefone) == 11:
-                telefone = '({}){}-{}'.format(telefone[0:2],telefone[2:7], telefone[7:])
+                id_cliente = controler.cpf_id(controler.limpa_cpf(request.form['cpfCliente']), 'clientes')
+            else: # Se não está cadastrado, semi-cadastra.
+                if "botao" in request.form:
+                    controler.cadastra_cliente(request.form["nome"], None, controler.limpa_cpf(request.form['cpfCliente']), request.form["telefone"], request.form["email"], None, None, None, None, None, None, None, None, None)
+                    id_cliente = controler.cpf_id(controler.limpa_cpf(request.form['cpfCliente']), 'clientes') #Se o cliente n tá cadastrado, é criado um semi-cadastro e depois o id_cliente dele é puxado
+
+            id_profissional = session['id']
+            data_consulta = request.form['dataConsulta']
+            data_gerado = date.today().strftime("%d/%m/%Y")
+            valor = request.form['valor']
+
+            if request.form["cpfCliente"] != "" and request.form["nome"] != "" and request.form["email"] != "" and request.form["telefone"] != "" and request.form["dataConsulta"] != "" and request.form["valor"] != "":
+                controler.cadastra_atendimento(id_profissional, id_cliente, valor, data_consulta, data_gerado)
+                return redirect(url_for('RecibosProfissional'))
             else:
-                telefone = '({}){}-{}'.format(telefone[0:2],telefone[2:6], telefone[6:])
-        
-        id_profissional = session['id']
-        id_cliente = controler.cpf_id(controler.limpa_cpf(request.form['cpfCliente']), 'clientes')
-        data_consulta = request.form['dataConsulta']
-        data_gerado = date.today().strftime("%d/%m/%Y")
-        valor = request.form['valor']
-        controler.cadastra_atendimento(id_profissional, id_cliente, valor, data_consulta, data_gerado)
-        return redirect(url_for('RecibosProfissional'))
-    return render_template('CadastrarAtendimentos.html', nome=nome, email=email, telefone=telefone)
+                if "botao" in request.form:
+                    error = "Preencha todos os campos"
+    return render_template('CadastrarAtendimentos.html', nome=nome, email=email, telefone=telefone, error=error)
 
 @app.route('/Informaçoes de cadastro do Profissional', methods=['GET', 'POST'])
 def Informacoes_cadastroPro():
