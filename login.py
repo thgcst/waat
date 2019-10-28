@@ -91,7 +91,7 @@ def pdf_template2(nomeProfissional, regProf, profissao, nome, cpfRes, nomeRes, p
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
     error = None
-    if request.method == "POST":
+    if request.method == "POST": #cliente
         if request.form["radio"] == '0':
             nome = request.form["nome"]
             data_de_nascimento = request.form["nascimento"]
@@ -105,25 +105,30 @@ def cadastro():
             complemento = request.form["complemento"]
             cidade = request.form["cidade"]
             estado = request.form["estado"]
+            ApenasUpdate=controler.exist(controler.limpa_cpf(cpf),'clientes')
 
             if nome=='' or data_de_nascimento=='' or cpf=='' or telefone=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or cidade=='' or estado=='':
                 error = 'Preencha todos os campos!'
             elif cpf == "CPF Inválido":
                 error = 'Verifique seu CPF!'
             elif endereco =="CEP não encontrado":
-                error = 'Verifique seu CEP!'
-            elif controler.verifica_email(email,'clientes'):
+                error = 'Verifique seu CEP!' 
+            elif controler.verifica_email(email,'clientes') and not ApenasUpdate:
                 error = 'Ops! Email já cadastrado.'
+
             else:
                 cpf = controler.limpa_cpf(request.form["cpf"])
-                if controler.verifica_cpf(cpf, 'clientes'):
+                if controler.verifica_cpf(cpf, 'clientes') and not ApenasUpdate:
                     error = 'Este CPF já está cadastrado!'
                 else:
                     hashed_password = generate_password_hash(senha)
                     if controler.verifica_idade(data_de_nascimento)==False:
                         nome_responsavel = '-'
                         cpf_responsavel = '-'
-                        controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, hashed_password, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
+                        if not ApenasUpdate:
+                            controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, hashed_password, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
+                        else:
+                            controler.completa_cadastro_cliente(nome, data_de_nascimento, cpf, telefone, email, hashed_password, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
                         return redirect(url_for('login'))
                     else:
                         nome_responsavel = request.form["nomeRes"]
@@ -131,8 +136,11 @@ def cadastro():
                         if nome_responsavel or cpf_responsavel =='':
                             error = 'Preencha todos os campos!'
                         else:
-                            controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, hashed_password, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
-                            return redirect(url_for('login'))
+                            if not ApenasUpdate:
+                                controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, hashed_password, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
+                            else:
+                                controler.completa_cadastro_cliente(nome, data_de_nascimento, cpf, telefone, email, hashed_password, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
+                                return redirect(url_for('login'))
 
         if request.form["radio"] == '1': #profissional
             nome = request.form["nomePro"]
@@ -339,24 +347,33 @@ def CadastrarAtendimentos():
     telefone = None
     error = None
     if request.method == 'POST':
-        if len(request.form["cpfCliente"]) == 14:
-            if controler.verifica_cpf(controler.limpa_cpf(request.form['cpfCliente']),"clientes"): #Se o cliente está cadastrado, puxa os dados dele
-                if request.form["nome"] != controler.select("nome","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]: #Essa sequência de 3 if's é pra completar o preencher automaticamente
-                    nome = controler.select("nome","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]
-                if request.form["email"] != controler.select("email","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]:
-                    email = controler.select("email","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]
-                if request.form["telefone"] != controler.select("telefone","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]:
-                    telefone = controler.select("telefone","clientes","cpf=" + controler.limpa_cpf(request.form['cpfCliente']))[0][0]
+        cpf = request.form['cpfCliente']
+        if len(cpf) == 14:
+            nome = request.form["nome"]
+            email = request.form["email"]
+            telefone = request.form["telefone"]
+            if controler.verifica_cpf(controler.limpa_cpf(cpf),'clientes'): #Se o cliente está cadastrado, puxa os dados dele
+                id_cliente = controler.cpf_id(controler.limpa_cpf(cpf), 'clientes')
+                user = Cliente(id_cliente)
+                if nome != user.nome: #Essa sequência de 3 if's é pra completar o preencher automaticamente
+                    nome = user.nome
+                if email != user.email:
+                    email = user.email
+                if telefone != user.telefone:
+                    telefone = user.telefone
                     if len(telefone) == 11:
                         telefone = '({}){}-{}'.format(telefone[0:2],telefone[2:7], telefone[7:])
                     else:
                         telefone = '({}){}-{}'.format(telefone[0:2],telefone[2:6], telefone[6:])
 
-                id_cliente = controler.cpf_id(controler.limpa_cpf(request.form['cpfCliente']), 'clientes')
             else: # Se não está cadastrado, semi-cadastra.
                 if "botao" in request.form:
-                    controler.cadastra_cliente(request.form["nome"], None, controler.limpa_cpf(request.form['cpfCliente']), request.form["telefone"], request.form["email"], None, None, None, None, None, None, None, None, None)
-                    id_cliente = controler.cpf_id(controler.limpa_cpf(request.form['cpfCliente']), 'clientes') #Se o cliente n tá cadastrado, é criado um semi-cadastro e depois o id_cliente dele é puxado
+                    nome = request.form["nome"]
+                    email = request.form["email"]
+                    telefone = request.form["telefone"]
+                    cpf = controler.limpa_cpf(request.form['cpfCliente'])
+                    controler.pre_cadastra_cliente(nome, cpf, controler.limpa_telefone(telefone), email)
+                    id_cliente = controler.cpf_id(cpf, 'clientes') #Se o cliente n tá cadastrado, é criado um semi-cadastro e depois o id_cliente dele é puxado
 
             id_profissional = session['id']
             data_consulta = request.form['dataConsulta']
