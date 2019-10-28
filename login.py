@@ -354,13 +354,13 @@ def CadastrarAtendimentos():
             telefone = request.form["telefone"]
             if controler.verifica_cpf(controler.limpa_cpf(cpf),'clientes'): #Se o cliente está cadastrado, puxa os dados dele
                 id_cliente = controler.cpf_id(controler.limpa_cpf(cpf), 'clientes')
-                user = Cliente(id_cliente)
-                if nome != user.nome: #Essa sequência de 3 if's é pra completar o preencher automaticamente
-                    nome = user.nome
-                if email != user.email:
-                    email = user.email
-                if telefone != user.telefone:
-                    telefone = user.telefone
+                userAtendimento = Cliente(id_cliente)
+                if nome != userAtendimento.nome: #Essa sequência de 3 if's é pra completar o preencher automaticamente
+                    nome = userAtendimento.nome
+                if email != userAtendimento.email:
+                    email = userAtendimento.email
+                if telefone != userAtendimento.telefone:
+                    telefone = userAtendimento.telefone
                     if len(telefone) == 11:
                         telefone = '({}){}-{}'.format(telefone[0:2],telefone[2:7], telefone[7:])
                     else:
