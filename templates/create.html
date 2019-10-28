@@ -44,9 +44,9 @@
                                 <!--nascimento-->
                                 <div class="inputBox">
                                     <input type="tel" name="nascimento" placeholder="Data de nascimento"
-                                        value="{{request.form.nascimento }}" class="input"
-                                        oninput="this.value = DDMMYYYY(this.value, event)" maxlength="10"
-                                        id="nascimento" onblur="addCampo()" />
+                                        onblur="validaData('nascimento')" value="{{request.form.nascimento }}"
+                                        class="input" oninput="this.value = DDMMYYYY(this.value, event)" maxlength="10"
+                                        id="nascimento"/>
                                 </div>
                                 <!--cpf-->
                                 <div class="inputBox">
@@ -137,8 +137,8 @@
                                 <!--nascimento-->
                                 <div class="inputBox"> <input type="tel" name="nascimentoPro"
                                         placeholder="Data de nascimento" value="{{  request.form.nascimentoPro }}"
-                                        class="input" oninput="this.value = DDMMYYYY(this.value, event)"
-                                        maxlength="10" /> </div>
+                                        onblur="validaData('nascimentoPro')" class="input"
+                                        oninput="this.value = DDMMYYYY(this.value, event)" maxlength="10" /> </div>
                                 <!--email-->
                                 <div class="inputBox"> <input type="email" name="emailPro" placeholder="E-mail"
                                         value="{{ request.form.emailPro }}" class="input" /> </div>
@@ -171,7 +171,8 @@
                                 <div class="inputBox"> <input type="text" name="estadoPro" id="estadoPro"
                                         placeholder="Estado" value="{{ request.form.estadoPro }}" class="input" />
                                 </div>
-                                <div class="dropzoneB4" id="dropzone" name="foto" value="">Arraste uma foto de sua assinatura<br> para
+                                <div class="dropzoneB4" id="dropzone" name="foto" value="">Arraste uma foto de sua
+                                    assinatura<br> para
                                     gerarmos recibos automaticamente</div>
                             </div>
                         </div>
@@ -208,7 +209,41 @@
     </script>
 
     <script>
+        function validaData(name) {
+            var data = document.getElementsByName(name)[0].value;
+            var dia = Number(data.slice(6,10) + data.slice(3,5) + data.slice(0,2))
+            var hoje = new Date()
+            hoje = Number(String(hoje.getFullYear()) + String(hoje.getMonth() + 1) + String(hoje.getDate()))
+            if (data.length != 10 || dia > hoje) {
+                document.getElementsByName(name)[0].className = "input cpfError";
+                return false
+            }
+            else {
+                document.getElementsByName(name)[0].className = "input";
+                return true
+            }
+        }
+
+        function validaData2(name) {
+            var data = document.getElementsByName(name)[0].value;
+            var dia = Number(data.slice(6,10) + data.slice(3,5) + data.slice(0,2))
+            var hoje = new Date()
+            hoje = Number(String(hoje.getFullYear()) + String(hoje.getMonth() + 1) + String(hoje.getDate()))
+            if (data.length != 10 || dia > hoje) {
+                return false
+            }
+            else {
+                return true
+            }
+        }
+
         function DDMMYYYY(value, event) {
+            document.getElementsByName("nascimento")[0].className = "input";
+            document.getElementsByName("nascimentoPro")[0].className = "input";
+            if(validaData2("nascimento")){
+                addCampo();
+                };
+
             let newValue = value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
 
             const dayOrMonth = (index) => index % 2 === 1 && index < 4;
@@ -367,7 +402,8 @@
 
         function validarCPF(id) {
             var cpf = document.getElementById(id).value
-            if (cpf.length == 14) {
+            var digitos = cpf.length
+            if (digitos == 14) {
                 function valida() {
                     cpf = cpf.replace(/[^\d]+/g, '');
                     if (cpf == '') return false;
@@ -409,6 +445,15 @@
                     document.getElementById(id).value = "CPF Inválido";
                     document.getElementById(id).className = "input cpfError";
                 }
+                else {
+                    if (digitos == 14) {
+                        // document.getElementById('botao').click()
+                        document.getElementById("form").submit();
+                    };
+                }
+            }
+            else {
+                document.getElementById(id).className = "input cpfError";
             }
         }
 

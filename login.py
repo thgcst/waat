@@ -102,22 +102,24 @@ def cadastro():
             cep=request.form["cep"]
             endereco = request.form["endereco"]
             numero = request.form["numero"]
-            complemento = request.form["complemento"]
+            complemento = "-" if request.form["complemento"] == "" else request.form["complemento"]
             cidade = request.form["cidade"]
             estado = request.form["estado"]
 
             if nome=='' or data_de_nascimento=='' or cpf=='' or telefone=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or cidade=='' or estado=='':
                 error = 'Preencha todos os campos!'
-            elif cpf == "CPF Inválido":
+            elif cpf == "CPF Inválido" or len(cpf) != 14:
                 error = 'Verifique seu CPF!'
             elif endereco =="CEP não encontrado":
                 error = 'Verifique seu CEP!'
             elif controler.verifica_email(email,'clientes'):
-                error = 'Ops! Email já cadastrado.'
+                error = 'Email já cadastrado!'
+            elif len(data_de_nascimento) != 10 or controler.valida_data(data_de_nascimento) or controler.verifica_idade(data_de_nascimento) == "erro":
+                error = 'Data de nascimento inválida'
             else:
                 cpf = controler.limpa_cpf(request.form["cpf"])
                 if controler.verifica_cpf(cpf, 'clientes'):
-                    error = 'Este CPF já está cadastrado!'
+                    error = 'Este CPF já está cadastrado'
                 else:
                     hashed_password = generate_password_hash(senha)
                     if controler.verifica_idade(data_de_nascimento)==False:
@@ -128,8 +130,10 @@ def cadastro():
                     else:
                         nome_responsavel = request.form["nomeRes"]
                         cpf_responsavel = request.form["cpfRes"]
-                        if nome_responsavel or cpf_responsavel =='':
-                            error = 'Preencha todos os campos!'
+                        if nome_responsavel=='' or cpf_responsavel =='':
+                            error = 'Preencha todos os campos'
+                        elif cpf_responsavel == "CPF Inválido" or len(cpf_responsavel) != 14:
+                            error = "Verifique o CPF do responsável"
                         else:
                             controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, hashed_password, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
                             return redirect(url_for('login'))
@@ -146,18 +150,20 @@ def cadastro():
             cep=request.form["cepPro"]
             endereco = request.form["enderecoPro"]
             numero = request.form["numeroPro"]
-            complemento = request.form["complementoPro"]
+            complemento = "-" if request.form["complementoPro"] == "" else request.form["complementoPro"]
             cidade = request.form["cidadePro"]
             estado = request.form["estadoPro"]
 
             if nome=='' or cpf=='' or profissao=='' or telefone=='' or data_de_nascimento=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or cidade=='' or estado=='':
                 error = 'Preencha todos os campos!'
-            elif cpf == "CPF Inválido":
+            elif cpf == "CPF Inválido" or len(cpf) != 14:
                 error = 'Verifique seu CPF!'
             elif endereco =="CEP não encontrado":
                 error = 'Verifique seu CEP!'
             elif controler.verifica_email(email,'profissionais'):
                 error = 'Ops! Email já cadastrado.'
+            elif len(data_de_nascimento) != 10  or controler.valida_data(data_de_nascimento) or controler.verifica_idade(data_de_nascimento) == "erro":
+                error = 'Data de nascimento inválida'
             else:
                 cpf = controler.limpa_cpf(request.form["cpfPro"])
                 if controler.verifica_cpf(cpf, 'profissionais'):
@@ -355,7 +361,7 @@ def CadastrarAtendimentos():
                 id_cliente = controler.cpf_id(controler.limpa_cpf(request.form['cpfCliente']), 'clientes')
             else: # Se não está cadastrado, semi-cadastra.
                 if "botao" in request.form:
-                    controler.cadastra_cliente(request.form["nome"], None, controler.limpa_cpf(request.form['cpfCliente']), request.form["telefone"], request.form["email"], None, None, None, None, None, None, None, None, None)
+                    controler.cadastra_cliente(request.form["nome"], None, controler.limpa_cpf(request.form['cpfCliente']), controler.limpa_telefone(request.form["telefone"]), request.form["email"], None, None, None, None, None, None, None, None, None)
                     id_cliente = controler.cpf_id(controler.limpa_cpf(request.form['cpfCliente']), 'clientes') #Se o cliente n tá cadastrado, é criado um semi-cadastro e depois o id_cliente dele é puxado
 
             id_profissional = session['id']

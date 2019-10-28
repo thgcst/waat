@@ -59,11 +59,11 @@
                 {% if error %}
                 <p class="error" style="text-align: center; color: #e74c3c; font-size: 14px">{{ error }}
                     {% endif %}
-                <!-- Submit -->
-                <div class="inputBox" style="padding-top: 30px; padding-bottom: 30px;">
-                    <input class="botao" type="submit" id="botao" name="botao" value="Enviar"
-                        onclick="document.getElementById('form').submit()">
-                </div>
+                    <!-- Submit -->
+                    <div class="inputBox" style="padding-top: 30px; padding-bottom: 30px;">
+                        <input class="botao" type="submit" id="botao" name="botao" value="Enviar"
+                            onclick="document.getElementById('form').submit()">
+                    </div>
             </form>
         </div>
     </div>
@@ -89,10 +89,16 @@
         return newValue.split('').map((v, i) => dayOrMonth(i) ? v + '/' : v).join('');
     };
 
-    function validaData(){
+    function validaData() {
         var data = document.getElementById("data").value;
-        if(data.length != 10){
+        var dia = Number(data.slice(6, 10) + data.slice(3, 5) + data.slice(0, 2))
+        var hoje = new Date()
+        hoje = Number(String(hoje.getFullYear()) + String(hoje.getMonth() + 1) + String(hoje.getDate()))
+        if (data.length != 10 || dia > hoje) {
             document.getElementById("data").className = "input cpfError";
+        }
+        else {
+            document.getElementById("data").className = "input";
         }
     }
 

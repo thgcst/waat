@@ -151,8 +151,12 @@ def cpf_senha(cpf, tabela):
 
 def verifica_idade(data_de_nascimento):
     hoje = date.today()
-    nascimento = date(int(data_de_nascimento[6:]),int(data_de_nascimento[3:5]),int(data_de_nascimento[:2]))
+    try:
+        nascimento = date(int(data_de_nascimento[6:]),int(data_de_nascimento[3:5]),int(data_de_nascimento[:2]))
+    except:
+        return "erro"
     idade = hoje.year - nascimento.year - ((hoje.month, hoje.day) < (hoje.month, hoje.day))
+
     if idade<18:
         return True
     else:
@@ -222,3 +226,9 @@ def verifica_email(email, table):
     cursor.execute(query)
     return bool(cursor.fetchall()[0][0])
 
+def valida_data(data):
+    '''Checa se a data inserida é maior que a data atual, logo é inválida'''
+    hoje = date.today()
+    hoje = int(str(hoje.year) + str(hoje.month) + str(hoje.day))
+    data = int(data[6:] + data[3:5] + data[0:2])
+    return data > hoje
