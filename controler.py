@@ -22,6 +22,15 @@ def select(fields, tables, where = None):
     cursor.execute(query)
     return cursor.fetchall()
 
+def exist(cpf, table):
+    global cursor
+    query = "SELECT COUNT(nome) FROM " + table +" WHERE cpf="+cpf;
+    cursor.execute(query)
+    return bool(cursor.fetchall()[0][0])
+
+
+
+
 def insert(values, table, fields =None):
     global cursor,  con
     query = "INSERT INTO " +table
@@ -31,7 +40,7 @@ def insert(values, table, fields =None):
     cursor.execute(query)
     con.commit()
 
-def update(sets, table, where=None):
+def update(sets, table, where):
     global cursor,  con
     query = "UPDATE " +table
     query += " SET " + ",".join([field+ " = '" + value + "'" for field, value in sets.items()])
@@ -181,6 +190,13 @@ def gera_id():
     return id_gerado
 
 
+def ApenasUpdate(cpf, table):
+    if exist(controler.limpa_cpf(cpf),'clientes'):
+        ApenasUpdate = True  #update
+    else:
+        ApenasUpdate = False #cadastro normal  
+
+
 def cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel):
     id_cliente = gera_id()
     user_mail = separa_email(email)[0]
@@ -207,6 +223,23 @@ def cadastra_atendimento(id_profissional, id_cliente, valor ,data_consulta, data
     data = ('DEFAULT', id_profissional, id_cliente, valor, data_consulta, data_gerado)
     cursor.execute(sql, data)
     con.commit()
+
+def pre_cadastra_cliente(nome, cpf, telefone, email):
+    id_cliente = gera_id()
+    user_mail = separa_email(email)[0]
+    domain_mail = separa_email(email)[1]
+    sql = "INSERT INTO clientes (id_cliente, nome, cpf, telefone, email, user_mail, domain_mail) VALUES(%s,%s,%s,%s,%s,%s,%s)"
+    data = (id_cliente, nome, cpf, telefone, email, user_mail, domain_mail)
+    cursor.execute(sql, data)
+    con.commit()
+
+def completa_cadastro_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel):
+    id_cliente = cpf_id(cpf, 'clientes')
+    user_mail = separa_email(email)[0]
+    domain_mail = separa_email(email)[1]
+    ups = {'nome':nome, 'data_de_nascimento':data_de_nascimento, 'telefone':telefone, 'email':email, 'senha':senha, 'cep':cep, 'endereco':endereco, 'numero':numero, 'complemento':complemento, 'cidade':cidade, 'estado':estado, 'nome_responsavel':nome_responsavel, 'cpf_responsavel':cpf_responsavel}
+    update(ups,'clientes','id_cliente='+str(id_cliente))
+
 
 def select_CursorDict(fields, tables, where = None):
     cursor = con.cursor(dictionary = True) 
