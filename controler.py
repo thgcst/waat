@@ -14,9 +14,7 @@ cursor = con.cursor()
 
 def select(fields, tables, where = None):
     global cursor
-
     query = "SELECT " + fields + " FROM " +tables
-
     if (where):
         query += " WHERE " + where
     cursor.execute(query)
@@ -27,9 +25,6 @@ def exist(cpf, table):
     query = "SELECT COUNT(nome) FROM " + table +" WHERE cpf="+cpf;
     cursor.execute(query)
     return bool(cursor.fetchall()[0][0])
-
-
-
 
 def insert(values, table, fields =None):
     global cursor,  con
@@ -191,7 +186,7 @@ def gera_id():
 
 
 def ApenasUpdate(cpf, table):
-    if exist(controler.limpa_cpf(cpf),'clientes'):
+    if exist(limpa_cpf(cpf),'clientes'):
         ApenasUpdate = True  #update
     else:
         ApenasUpdate = False #cadastro normal  

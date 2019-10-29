@@ -253,41 +253,7 @@ def sobreNos():
         return redirect(url_for('cadastro'))
     return render_template('sobreNos.html', error=error)
 
-#CONFIGURAÇÃO DO EMAIL
-app.config['DEBUG']=True
-app.config['TESTING']=False
-app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT']=587
-app.config['MAIL_USE_TLS']=True
-app.config['MAIL_USE_SSL']=False
-#app.config['MAIL_DEBUG']=True
-app.config['MAIL_USERNAME']='waat.ufrj@gmail.com'
-app.config['MAIL_PASSWORD']='PipocaSalgada!'
-app.config['MAIL_DEFAULT_SENDER']=('Equipe WAAT', 'waat.ufrj@gmail.com')
-app.config['MAIL_MAX_EMAILS']=3 #NÃO MEXAM AQUI
-#app.config['MAIL_SUPRESS_SEND']=False
-app.config['MAIL_ASCII_ATTACHMENTS']=True
-
-mail = Mail(app)
-
-@app.route('/email_recuperar_senha/')
-def email_recuperacao_senha():
-    msg = Message("Recuperação de Senha", recipients=['aadottori@gmail.com', 'anderson.avvd@gmail.com','thiagodias2708@gmail.com', 'wesley.jupter@poli.ufrj.br'])
-    msg.html= render_template('RecuperarSenha.html', senha = 'Pega aqui')
-    mail.send(msg)
-    return 'Senha enviada'
-
-@app.route('/enviaEmail/')
-def enviaEmail():
-    msg = Message("Recibo", recipients=['aadottori@gmail.com', 'anderson.avvd@gmail.com','thiagodias2708@gmail.com', 'wesley.jupter@poli.ufrj.br'])
-    msg.body= "Segue em anexo o recibo referente à sua consulta."
-
-    with app.open_resource("recibo_teste.pdf") as recibo:
-        msg.attach("recibo_teste.pdf", "application/pdf", recibo.read())
-    mail.send(msg)
-    return 'Email enviado'
-
-@app.route('/recibos profissional', methods=['GET', 'POST'])
+@app.route('/recibosProfissional', methods=['GET', 'POST'])
 def RecibosProfissional():
     def sortData(val):
         data = val[5][6:] + val[5][3:5] + val[5][0:2]
@@ -314,7 +280,7 @@ def RecibosProfissional():
             recibosNew.sort(key = sortValor)
     return render_template('RecibosProfissional.html', recibos=recibosNew)
 
-@app.route('/recibos cliente', methods=['GET', 'POST'])
+@app.route('/recibosCliente', methods=['GET', 'POST'])
 def RecibosCliente():
     def sortData(val):
         data = val[5][6:] + val[5][3:5] + val[5][0:2]
@@ -345,7 +311,7 @@ def RecibosCliente():
             recibosNew.sort(key = sortValor)
     return render_template('RecibosCliente.html', recibos=recibosNew)
 
-@app.route('/cadastrar atendimentos', methods=['GET', 'POST'])
+@app.route('/cadastraAtendimento', methods=['GET', 'POST'])
 def CadastrarAtendimentos():
     nome = None
     email = None
@@ -393,7 +359,7 @@ def CadastrarAtendimentos():
                     error = "Preencha todos os campos"
     return render_template('CadastrarAtendimentos.html', nome=nome, email=email, telefone=telefone, error=error)
 
-@app.route('/Informaçoes de cadastro do Profissional', methods=['GET', 'POST'])
+@app.route('/infoProfissional', methods=['GET', 'POST'])
 def Informacoes_cadastroPro():
     telefone = Profissional(session['id']).telefone
     if len(telefone) == 11:
@@ -402,7 +368,7 @@ def Informacoes_cadastroPro():
         telefone = '({}) {}-{}'.format(telefone[0:2],telefone[2:6], telefone[6:])
     return render_template('Informacoes_cadastroPro.html', nome=Profissional(session['id']).nome, cpf=Profissional(session['id']).cpf, profissao=Profissional(session['id']).profissao, registro=Profissional(session['id']).registro_profissional, telefone=telefone, nascimento=Profissional(session['id']).data_de_nascimento, email=Profissional(session['id']).email, cep=Profissional(session['id']).cep, endereco=Profissional(session['id']).endereco, numero=Profissional(session['id']).numero, complemento=Profissional(session['id']).complemento, cidade=Profissional(session['id']).cidade, estado=Profissional(session['id']).estado)
 
-@app.route('/Informaçoes de cadastro do Cliente', methods=['GET', 'POST'])
+@app.route('/infoCliente', methods=['GET', 'POST'])
 def Informacoes_cadastroCliente():
     telefone = Cliente(session['id']).telefone
     if len(telefone) == 11:
@@ -414,5 +380,52 @@ def Informacoes_cadastroCliente():
 
     return render_template('Informacoes_cadastroCliente.html', nome=Cliente(session['id']).nome, cpf=cpf, telefone=telefone, nascimento=Cliente(session['id']).data_de_nascimento, email=Cliente(session['id']).email, cep=Cliente(session['id']).cep, endereco=Cliente(session['id']).endereco, numero=Cliente(session['id']).numero, complemento=Cliente(session['id']).complemento, cidade=Cliente(session['id']).cidade, estado=Cliente(session['id']).estado)
 
+#CONFIGURAÇÃO DO EMAIL
+app.config['DEBUG']=True
+app.config['TESTING']=False
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT']=587
+app.config['MAIL_USE_TLS']=True
+app.config['MAIL_USE_SSL']=False
+#app.config['MAIL_DEBUG']=True
+app.config['MAIL_USERNAME']='waat.ufrj@gmail.com'
+app.config['MAIL_PASSWORD']='PipocaSalgada!'
+app.config['MAIL_DEFAULT_SENDER']=('Equipe WAAT', 'waat.ufrj@gmail.com')
+app.config['MAIL_MAX_EMAILS']=3 #NÃO MEXAM AQUI
+#app.config['MAIL_SUPRESS_SEND']=False
+app.config['MAIL_ASCII_ATTACHMENTS']=True
+
+mail = Mail(app)
+
+def email_recuperacao_senha(cpf):
+    cpf = controler.limpa_cpf(cpf)
+    if controler.exist(cpf, clientes)==True:
+        endereco = controler.select(email, clientes, cpf)
+    elif controler.exist(cpf, profissionais)==True:
+        endereco = controler.select(email, profissionais, cpf)    
+    else:
+        return ("Email não cadastrado.")
+
+    msg = Message("Recuperação de Senha", recipients=[endereco])
+    msg.html= render_template('RecuperarSenha.html', senha = 'Pega aqui')
+    mail.send(msg)
+    return 'Senha enviada'
+
+@app.route('/recuperasenha/')
+def manda_email():
+    email_recuperacao_senha('167.895.777-18')
+
+
+@app.route('/enviaEmail/')
+def enviaEmail():
+    msg = Message("Recibo", recipients=['aadottori@gmail.com', 'anderson.avvd@gmail.com','thiagodias2708@gmail.com', 'wesley.jupter@poli.ufrj.br'])
+    msg.body= "Segue em anexo o recibo referente à sua consulta."
+
+    with app.open_resource("recibo_teste.pdf") as recibo:
+        msg.attach("recibo_teste.pdf", "application/pdf", recibo.read())
+    mail.send(msg)
+    return 'Email enviado'
+
 if __name__ == '__main__':
     app.run(debug=True)
+

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+
+
+<head>
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="container-login100" id="container">
+        <div class="wrap-login100" id="wrap">
+            <form method="POST" id="form" style="text-align: center">
+                <h1 class="welcome">Esqueceu a senha, animal?</h1>
+                
+                <div class="inputBox" style="padding-top: 40px">
+                    <input type="text" name="cpf" placeholder="CPF" value="{{request.form.cpf}}" class="input" maxlength="14" oninput="this.value = CPF(this.value, event)" />
+                </div>
+                <div style="height: 30px"></div>
+
+                    <div class="inputBox" style="padding-bottom: 10px;">
+                        <input class="botao" type="submit" name="botao"
+                            onclick="document.getElementById('form').submit()">Enviar</input>
+                    </div>
+                    </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+
+        var wrap = document.getElementById("wrap");
+        var btn = document.getElementById("esqueci");
+        var container = document.getElementById("container");
+        var elem = create('<div style="width: 400px"><i id="back" onclick="back()" class="fa icon">&#xf0a8;</i></div><form method="POST" id="form2"> <h2 class="welcome" style="text-align: center; padding-top: 0">Esqueci minha senha</h2> <div class="inputBox" id="divForgot" style="padding-top: 40px"> <input type="text" name="cpfForgot" id="inputForgot" placeholder="Insira seu CPF" value="{{request.form.cpfForgot}}" class="input" maxlength="14" oninput="this.value = CPF(this.value, event)" /> </div> <div class="inputBox" id="divForgot2" style="padding-bottom: 10px; padding-top: 30px"> <button class="botao" id="btnForgot" onclick="document.getElementById(`formForgot`).submit()" type="submit">Enviar</button> </div> </form>');
+        var body = document.body;
+
+        btn.onclick = function () {
+            wrap.style.display = "none";
+            container.appendChild(elem);
+        }
+
+        function back() {
+            var modal = document.getElementById("modal");
+            container.removeChild(document.getElementById("modal"));
+            wrap.style.display = "flex";
+        }
+    </script>
+
+</body>
+
+
+
+</html>
