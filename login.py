@@ -86,7 +86,7 @@ def pdf_template2(nomeProfissional, regProf, profissao, nome, cpfRes, nomeRes, p
     response.headers['Content-Disposition'] =   'inline; filename = recibo.pdf'
 
     return response
-
+#teste hahaha
 
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
