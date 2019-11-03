@@ -269,13 +269,30 @@ def RecibosProfissional():
         recibo = list(recibo)
         recibo.append(controler.select("nome", "clientes", "id_cliente=" + str(recibo[1]))[0][0])
         recibosNew.append(recibo)
-    if request.method == "POST":
+    if request.method == "POST": # Handles os ordenadores
         if "data" in request.form:
             recibosNew.sort(key = sortData)
         elif "nome" in request.form:
             recibosNew.sort(key = sortNome)
         elif "valor" in request.form:
             recibosNew.sort(key = sortValor)
+    if request.method == "POST":
+        dic = request.form.to_dict()
+        app.logger.warning(dic)
+        dicInvertido = dict(zip(dic.values(),dic.keys()))
+        if "Baixar recibo" in dicInvertido :
+            index = int(dicInvertido["Baixar recibo"])
+            id_atendimento = str(recibosNew[index][0])
+            rendered = controler.gerar_pdf(id_atendimento)
+
+            pdf = pdfkit.from_string(rendered, False)
+
+            response =  make_response(pdf)
+            response.headers['Content-Type'] =  'applocation/pdf'
+            response.headers['Content-Disposition'] =   'inline; filename = recibo' + id_atendimento + '.pdf'
+
+            return response
+
     return render_template('RecibosProfissional.html', recibos=recibosNew)
 
 @app.route('/recibosCliente', methods=['GET', 'POST'])
@@ -307,7 +324,6 @@ def RecibosCliente():
             recibosNew.sort(key = sortArea)
         elif "valor" in request.form:
             recibosNew.sort(key = sortValor)
-    app.logger.info(recibosNew)
     if request.method == "POST":
         dic = request.form.to_dict()
         app.logger.warning(dic)
