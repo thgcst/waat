@@ -142,6 +142,8 @@ th {
 .txt2 {
   font-size: 14px;
   color: #666666;
+  background: none;
+  border: none;
   transition: all 0.4s;
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;

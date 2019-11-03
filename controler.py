@@ -1,5 +1,7 @@
 import random
 import mysql.connector
+from flask import render_template, make_response
+import pdfkit
 from datetime import date
 
 config = {
@@ -260,3 +262,33 @@ def valida_data(data):
     hoje = int(str(hoje.year) + str(hoje.month) + str(hoje.day))
     data = int(data[6:] + data[3:5] + data[0:2])
     return data > hoje
+
+def gerar_pdf(id_atendimento):
+    id_profissional = str(select("id_profissional", "atendimentos", "id_atendimento="+id_atendimento)[0][0])
+    id_cliente = str(select("id_cliente", "atendimentos", "id_atendimento = " + id_atendimento)[0][0])
+    nomeProfissional = select("nome", "profissionais" , "id_profissional = " + id_profissional)[0][0]
+    regProf = select("registro_profissional", "profissionais" , "id_profissional = " + id_profissional)[0][0]
+    profissao = select("profissao", "profissionais" , "id_profissional = " + id_profissional)[0][0]
+    nome = select("nome", "clientes" , "id_cliente = " + id_cliente)[0][0]
+    cpf = select("cpf", "clientes" , "id_cliente = " + id_cliente)[0][0]
+    cpf = '{}.{}.{}-{}'.format(cpf[0:3],cpf[3:6],cpf[6:9],cpf[9:])
+    cpfRes = select("cpf_responsavel", "clientes" , "id_cliente = " + id_cliente)[0][0]
+    cpfRes = '{}.{}.{}-{}'.format(cpfRes[0:3],cpfRes[3:6],cpfRes[6:9],cpfRes[9:])
+    nomeRes = select("nome_responsavel", "clientes" , "id_cliente = " + id_cliente)[0][0]
+    precoConsulta = select("valor", "atendimentos", "id_atendimento = " + id_atendimento)[0][0]
+    email = select("email", "profissionais" , "id_profissional = " + id_profissional)[0][0]
+    enderecoComercial = select("endereco", "profissionais" , "id_profissional = " + id_profissional)[0][0] + "" + select("numero", "profissionais" , "id_profissional = " + id_profissional)[0][0] + ", " + select("endereco", "profissionais" , "id_profissional = " + id_profissional)[0][0]
+    telefone = select("telefone", "profissionais" , "id_profissional = " + id_profissional)[0][0]
+    if len(telefone) == 11:
+        telefone = '({}){}-{}'.format(telefone[0:2],telefone[2:7], telefone[7:])
+    else:
+        telefone = '({}){}-{}'.format(telefone[0:2],telefone[2:6], telefone[6:])
+    cep = select("cep", "profissionais" , "id_profissional = " + id_profissional)[0][0]
+    dataDoAtendimento = select("data_consulta", "atendimentos" , "id_atendimento = " + id_atendimento)[0][0]
+
+    if nomeRes == '-' or nomeRes == None:
+        rendered = render_template('pdf_template18+.html', nomeProfissional = nomeProfissional, regProf = regProf, profissao = profissao, nome = nome, cpf = cpf, precoConsulta = precoConsulta, email=email, enderecoComercial = enderecoComercial, telefone = telefone, cep = cep, dataDoAtendimento = dataDoAtendimento)
+    else:
+        rendered = render_template('pdf_template18-.html', nomeProfissional = nomeProfissional, regProf = regProf, profissao = profissao, nome = nome, cpfRes = cpfRes, nomeRes = nomeRes, precoConsulta = precoConsulta, email=email, enderecoComercial = enderecoComercial, telefone = telefone, cep = cep , dataDoAtendimento = dataDoAtendimento)
+
+    return rendered
