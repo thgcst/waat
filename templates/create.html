@@ -213,8 +213,9 @@
             var data = document.getElementsByName(name)[0].value;
             var dia = Number(data.slice(6,10) + data.slice(3,5) + data.slice(0,2))
             var hoje = new Date()
-            hoje = Number(String(hoje.getFullYear()) + String(hoje.getMonth() + 1) + String(hoje.getDate()))
+            hoje = Number(String(hoje.getFullYear()) + ("0" + String(hoje.getMonth() + 1)).slice(-2) + ("0" + String(hoje.getDate())).slice(-2))
             if (data.length != 10 || dia > hoje) {
+                console.log(dia,hoje,name);
                 document.getElementsByName(name)[0].className = "input cpfError";
                 return false
             }
@@ -228,7 +229,7 @@
             var data = document.getElementsByName(name)[0].value;
             var dia = Number(data.slice(6,10) + data.slice(3,5) + data.slice(0,2))
             var hoje = new Date()
-            hoje = Number(String(hoje.getFullYear()) + String(hoje.getMonth() + 1) + String(hoje.getDate()))
+            hoje = Number(String(hoje.getFullYear()) + ("0" + String(hoje.getMonth() + 1)).slice(-2) + ("0" + String(hoje.getDate())).slice(-2))
             if (data.length != 10 || dia > hoje) {
                 return false
             }

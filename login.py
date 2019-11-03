@@ -257,7 +257,6 @@ def sobreNos():
 def RecibosProfissional():
     def sortData(val):
         data = val[5][6:] + val[5][3:5] + val[5][0:2]
-        app.logger.warning(data)
         return int(data)
     def sortNome(val): 
         return val[7]
