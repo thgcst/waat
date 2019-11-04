@@ -159,12 +159,6 @@ def cadastro():
                     return redirect(url_for('login'))
     return render_template('create.html', error=error)
 
-@app.route('/esqueci minha senha', methods=['GET', 'POST'])
-def esqueci():
-    if request.method == "POST":
-        if "submit" in request.form:
-            cpf = request.form["cpfForgot"]
-    return render_template('esqueci_senha.html')
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -415,17 +409,18 @@ app.config['MAIL_ASCII_ATTACHMENTS']=True
 
 mail = Mail(app)
 
-def email_recuperacao_senha(cpf):
+@app.route('/esqueciminhasenha', methods=['GET', 'POST'])
+def esqueci():
+    if request.method == "POST":
+        if "submit" in request.form:
+            cpf = request.form["cpfForgot"]
+            email = controler.email_user(cpf)[0]
+            msg = Message("Recuperação de Senha", recipients=[email])
+            msg.body = 'Pega aqui'
+            #msg.html= render_template('RecuperarSenha.html', senha = 'Pega aqui')
+            mail.send(msg)
 
-    msg = Message("Recuperação de Senha", recipients=[endereco])
-    msg.html= render_template('RecuperarSenha.html', senha = 'Pega aqui')
-    mail.send(msg)
-    return 'Senha enviada'
-
-@app.route('/recuperasenha/')
-def manda_email():
-    email_recuperacao_senha('167.895.777-18')
-
+    return render_template('esqueci_senha.html',error=error)
 
 @app.route('/enviaEmail/')
 def enviaEmail():

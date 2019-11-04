@@ -186,6 +186,21 @@ def gera_id():
         id_no_bd = (verifica_id_cliente(id_gerado) or verifica_id_profissional(id_gerado) or verifica_id_atendimento(id_gerado))
     return id_gerado
 
+def email_user(cpf):
+    cpf = limpa_cpf(cpf)
+    error = None
+    if exist(cpf, 'clientes'):
+        error='enviado'
+        email = select('email', 'clientes', 'cpf='+cpf)[0][0]
+        return (email,error)
+    elif exist(cpf, 'profissionais'):
+        error='enviado'
+        email = select('email', 'profissionais', 'cpf='+cpf)[0][0]
+        return (email,error)
+    else:
+        error = "Não cadastrado"
+        return (None, error)
+
 
 def ApenasUpdate(cpf, table):
     if exist(limpa_cpf(cpf),'clientes'):
