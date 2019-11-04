@@ -418,11 +418,11 @@ def esqueci():
             cpf = request.form["cpfForgot"]
             email = controler.email_user(cpf)[0]
             msg = Message("Recuperação de Senha", recipients=[email])
-            msg.body = 'Pega aqui'
-            #msg.html= render_template('RecuperarSenha.html', senha = 'Pega aqui')
+            # msg.body = 'Pega aqui'
+            msg.html= render_template('RecuperarSenha.html', senha = 'Pega aqui')
             mail.send(msg)
 
-    return render_template('esqueci_senha.html',error=error)
+    return render_template('esqueci_senha.html')
 
 @app.route('/enviaEmail/')
 def enviaEmail():
