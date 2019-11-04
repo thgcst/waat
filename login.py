@@ -430,13 +430,6 @@ app.config['MAIL_ASCII_ATTACHMENTS']=True
 mail = Mail(app)
 
 def email_recuperacao_senha(cpf):
-    cpf = controler.limpa_cpf(cpf)
-    if controler.exist(cpf, clientes)==True:
-        endereco = controler.select(email, clientes, cpf)
-    elif controler.exist(cpf, profissionais)==True:
-        endereco = controler.select(email, profissionais, cpf)    
-    else:
-        return ("Email não cadastrado.")
 
     msg = Message("Recuperação de Senha", recipients=[endereco])
     msg.html= render_template('RecuperarSenha.html', senha = 'Pega aqui')
