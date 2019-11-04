@@ -256,6 +256,8 @@ def RecibosProfissional():
             recibosNew.sort(key = sortNome)
         elif "valor" in request.form:
             recibosNew.sort(key = sortValor)
+        elif "cadastrar" in request.form:
+            return redirect(url_for('CadastrarAtendimentos'))
     if request.method == "POST":
         dic = request.form.to_dict()
         app.logger.warning(dic)
@@ -273,7 +275,7 @@ def RecibosProfissional():
 
             return response
 
-    return render_template('RecibosProfissional.html', recibos=recibosNew)
+    return render_template('RecibosProfissional.html', recibos=recibosNew, lenRecibos = len(recibosNew))
 
 @app.route('/recibosCliente', methods=['GET', 'POST'])
 def RecibosCliente():
