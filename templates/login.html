@@ -27,7 +27,7 @@
                     <input type="password" name="senha" placeholder="Senha" value="{{
                             request.form.senha }}" class="input" />
                 </div>
-                <a class="txt2" id="esqueci" style="font-size: 14px; text-align: center">
+                <a class="txt2" id="esqueci" style="font-size: 14px; text-align: center" onclick="window.location.href='{{ url_for( 'esqueci')}}';">
                     Esqueci minha senha
                 </a>
                 <div style="height: 30px"></div>
@@ -57,29 +57,9 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="{{ url_for('static', filename='js/login.js') }}"></script>
-    <script>
-
-        var wrap = document.getElementById("wrap");
-        var btn = document.getElementById("esqueci");
-        var container = document.getElementById("container");
-        var elem = create('<div style="width: 400px"><i id="back" onclick="back()" class="fa icon">&#xf0a8;</i></div><form method="POST" id="form2"> <h2 class="welcome" style="text-align: center; padding-top: 0">Esqueci minha senha</h2> <div class="inputBox" id="divForgot" style="padding-top: 40px"> <input type="text" name="cpfForgot" id="inputForgot" placeholder="Insira seu CPF" value="{{ request.form.cpfForgot }}" class="input" maxlength="14" oninput="this.value = CPF(this.value, event)" /> </div> <div class="inputBox" id="divForgot2" style="padding-bottom: 10px; padding-top: 30px"> <button class="botao" id="btnForgot" onclick="document.getElementById(`formForgot`).submit()" type="submit">Enviar</button> </div> </form>');
-        var body = document.body;
-
-        btn.onclick = function () {
-            wrap.style.display = "none";
-            container.appendChild(elem);
-        }
-
-        function back() {
-            var modal = document.getElementById("modal");
-            container.removeChild(document.getElementById("modal"));
-            wrap.style.display = "flex";
-        }
-    </script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/login.js') }}"></script>
 
 </body>
-
 
 
 </html>

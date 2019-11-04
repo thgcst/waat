@@ -4,48 +4,32 @@
 
 
 <head>
-    <title>Login</title>
+    <title>Esqueci minha senha</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/login.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 </head>
 
 <body>
+    <i class="fa icon" style="font-size: 40px;"
+        onclick="window.location.href='{{ url_for( 'RecibosProfissional')}}'">&#xf0a8;</i>
     <div class="container-login100" id="container">
-        <div class="wrap-login100" id="wrap">
-            <form method="POST" id="form" style="text-align: center">
-                <h1 class="welcome">Esqueceu a senha, animal?</h1>
-                
-                <div class="inputBox" style="padding-top: 40px">
-                    <input type="text" name="cpf" placeholder="CPF" value="{{request.form.cpf}}" class="input" maxlength="14" oninput="this.value = CPF(this.value, event)" />
+        <div class="modal" id="modal">
+            <form method="POST" id="form2">
+                <h2 class="welcome" style="text-align: center; padding-top: 0">Esqueci minha senha</h2>
+                <div class="inputBox" id="divForgot" style="padding-top: 40px"> <input type="text" name="cpfForgot"
+                        id="inputForgot" placeholder="Insira seu CPF" value="{{ request.form.cpfForgot }}" class="input"
+                        maxlength="14" oninput="this.value = CPF(this.value, event)" /> </div>
+                <div class="inputBox" id="divForgot2" style="padding-bottom: 10px; padding-top: 30px">
+                    <input type="submit" class="botao" name="submit" id="btnForgot"></input>
                 </div>
-                <div style="height: 30px"></div>
-
-                    <div class="inputBox" style="padding-bottom: 10px;">
-                        <input class="botao" type="submit" name="botao"
-                            onclick="document.getElementById('form').submit()">Enviar</input>
-                    </div>
-                    </div>
             </form>
         </div>
     </div>
 
-    <script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/login.js') }}"></script>
 
-        var wrap = document.getElementById("wrap");
-        var btn = document.getElementById("esqueci");
-        var container = document.getElementById("container");
-        var elem = create('<div style="width: 400px"><i id="back" onclick="back()" class="fa icon">&#xf0a8;</i></div><form method="POST" id="form2"> <h2 class="welcome" style="text-align: center; padding-top: 0">Esqueci minha senha</h2> <div class="inputBox" id="divForgot" style="padding-top: 40px"> <input type="text" name="cpfForgot" id="inputForgot" placeholder="Insira seu CPF" value="{{request.form.cpfForgot}}" class="input" maxlength="14" oninput="this.value = CPF(this.value, event)" /> </div> <div class="inputBox" id="divForgot2" style="padding-bottom: 10px; padding-top: 30px"> <button class="botao" id="btnForgot" onclick="document.getElementById(`formForgot`).submit()" type="submit">Enviar</button> </div> </form>');
-        var body = document.body;
-
-        btn.onclick = function () {
-            wrap.style.display = "none";
-            container.appendChild(elem);
-        }
-
-        function back() {
-            var modal = document.getElementById("modal");
-            container.removeChild(document.getElementById("modal"));
-            wrap.style.display = "flex";
-        }
-    </script>
 
 </body>
 

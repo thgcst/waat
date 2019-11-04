@@ -152,17 +152,18 @@ body {
   justify-content: center;
   width: 400px;
   padding-bottom: 20px;
+  padding-top: 30px;
 }
 
 .icon {
-  align-content: flex-start;
+  position: absolute;
   font-size: 40px;
   margin: 5px;
   padding: 10px 0 0 10px;
-  color: rgb(180, 180, 180);
+  color: white;
 }
 
-.icon:hover{
-  color: rgb(29, 29, 29);
+.icon:hover {
+  color: rgb(218, 218, 218);
   cursor: pointer;
 }

@@ -65,27 +65,6 @@ class Profissional:
         controler.update({'senha':senha}, 'profissionais', 'id_profissional='+self.id)
         self.nome = controler.select('senha', 'profissionais', 'id_profissional='+self.id)[0][0]
 
-@app.route('/<nomeProfissional>/<regProf>/<profissao>/<nome>/<cpf>/<precoConsulta>/<email>/<enderecoComercial>/<telefone>/<cep>')
-def pdf_template1(nomeProfissional, regProf, profissao, nome, cpf, precoConsulta, email, enderecoComercial, telefone, cep):
-    rendered = render_template('pdf_template18+.html', nomeProfissional = nomeProfissional, regProf = regProf, profissao = profissao, nome = nome, cpf = cpf, precoConsulta = precoConsulta, email=email, enderecoComercial = enderecoComercial, telefone = telefone, cep = cep)
-    pdf = pdfkit.from_string(rendered, False)
-
-    response =  make_response(pdf)
-    response.headers['Content-Type'] =  'applocation/pdf'
-    response.headers['Content-Disposition'] =   'inline; filename = recibo.pdf'
-
-    return response
-
-@app.route('/<nomeProfissional>/<regProf>/<profissao>/<nome>/<cpfRes>/<nomeRes>/<precoConsulta>/<email>/<enderecoComercial>/<telefone>/<cep>')
-def pdf_template2(nomeProfissional, regProf, profissao, nome, cpfRes, nomeRes, precoConsulta, email, enderecoComercial, telefone, cep):
-    rendered = render_template('pdf_template18-.html', nomeProfissional = nomeProfissional, regProf = regProf, profissao = profissao, nome = nome, cpfRes = cpfRes, nomeRes = nomeRes, precoConsulta = precoConsulta, email=email, enderecoComercial = enderecoComercial, telefone = telefone, cep = cep)
-    pdf = pdfkit.from_string(rendered, False)
-
-    response =  make_response(pdf)
-    response.headers['Content-Type'] =  'applocation/pdf'
-    response.headers['Content-Disposition'] =   'inline; filename = recibo.pdf'
-
-    return response
 
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
@@ -179,6 +158,13 @@ def cadastro():
                     controler.cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, hashed_password, cep, endereco, numero, complemento, cidade, estado)
                     return redirect(url_for('login'))
     return render_template('create.html', error=error)
+
+@app.route('/esqueci minha senha', methods=['GET', 'POST'])
+def esqueci():
+    if request.method == "POST":
+        if "submit" in request.form:
+            cpf = request.form["cpfForgot"]
+    return render_template('esqueci_senha.html')
 
 
 @app.route('/', methods=['GET', 'POST'])

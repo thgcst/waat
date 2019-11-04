@@ -11,15 +11,3 @@ function CPF(value, event) {
 
     return newValue.split('').map((v, i) => aux(i) ? v + '.' : (i == 8 ? v + '-' : v)).join('');
 };
-
-function create(htmlStr) {
-    var elem = document.createElement('div');
-    att = document.createAttribute("class");
-    att.value = "modal";
-    elem.setAttributeNode(att);
-    att = document.createAttribute("id");
-    att.value = "modal";
-    elem.setAttributeNode(att);
-    elem.innerHTML = htmlStr;
-    return elem;
-}
