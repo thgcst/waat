@@ -416,16 +416,18 @@ mail = Mail(app)
 
 @app.route('/esqueciminhasenha', methods=['GET', 'POST'])
 def esqueci():
+    error = None
+    sucesso = None
     if request.method == "POST":
         if "submit" in request.form:
             cpf = request.form["cpfForgot"]
             email = controler.email_user(cpf)[0]
             msg = Message("Recuperação de Senha", recipients=[email])
             # msg.body = 'Pega aqui'
-            msg.html= render_template('RecuperarSenha.html', senha = 'Pega aqui', error=error, sucesso=sucesso)
+            msg.html= render_template('RecuperarSenha.html')
             mail.send(msg)
 
-    return render_template('esqueci_senha.html')
+    return render_template('esqueci_senha.html', senha = 'Pega aqui', error=error, sucesso=sucesso)
 
 @app.route('/enviaEmail/')
 def enviaEmail():
