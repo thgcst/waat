@@ -56,15 +56,15 @@
                             {% else %}
                             {% for recibo in recibos %}
                             <tr>
-                                <td>{{recibo[5]}}</td>
+                                <td>{{recibo[4]}}</td>
                                 <td>
                                     <input type="submit" class="txt2" style="font-size: 17px"
                                         name={{recibos.index(recibo)}} value="Baixar recibo">
                                     </input>
                                 </td>
+                                <td>{{recibo[6]}}</td>
                                 <td>{{recibo[7]}}</td>
-                                <td>{{recibo[8]}}</td>
-                                <td>{{recibo[4]}}</td>
+                                <td>{{recibo[3]}}</td>
 
                             </tr>
                             {% endfor %}

@@ -149,6 +149,8 @@ def cadastro():
                 error = 'Ops! Email já cadastrado.'
             elif len(data_de_nascimento) != 10  or controler.valida_data(data_de_nascimento) or controler.verifica_idade(data_de_nascimento) == "erro":
                 error = 'Data de nascimento inválida'
+            elif len(request.form["telefonePro"]) != 14 and len(request.form["telefonePro"]) != 13:
+                error = 'Verifique seu telefone!'
             else:
                 cpf = controler.limpa_cpf(request.form["cpfPro"])
                 if controler.verifica_cpf(cpf, 'profissionais'):
@@ -235,12 +237,12 @@ def sobreNos():
 @app.route('/recibosProfissional', methods=['GET', 'POST'])
 def RecibosProfissional():
     def sortData(val):
-        data = val[5][6:] + val[5][3:5] + val[5][0:2]
+        data = val[4][6:] + val[4][3:5] + val[4][0:2]
         return int(data)
     def sortNome(val): 
-        return val[7]
+        return val[6]
     def sortValor(val): 
-        valor = val[4].replace("R$","").replace(",","")
+        valor = val[3].replace("R$","").replace(",","")
         return int(valor)
     id_profissional = session['id']
     recibos = controler.select("*", "atendimentos", "id_profissional="+id_profissional)
@@ -258,6 +260,7 @@ def RecibosProfissional():
             recibosNew.sort(key = sortValor)
         elif "cadastrar" in request.form:
             return redirect(url_for('CadastrarAtendimentos'))
+    app.logger.info(recibosNew[0])
     if request.method == "POST":
         dic = request.form.to_dict()
         app.logger.warning(dic)
@@ -280,14 +283,14 @@ def RecibosProfissional():
 @app.route('/recibosCliente', methods=['GET', 'POST'])
 def RecibosCliente():
     def sortData(val):
-        data = val[5][6:] + val[5][3:5] + val[5][0:2]
+        data = val[4][6:] + val[4][3:5] + val[4][0:2]
         return int(data)
     def sortNome(val): 
-        return val[7]
+        return val[6]
     def sortArea(val): 
-        return val[8]
+        return val[7]
     def sortValor(val): 
-        valor = val[4].replace("R$","").replace(",","")
+        valor = val[3].replace("R$","").replace(",","")
         return int(valor)
     id_cliente = session['id']
     recibos = controler.select("*", "atendimentos", "id_cliente="+id_cliente)
