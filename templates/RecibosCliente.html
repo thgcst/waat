@@ -49,12 +49,17 @@
                     </table>
                     <div style="overflow: scroll;max-height: 60vh;background: #fff;">
                         <table id="table">
+                            {% if lenRecibos == 0 %}
+                            <tr>
+                                <td style="width: 1000px">Você não tem atendimentos cadastrados</td>
+                            </tr>
+                            {% else %}
                             {% for recibo in recibos %}
                             <tr>
                                 <td>{{recibo[5]}}</td>
                                 <td>
-                                    <input type="submit" class="txt2" style="font-size: 17px" name={{recibos.index(recibo)}}
-                                        value="Baixar recibo">
+                                    <input type="submit" class="txt2" style="font-size: 17px"
+                                        name={{recibos.index(recibo)}} value="Baixar recibo">
                                     </input>
                                 </td>
                                 <td>{{recibo[7]}}</td>
@@ -63,6 +68,7 @@
 
                             </tr>
                             {% endfor %}
+                            {% endif %}
                         </table>
                     </div>
                 </div>

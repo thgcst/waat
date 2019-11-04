@@ -23,9 +23,7 @@
             <div style="width: 90%; max-width: 1050px;">
                 <div style="display: flex;flex-direction: row; justify-content: space-between;">
                     <div class="inputBox" style="padding-bottom: 0px;">
-                        <button class="botao" type="submit"
-                            onclick="window.location.href='{{ url_for( 'CadastrarAtendimentos')}}';">Cadastrar novo
-                            atendimento</button>
+                        <input class="botao" type="submit" name="cadastrar" value="Cadastrar novo atendimento"></input>
                     </div>
                     <div class="dropdown" style="margin-bottom: 15px">
                         <button class="botao botao2">Ordenar por</button>
@@ -50,6 +48,11 @@
                     </table>
                     <div style="overflow: scroll;max-height: 60vh;background: #fff;">
                         <table id="table">
+                            {% if lenRecibos == 0 %}
+                            <tr >
+                                <td style="width: 1000px">Você não tem atendimentos cadastrados</td>
+                            </tr>
+                            {% else %}
                             {% for recibo in recibos %}
                             <tr>
                                 <td>{{recibo[5]}}</td>
@@ -63,6 +66,7 @@
 
                             </tr>
                             {% endfor %}
+                            {% endif %}
                         </table>
                     </div>
                 </div>
