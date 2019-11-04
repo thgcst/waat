@@ -419,7 +419,7 @@ def esqueci():
             email = controler.email_user(cpf)[0]
             msg = Message("Recuperação de Senha", recipients=[email])
             # msg.body = 'Pega aqui'
-            msg.html= render_template('RecuperarSenha.html', senha = 'Pega aqui')
+            msg.html= render_template('RecuperarSenha.html', senha = 'Pega aqui', error=error, sucesso=sucesso)
             mail.send(msg)
 
     return render_template('esqueci_senha.html')

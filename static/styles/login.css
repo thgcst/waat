@@ -155,6 +155,10 @@ body {
   padding-top: 30px;
 }
 
+.sucesso{
+  font-weight: 600;
+}
+
 .icon {
   position: absolute;
   font-size: 40px;
