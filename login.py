@@ -3,7 +3,9 @@ import pdfkit
 import controler, teste
 from flask_mail import Mail, Message
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import date
+from datetime import date, datetime
+import secrets
+import uuid
 
 app = Flask(__name__)
 
@@ -421,23 +423,32 @@ def esqueci():
     if request.method == "POST":
         if "submit" in request.form:
             cpf = request.form["cpfForgot"]
+            chave = str(uuid.uuid4())
+
+            controler.cadastra_esquecimento(cpf, chave)
+
             email = controler.email_user(cpf)[0]
             msg = Message("Recuperação de Senha", recipients=[email])
+            link = 'http://127.0.0.1:5000/Redefinir/'+chave
             # msg.body = 'Pega aqui'
-            msg.html= render_template('RecuperarSenha.html')
+            msg.html= render_template('RecuperarSenha.html', link = link)
             mail.send(msg)
 
-    return render_template('esqueci_senha.html', senha = 'Pega aqui', error=error, sucesso=sucesso)
+    return render_template('esqueci_senha.html', error=error, sucesso=sucesso)
+
+@app.route('/Redefinir/<token>', methods=['GET', 'POST'])
+def redf(token):
+    return str(token)
 
 @app.route('/enviaEmail/')
-def enviaEmail():
-    msg = Message("Recibo", recipients=['aadottori@gmail.com', 'anderson.avvd@gmail.com','thiagodias2708@gmail.com', 'wesley.jupter@poli.ufrj.br'])
+def enviaEmail(email):
+    msg = Message("Recibo", recipients=[email])
     msg.body= "Segue em anexo o recibo referente à sua consulta."
 
     with app.open_resource("recibo_teste.pdf") as recibo:
         msg.attach("recibo_teste.pdf", "application/pdf", recibo.read())
     mail.send(msg)
-    return 'Email enviado'
+
 
 if __name__ == '__main__':
     app.run(debug=True)

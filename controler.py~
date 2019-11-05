@@ -2,7 +2,7 @@ import random
 import mysql.connector
 from flask import render_template, make_response
 import pdfkit
-from datetime import date, datetime
+from datetime import date
 
 config = {
   'user': 'sql10310695',
@@ -237,8 +237,8 @@ def cadastra_atendimento(id_profissional, id_cliente, valor ,data_consulta, data
     con.commit()
 
 def cadastra_esquecimento(cpf, chave, datahora):
-    sql = "INSERT INTO esqueceusenha (cpf, chave) VALUES(%s,%s)"
-    data = ('DEFAULT', cpf, chave)
+    sql = "INSERT INTO esqueceusenha (cpf, chave, datahora) VALUES(%s,%s,%s)"
+    data = ('DEFAULT', cpf, chave, datahora)
     cursor.execute(sql, data)
     con.commit()
 
@@ -313,11 +313,3 @@ def gerar_pdf(id_atendimento):
         rendered = render_template('pdf_template18-.html', nomeProfissional = nomeProfissional, regProf = regProf, profissao = profissao, nome = nome, cpfRes = cpfRes, nomeRes = nomeRes, precoConsulta = precoConsulta, email=email, enderecoComercial = enderecoComercial, telefone = telefone, cep = cep , dataDoAtendimento = dataDoAtendimento)
 
     return rendered
-
-#codigo para validacao de tempo:
-
-"""
-data_registro = select('datahora', 'esqueceusenha', 'cpf= '+cpf)
-data_agora = datetime.now()
-validação = (data_agora - data_registro)<timedelta(days=1)
-"""
