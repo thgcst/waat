@@ -17,11 +17,17 @@
         <div class="modal" id="modal">
             <form method="POST" id="form2">
                 <h2 class="welcome" style="text-align: center; padding-top: 0">Redefinir senha</h2>
-                <div class="inputBox" id="divForgot" style="padding-top: 40px"> <input type="text" name="senhanova"
+                <div class="inputBox" id="divForgot" style="padding-top: 40px"> <input type="password" name="senhanova"
                         id="inputForgot" placeholder="Digite a nova senha" value="{{ request.form.senhanova }}" class="input"
-                        maxlength="14" />
+                        maxlength="32" />
                 </div>
-             
+                <div class="inputBox" id="divForgot" style="padding-top: 40px"> <input type="password" name="confirma_senhanova"
+                    id="inputForgot" placeholder="Confirme sua nova senha" value="{{ request.form.confirma_senhanova }}" class="input"
+                    maxlength="32" />
+                {% if error %}
+                <p class="error" style="text-align: center; color: #e74c3c; font-size: 14px">{{ error }}
+                    {% endif %}
+            </div>
                 <div class="inputBox" id="divForgot2" style="padding-bottom: 10px; padding-top: 30px">
                     <input type="submit" class="botao" name="submit" id="btnForgot" value="Mudar senha"></input>
                 </div>

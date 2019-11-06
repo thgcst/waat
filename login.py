@@ -429,7 +429,7 @@ def esqueci():
 
             email = controler.email_user(cpf)[0]
             msg = Message("Recuperação de Senha", recipients=[email])
-            link = 'http://127.0.0.1:5000/Redefinir/'+chave
+            link = 'http://127.0.0.1:5000/redefinir/'+chave
             msg.html= render_template('RecuperarSenha.html', link = link)
             mail.send(msg)
             return redirect(url_for('login'))
@@ -438,20 +438,32 @@ def esqueci():
 
 @app.route('/redefinir/<token>', methods=['GET', 'POST'])
 def redf(token):
-    if controler.valida_token:
-        senhanova = request.form['senhanova']
-        hashed_nova = generate_password_hash(senhanova)
-        cpf = controler.select('cpf', 'esqueceusenha', 'token='+token)[0][0]
-        if controler.verifica_cpf(cpf, "clientes"):
-            ups = {'senha':hashed_nova}
-            controler.update(ups, "clientes", "cpf="+cpf)
-        elif controler.verifica_cpf(cpf, "profissionais"):
-            ups = {'senha':hashed_nova}
-            controler.update(ups, "profissionais", "cpf="+cpf)
+    error = None
+    if request.method == 'POST':
+        if controler.valida_token(token):
+            senhanova = request.form['senhanova']
+            confirma_senhanova = request.form['confirma_senhanova']
+            if senhanova == confirma_senhanova:
+                pass
+            else:
+                error = "As senhas não conferem."
+
+            hashed_nova = generate_password_hash(senhanova)
+            cpf = controler.select('cpf', 'esqueceusenha', 'chave= "'+token+'"')[0][0]
+            if controler.verifica_cpf(cpf, "clientes"):
+                ups = {'senha':hashed_nova}
+                controler.update(ups, "clientes", "cpf="+cpf)
+            elif controler.verifica_cpf(cpf, "profissionais"):
+                ups = {'senha':hashed_nova}
+                controler.update(ups, "profissionais", "cpf="+cpf)
+            return redirect(url_for('login'))
+        
+        else:
+            error = "O token expirou."
+    return render_template('redefinir_senha.html',error = error)   
+
     
-    else:
-        return "O token expirou. Esqueça a senha de novo"
-    return render_template('redefinir_senha.html')
+    
 
 @app.route('/enviaEmail/')
 def enviaEmail(email):

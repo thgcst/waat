@@ -308,7 +308,7 @@ def gerar_pdf(id_atendimento):
 
 
 def valida_token(token):
-    data_registro = select('datahora', 'esqueceusenha', 'chave= '+token)
+    data_registro = select('datahora', 'esqueceusenha', 'chave= "'+token+'"')[0][0]
     data_agora = datetime.now()
     validacao = (data_agora - data_registro)
     return validacao<timedelta(days=1)
