@@ -422,19 +422,18 @@ def esqueci():
     sucesso = None
     if request.method == "POST":
         if "submit" in request.form:
-            cpf = controler.limpa_cpf(request.form["cpfForgot"])
+            cpf = request.form["cpfForgot"]
             chave = str(uuid.uuid4())
             datahora = datetime.now()
-            controler.cadastra_esquecimento(cpf, chave, datahora)
+            controler.cadastra_esquecimento(controler.limpa_cpf(cpf), chave, datahora)
 
             email = controler.email_user(cpf)[0]
             msg = Message("Recuperação de Senha", recipients=[email])
             link = 'http://127.0.0.1:5000/Redefinir/'+chave
-            # msg.body = 'Pega aqui'
             msg.html= render_template('RecuperarSenha.html', link = link)
             mail.send(msg)
-            return 'Olha seu email'
-
+            return redirect(url_for('login'))
+            
     return render_template('esqueci_senha.html', error=error, sucesso=sucesso)
 
 @app.route('/redefinir/<token>', methods=['GET', 'POST'])
