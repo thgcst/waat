@@ -433,6 +433,7 @@ def esqueci():
             # msg.body = 'Pega aqui'
             msg.html= render_template('RecuperarSenha.html', link = link)
             mail.send(msg)
+            return 'Olha seu email'
 
     return render_template('esqueci_senha.html', error=error, sucesso=sucesso)
 
