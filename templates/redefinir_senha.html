@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+
+
+<head>
+    <title>Redefinir senha</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/login.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+</head>
+
+<body>
+    <i class="fa icon" style="font-size: 40px;" onclick="window.location.href='{{ url_for( 'login')}}'">&#xf0a8;</i>
+    <div class="container-login100" id="container">
+        <div class="modal" id="modal">
+            <form method="POST" id="form2">
+                <h2 class="welcome" style="text-align: center; padding-top: 0">Redefinir senha</h2>
+                <div class="inputBox" id="divForgot" style="padding-top: 40px"> <input type="text" name="senhanova"
+                        id="inputForgot" placeholder="Digite a nova senha" value="{{ request.form.senhanova }}" class="input"
+                        maxlength="14" />
+                </div>
+             
+                <div class="inputBox" id="divForgot2" style="padding-bottom: 10px; padding-top: 30px">
+                    <input type="submit" class="botao" name="submit" id="btnForgot" value="Mudar senha"></input>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/login.js') }}"></script>
+
+
+</body>

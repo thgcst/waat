@@ -2,7 +2,7 @@ import random
 import mysql.connector
 from flask import render_template, make_response
 import pdfkit
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 config = {
   'user': 'sql10310695',
@@ -45,7 +45,7 @@ def update(sets, table, where):
         query += " WHERE " + where
     cursor.execute(query)
     con.commit()
-    
+
 def delete(table, where):
     global cursor,  con
     query = "DELETE FROM "+ table +" WHERE "+where
@@ -135,14 +135,6 @@ def verifica_cpf(cpf, tabela):
     cpf = "cpf="+str(cpf)
     cpf_no_db = bool(len(select("cpf", tabela, cpf)))
     return cpf_no_db
-
-#def verifica_email(email, tabela):
-#    user = separa_email(email)[0]
-#    domain = separa_email(email)[1]
-#  essa busca da próxima linha no sql devolve 0 se não estiver lá e 1 se já estiver cadastrado. como a gente faz
-#  essa linha funcionar aqui? 
-#    sql = "select count("user_mail") from"+ tabela +" where user_mail = "user" and domain_mail = "domain" 
-#
 
 def separa_email(email):
     user_mail = email.split('@')[0]
@@ -314,10 +306,9 @@ def gerar_pdf(id_atendimento):
 
     return rendered
 
-#codigo para validacao de tempo:
 
-"""
-data_registro = select('datahora', 'esqueceusenha', 'cpf= '+cpf)
-data_agora = datetime.now()
-validação = (data_agora - data_registro)<timedelta(days=1)
-"""
+def valida_token(token):
+    data_registro = select('datahora', 'esqueceusenha', 'chave= '+token)
+    data_agora = datetime.now()
+    validacao = (data_agora - data_registro)
+    return validacao<timedelta(days=1)

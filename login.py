@@ -422,10 +422,10 @@ def esqueci():
     sucesso = None
     if request.method == "POST":
         if "submit" in request.form:
-            cpf = request.form["cpfForgot"]
+            cpf = controler.limpa_cpf(request.form["cpfForgot"])
             chave = str(uuid.uuid4())
-
-            controler.cadastra_esquecimento(cpf, chave)
+            datahora = datetime.now()
+            controler.cadastra_esquecimento(cpf, chave, datahora)
 
             email = controler.email_user(cpf)[0]
             msg = Message("Recuperação de Senha", recipients=[email])
@@ -437,9 +437,22 @@ def esqueci():
 
     return render_template('esqueci_senha.html', error=error, sucesso=sucesso)
 
-@app.route('/Redefinir/<token>', methods=['GET', 'POST'])
+@app.route('/redefinir/<token>', methods=['GET', 'POST'])
 def redf(token):
-    return str(token)
+    if controler.valida_token:
+        senhanova = request.form['senhanova']
+        hashed_nova = generate_password_hash(senhanova)
+        cpf = controler.select('cpf', 'esqueceusenha', 'token='+token)[0][0]
+        if controler.verifica_cpf(cpf, "clientes"):
+            ups = {'senha':hashed_nova}
+            controler.update(ups, "clientes", "cpf="+cpf)
+        elif controler.verifica_cpf(cpf, "profissionais"):
+            ups = {'senha':hashed_nova}
+            controler.update(ups, "profissionais", "cpf="+cpf)
+    
+    else:
+        return "O token expirou. Esqueça a senha de novo"
+    return render_template('redefinir_senha.html')
 
 @app.route('/enviaEmail/')
 def enviaEmail(email):
@@ -449,7 +462,6 @@ def enviaEmail(email):
     with app.open_resource("recibo_teste.pdf") as recibo:
         msg.attach("recibo_teste.pdf", "application/pdf", recibo.read())
     mail.send(msg)
-
 
 if __name__ == '__main__':
     app.run(debug=True)
