@@ -228,9 +228,9 @@ def cadastra_atendimento(id_profissional, id_cliente, valor ,data_consulta, data
     cursor.execute(sql, data)
     con.commit()
 
-def cadastra_esquecimento(cpf, chave, datahora):
+def cadastra_esquecimento(cpf, chave):
     sql = "INSERT INTO esqueceusenha (id_esquecimento, cpf, chave,datahora) VALUES(%s,%s,%s,%s)"
-    data = ('DEFAULT', cpf, chave, datahora)
+    data = ('DEFAULT', cpf, chave,'DEFAULT')
     cursor.execute(sql, data)
     con.commit()
 
