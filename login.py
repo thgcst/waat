@@ -69,7 +69,7 @@ class Cliente(Usuario):                                              #Criando Cl
         self.nome_responsavel = dados['nome_responsavel']
         self.cpf_responsavel = dados['cpf_responsavel']
 
-
+# tipo 0 - semicadastro  1 - cliente  2 - profissional  3 - cliprof
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
     error = None
@@ -87,7 +87,8 @@ def cadastro():
             complemento = "-" if request.form["complemento"] == "" else request.form["complemento"]
             cidade = request.form["cidade"]
             estado = request.form["estado"]
-            ApenasUpdate=controler.exist(controler.limpa_cpf(cpf),'clientes')
+
+            ApenasUpdate=controler.exist(controler.limpa_cpf(cpf),'usuarios')
 
             if nome=='' or data_de_nascimento=='' or cpf=='' or telefone=='' or email=='' or senha=='' or cep=='' or endereco=='' or numero=='' or cidade=='' or estado=='':
                 error = 'Preencha todos os campos!'
@@ -95,13 +96,13 @@ def cadastro():
                 error = 'Verifique seu CPF!'
             elif endereco =="CEP não encontrado":
                 error = 'Verifique seu CEP!'
-            elif controler.verifica_email(email,'clientes') and not ApenasUpdate:
+            elif controler.verifica_email(email,'usuarios') and not ApenasUpdate:
                 error = 'Ops! Email já cadastrado.'
             elif len(data_de_nascimento) != 10 or controler.valida_data(data_de_nascimento) or controler.verifica_idade(data_de_nascimento) == "erro":
                 error = 'Data de nascimento inválida!'
             else:
                 cpf = controler.limpa_cpf(request.form["cpf"])
-                if controler.verifica_cpf(cpf, 'clientes') and not ApenasUpdate:
+                if controler.verifica_cpf(cpf, 'usuarios') and not ApenasUpdate:
                     error = 'Este CPF já está cadastrado!'
                 else:
                     hashed_password = generate_password_hash(senha)
@@ -109,7 +110,10 @@ def cadastro():
                         nome_responsavel = '-'
                         cpf_responsavel = '-'
                         if not ApenasUpdate:
-                            controler.cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, hashed_password, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
+                            tipo=1
+                            controler.cadastra_usuario(cpf, nome, email, telefone, hashed_password, tipo)
+                            id_cliente = controler.select("id", "usuarios", "cpf="+str(cpf))[0][0]
+                            controler.cadastra_cliente(id_cliente, data_de_nascimento,cep,endereco,numero,complemento,cidade,estado, nome_responsavel, cpf_responsavel)
                         else:
                             controler.completa_cadastro_cliente(nome, data_de_nascimento, cpf, telefone, email, hashed_password, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
                         return redirect(url_for('login'))
@@ -463,9 +467,6 @@ def redf(token):
         else:
             error = "O token expirou."
     return render_template('redefinir_senha.html',error = error)   
-
-    
-    
 
 @app.route('/enviaEmail/')
 def enviaEmail(email):
