@@ -181,18 +181,13 @@ def gera_id():
 def email_user(cpf):
     cpf = limpa_cpf(cpf)
     error = None
-    if exist(cpf, 'clientes'):
+    if exist(cpf, 'usuarios'):
         error='enviado'
-        email = select('email', 'clientes', 'cpf='+cpf)[0][0]
-        return (email,error)
-    elif exist(cpf, 'profissionais'):
-        error='enviado'
-        email = select('email', 'profissionais', 'cpf='+cpf)[0][0]
+        email = select('email', 'usuarios', 'cpf='+cpf)[0][0]
         return (email,error)
     else:
         error = "Não cadastrado"
         return (None, error)
-
 
 def ApenasUpdate(cpf, table):
     if exist(limpa_cpf(cpf),'clientes'):
@@ -200,36 +195,41 @@ def ApenasUpdate(cpf, table):
     else:
         ApenasUpdate = False #cadastro normal  
 
-
-def cadastra_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel):
-    id_cliente = gera_id()
+def cadastra_usuario(cpf, nome, email, telefone, senha, tipo):
     user_mail = separa_email(email)[0]
     domain_mail = separa_email(email)[1]
-    sql = "INSERT INTO clientes (id_cliente, nome, data_de_nascimento, cpf, telefone, email, user_mail, domain_mail, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-    data = (id_cliente, nome, data_de_nascimento, cpf, telefone, email, user_mail, domain_mail, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
+    sql = "INSERT INTO usuarios (id, cpf, nome, email, user_mail, domain_mail, telefone, senha, tipo) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    data = (id, cpf, nome, email, user_mail, domain_mail, telefone, senha, tipo)
+    cursor.execute(sql, data)
+    con.commit()
+
+def cadastra_cliente(id_cliente, data_de_nascimento, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel):
+    # id pelo cpf
+    sql = "INSERT INTO clientes (id_cliente, data_de_nascimento, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    data = (id_cliente, data_de_nascimento, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
     cursor.execute(sql, data)
     con.commit()
 
 
-def cadastra_profissional(nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, senha, cep, endereco, numero, complemento, cidade, estado):
-    id_profissional = gera_id()
-    user_mail = separa_email(email)[0]
-    domain_mail = separa_email(email)[1]
+def cadastra_profissional(profissao, registro_profissional, telefone_comercial, cep, endereco, numero, complemento, cidade, estado):
+    #id pelo cpf
     if registro_profissional == "":
         registro_profissional = "-"
-    sql = "INSERT INTO profissionais (id_profissional, nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, user_mail, domain_mail, senha, cep, endereco, numero, complemento, cidade, estado) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-    data = (id_profissional, nome, cpf, profissao, registro_profissional, telefone, data_de_nascimento, email, user_mail, domain_mail, senha, cep, endereco, numero, complemento, cidade, estado)
+    if telefone_comercial == "":
+        telefone_comercial == ""
+    sql = "INSERT INTO profissionais (id_profissional, profissao, registro_profissional, telefone_comercial, cep, endereco, numero, complemento, cidade, estado) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    data = (id_profissional, profissao, registro_profissional, telefone_comercial, cep, endereco, numero, complemento, cidade, estado)
     cursor.execute(sql, data)
     con.commit()
 
-def cadastra_atendimento(id_profissional, id_cliente, valor ,data_consulta, data_gerado):
+def cadastra_atendimento(id_profissional, id_cliente, valor, data_consulta, data_gerado):
     sql = "INSERT INTO atendimentos (id_atendimento, id_profissional, id_cliente, valor, data_consulta, data_gerado) VALUES(%s,%s,%s,%s,%s,%s)"
     data = ('DEFAULT', id_profissional, id_cliente, valor, data_consulta, data_gerado)
     cursor.execute(sql, data)
     con.commit()
 
 def cadastra_esquecimento(cpf, chave, datahora):
-    sql = "INSERT INTO esqueceusenha (id_esquecimento, cpf, chave,datahora) VALUES(%s,%s,%s,%s)"
+    sql = "INSERT INTO pedidos_mudanca_senha (id_esquecimento, cpf, chave,datahora) VALUES(%s,%s,%s,%s)"
     data = ('DEFAULT', cpf, chave, datahora)
     cursor.execute(sql, data)
     con.commit()
