@@ -11,38 +11,32 @@ app = Flask(__name__)
 
 app.secret_key = "PipocaSalgada"
 
-class Cliente:
+class Usuario():
 
     def __init__(self, id):
         self.id = str(id)
-        dados = controler.select_CursorDict('*', 'clientes', 'id_cliente='+self.id)[0]
+        
+        dados = controler.select_CursorDict('*', 'usuarios', 'id_usuario='+self.id)[0]
         self.nome = dados['nome']
         self.data_de_nascimento = dados['data_de_nascimento']
         self.cpf = dados['cpf']
         self.telefone = dados['telefone']
         self.email = dados['email']
         self.senha = dados['senha']
-        self.cep = dados['cep']
-        self.endereco = dados['endereco']
-        self.numero = dados['numero']
-        self.complemento = dados['complemento']
-        self.cidade = dados['cidade']
-        self.estado = dados['estado']
-        self.nome_responsavel = dados['nome_responsavel']
-        self.cpf_responsavel = dados['cpf_responsavel']
+        self.tipo = dados['tipo']
 
-    def set_nome(self, nome):
+    def up_nome(self, nome):
         controler.update({'nome':nome}, 'clientes', 'id_cliente='+self.id)
         self.nome = controler.select('nome', 'clientes', 'id_cliente='+self.id)[0][0]
 
-    def set_senha(self, senha):
+    def up_senha(self, senha):
         controler.update({'senha':senha}, 'clientes', 'id_cliente='+self.id)
-        self.nome = controler.select('senha', 'clientes', 'id_cliente='+self.id)[0][0]
+        self.senha = controler.select('senha', 'clientes', 'id_cliente='+self.id)[0][0]
 
 
-class Profissional:
-    def __init__(self, id):
-        self.id = str(id)
+class Profissional(Usuario):
+    def __init__(self,id):
+        super().__init__(id)                              #Usando o fato de ser subclasse e herdando metodos e atributos da classe mãe
         dados = controler.select_CursorDict('*', 'profissionais', 'id_profissional='+self.id)[0]
         self.nome = dados['nome']
         self.profissao = dados['profissao']
@@ -59,13 +53,21 @@ class Profissional:
         self.cidade = dados['cidade']
         self.estado = dados['estado']
 
-    def set_nome(self, nome):
-        controler.update({'nome':nome}, 'profissionais', 'id_profissional='+self.id)
-        self.nome = controler.select('nome', 'profissionais', 'id_profissional='+self.id)[0][0]
 
-    def set_senha(self, senha):
-        controler.update({'senha':senha}, 'profissionais', 'id_profissional='+self.id)
-        self.nome = controler.select('senha', 'profissionais', 'id_profissional='+self.id)[0][0]
+class Cliente(Usuario):                                              #Criando Clase profissional que é subclasse de Usuário
+
+    def __init__(self,id):
+
+        super().__init__(id)                           #Usando o fato de ser subclasse e herdando metodos e atributos da classe mãe
+        dados = controler.select_CursorDict('*', 'clientes', 'id_cliente='+self.id)[0]
+        self.cep = dados['cep']
+        self.endereco = dados['endereco']
+        self.numero = dados['numero']
+        self.complemento = dados['complemento']
+        self.cidade = dados['cidade']
+        self.estado = dados['estado']
+        self.nome_responsavel = dados['nome_responsavel']
+        self.cpf_responsavel = dados['cpf_responsavel']
 
 
 @app.route('/cadastro', methods=['GET', 'POST'])
@@ -473,7 +475,7 @@ def enviaEmail(email):
     with app.open_resource("recibo_teste.pdf") as recibo:
         msg.attach("recibo_teste.pdf", "application/pdf", recibo.read())
     mail.send(msg)
-
+'''
 if __name__ == '__main__':
     app.run(debug=True)
-
+'''
