@@ -41,7 +41,6 @@ class Profissional(Usuario):
         self.profissao = dados['profissao']
         self.registro_profissional = dados['registro_profissional']
         self.telefone_comercial = dados['telefone_comercial']
-        self.data_de_nascimento = dados['data_de_nascimento']
         self.cep = dados['cep']
         self.endereco = dados['endereco']
         self.numero = dados['numero']
@@ -214,8 +213,8 @@ def before_request():
 def loggedCliente():
     if 'user' in session:
         user = Cliente(session['id'])
-    return render_template("loggedCliente.html", cliente=user.nome)
-
+        return render_template("loggedCliente.html", cliente=user.nome)
+    return redirect(url_for('login'))
 
 @app.route('/loggedProfissional')
 def loggedProfissional():
@@ -223,6 +222,20 @@ def loggedProfissional():
         user = Profissional(session['id'])
         return render_template("loggedProfissional.html", profissional=user.nome)
     return redirect(url_for('login'))
+
+
+@app.route('/loggedCliProf', methods=['GET', 'POST'])
+def ProfissionalCliente():
+    if 'user' in session:
+        if False :#botão cliente
+            user = Cliente(session['id'])
+            return render_template("loggedCliente.html", cliente=user.nome)
+
+        if True :#botão profisisonal
+            user = Profissional(session['id'])
+            return render_template("loggedProfissional.html", profissional=user.nome)
+        return redirect(url_for('login'))
+    return render_template('ProfissionalCliente.html', nome_usuario='Anderson')
 
 
 @app.route('/logout')
@@ -239,13 +252,6 @@ def sobreNos():
     if request.method =='POST':
         return redirect(url_for('cadastro'))
     return render_template('sobreNos.html', error=error)
-
-@app.route('/ProfissionalCliente', methods=['GET', 'POST'])
-def ProfissionalCliente():
-    if "profissional" in request.form:
-        return "Profissional"
-
-    return render_template('ProfissionalCliente.html', nome_usuario='Anderson')
 
 @app.route('/recibosProfissional', methods=['GET', 'POST'])
 def RecibosProfissional():

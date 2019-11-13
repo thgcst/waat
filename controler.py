@@ -230,7 +230,7 @@ def cadastra_atendimento(id_profissional, id_cliente, valor, data_consulta, data
     con.commit()
 
 def cadastra_esquecimento(cpf, chave, datahora):
-    sql = "INSERT INTO pedidos_mudanca_senha (id_esquecimento, cpf, chave,datahora) VALUES(%s,%s,%s,%s)"
+    sql = "INSERT INTO pedido_mudanca_senha (id_pedido, cpf, chave,datahora) VALUES(%s,%s,%s,%s)"
     data = ('DEFAULT', cpf, chave, datahora)
     cursor.execute(sql, data)
     con.commit()
@@ -309,7 +309,7 @@ def gerar_pdf(id_atendimento):
 
 
 def valida_token(token):
-    data_registro = select('datahora', 'esqueceusenha', 'chave= "'+token+'"')[0][0]
+    data_registro = select('datahora', 'pedido_mudanca_senha', 'chave= "'+token+'"')[0][0]
     data_agora = datetime.now()
     validacao = (data_agora - data_registro)
     return validacao<timedelta(days=1)
