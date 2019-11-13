@@ -163,12 +163,15 @@ def verifica_idade(data_de_nascimento):
 def cpf_id(cpf, tabela):
     """Retorna o id correspondente ao cpf"""
     cpf = "cpf="+str(cpf)
-    if tabela == 'clientes':
-        id = select("id_cliente", tabela, cpf)
-        return id[0][0]
-    else:
-        id = select("id_profissional", tabela, cpf)
-        return id[0][0]
+    id = select("id", tabela, cpf)
+    return id[0][0]
+
+def cpf_tipo(cpf, tabela):
+    """Retorna o id correspondente ao cpf"""
+    cpf = "cpf="+str(cpf)
+    tipo = select("tipo", tabela, cpf)
+    return tipo[0][0]
+
 
 def gera_id():
     id_gerado = random.randint(1,100)
@@ -195,24 +198,22 @@ def ApenasUpdate(cpf, table):
     else:
         ApenasUpdate = False #cadastro normal  
 
-def cadastra_usuario(cpf, nome, email, telefone, senha, tipo):
+def cadastra_usuario(cpf, nome, email, telefone, data_de_nascimento, senha, tipo):
     user_mail = separa_email(email)[0]
     domain_mail = separa_email(email)[1]
-    sql = "INSERT INTO usuarios (id, cpf, nome, email, user_mail, domain_mail, telefone, senha, tipo) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-    data = (id, cpf, nome, email, user_mail, domain_mail, telefone, senha, tipo)
+    sql = "INSERT INTO usuarios (id, cpf, nome, email, user_mail, domain_mail, telefone, data_de_nascimento, senha, tipo) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    data = ('DEFAULT', cpf, nome, email, user_mail, domain_mail, telefone, data_de_nascimento, senha, tipo)
     cursor.execute(sql, data)
     con.commit()
 
-def cadastra_cliente(id_cliente, data_de_nascimento, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel):
-    # id pelo cpf
-    sql = "INSERT INTO clientes (id_cliente, data_de_nascimento, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-    data = (id_cliente, data_de_nascimento, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
+def cadastra_cliente(id_cliente, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel):
+    sql = "INSERT INTO clientes (id_cliente, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    data = (id_cliente, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel)
     cursor.execute(sql, data)
     con.commit()
 
 
-def cadastra_profissional(profissao, registro_profissional, telefone_comercial, cep, endereco, numero, complemento, cidade, estado):
-    #id pelo cpf
+def cadastra_profissional(id_profissional, profissao, registro_profissional, telefone_comercial, cep, endereco, numero, complemento, cidade, estado):
     if registro_profissional == "":
         registro_profissional = "-"
     if telefone_comercial == "":
@@ -247,7 +248,7 @@ def completa_cadastro_cliente(nome, data_de_nascimento, cpf, telefone, email, se
     id_cliente = cpf_id(cpf, 'clientes')
     user_mail = separa_email(email)[0]
     domain_mail = separa_email(email)[1]
-    ups = {'nome':nome, 'data_de_nascimento':data_de_nascimento, 'telefone':telefone, 'email':email, 'senha':senha, 'cep':cep, 'endereco':endereco, 'numero':numero, 'complemento':complemento, 'cidade':cidade, 'estado':estado, 'nome_responsavel':nome_responsavel, 'cpf_responsavel':cpf_responsavel}
+    ups = {'nome':nome, 'data_de_nascimento':data_de_nascimento, 'telefone':telefone, 'email':email, 'user_mail':user_mail, 'domain_mail':domain_mail, 'senha':senha, 'cep':cep, 'endereco':endereco, 'numero':numero, 'complemento':complemento, 'cidade':cidade, 'estado':estado, 'nome_responsavel':nome_responsavel, 'cpf_responsavel':cpf_responsavel}
     update(ups,'clientes','id_cliente='+str(id_cliente))
 
 
