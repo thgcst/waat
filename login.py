@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, make_response, session, g
 import pdfkit
-import controler, teste
+import controler
 from flask_mail import Mail, Message
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date, datetime
