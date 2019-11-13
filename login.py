@@ -15,8 +15,7 @@ class Usuario():
 
     def __init__(self, id):
         self.id = str(id)
-        
-        dados = controler.select_CursorDict('*', 'usuarios', 'id_usuario='+self.id)[0]
+        dados = controler.select_CursorDict('*', 'usuarios', 'id='+self.id)[0]
         self.nome = dados['nome']
         self.data_de_nascimento = dados['data_de_nascimento']
         self.cpf = dados['cpf']
@@ -26,26 +25,22 @@ class Usuario():
         self.tipo = dados['tipo']
 
     def up_nome(self, nome):
-        controler.update({'nome':nome}, 'clientes', 'id_cliente='+self.id)
-        self.nome = controler.select('nome', 'clientes', 'id_cliente='+self.id)[0][0]
+        controler.update({'nome':nome}, 'clientes', 'id='+self.id)
+        self.nome = controler.select('nome', 'clientes', 'id='+self.id)[0][0]
 
     def up_senha(self, senha):
-        controler.update({'senha':senha}, 'clientes', 'id_cliente='+self.id)
-        self.senha = controler.select('senha', 'clientes', 'id_cliente='+self.id)[0][0]
+        controler.update({'senha':senha}, 'clientes', 'id='+self.id)
+        self.senha = controler.select('senha', 'clientes', 'id='+self.id)[0][0]
 
 
 class Profissional(Usuario):
     def __init__(self,id):
         super().__init__(id)                              #Usando o fato de ser subclasse e herdando metodos e atributos da classe mãe
         dados = controler.select_CursorDict('*', 'profissionais', 'id_profissional='+self.id)[0]
-        self.nome = dados['nome']
         self.profissao = dados['profissao']
         self.registro_profissional = dados['registro_profissional']
-        self.cpf = dados['cpf']
-        self.telefone = dados['telefone']
+        self.telefone_comercial = dados['telefone_comercial']
         self.data_de_nascimento = dados['data_de_nascimento']
-        self.email = dados['email']
-        self.senha = dados['senha']
         self.cep = dados['cep']
         self.endereco = dados['endereco']
         self.numero = dados['numero']
@@ -57,7 +52,6 @@ class Profissional(Usuario):
 class Cliente(Usuario):                                              #Criando Clase profissional que é subclasse de Usuário
 
     def __init__(self,id):
-
         super().__init__(id)                           #Usando o fato de ser subclasse e herdando metodos e atributos da classe mãe
         dados = controler.select_CursorDict('*', 'clientes', 'id_cliente='+self.id)[0]
         self.cep = dados['cep']
@@ -241,6 +235,13 @@ def sobreNos():
     if request.method =='POST':
         return redirect(url_for('cadastro'))
     return render_template('sobreNos.html', error=error)
+
+@app.route('/ProfissionalCliente', methods=['GET', 'POST'])
+def ProfissionalCliente():
+    if "profissional" in request.form:
+        return "Profissional"
+
+    return render_template('ProfissionalCliente.html', nome_usuario='Anderson')
 
 @app.route('/recibosProfissional', methods=['GET', 'POST'])
 def RecibosProfissional():
@@ -450,23 +451,17 @@ def redf(token):
             senhanova = request.form['senhanova']
             confirma_senhanova = request.form['confirma_senhanova']
             if senhanova == confirma_senhanova:
-                pass
+                hashed_nova = generate_password_hash(senhanova)
+                cpf = controler.select('cpf', 'pedido_mudanca_senha', 'chave= "'+token+'"')[0][0]
+                if controler.verifica_cpf(cpf, 'usuarios'):
+                    ups = {'senha':hashed_nova}
+                    controler.update(ups, "usuarios", "cpf="+cpf)
+                return redirect(url_for('login'))
             else:
                 error = "As senhas não conferem."
-
-            hashed_nova = generate_password_hash(senhanova)
-            cpf = controler.select('cpf', 'esqueceusenha', 'chave= "'+token+'"')[0][0]
-            if controler.verifica_cpf(cpf, "clientes"):
-                ups = {'senha':hashed_nova}
-                controler.update(ups, "clientes", "cpf="+cpf)
-            elif controler.verifica_cpf(cpf, "profissionais"):
-                ups = {'senha':hashed_nova}
-                controler.update(ups, "profissionais", "cpf="+cpf)
-            return redirect(url_for('login'))
-        
         else:
             error = "O token expirou."
-    return render_template('redefinir_senha.html',error = error)   
+    return render_template('redefinir_senha.html', error = error)   
 
 @app.route('/enviaEmail/')
 def enviaEmail(email):
@@ -476,7 +471,6 @@ def enviaEmail(email):
     with app.open_resource("recibo_teste.pdf") as recibo:
         msg.attach("recibo_teste.pdf", "application/pdf", recibo.read())
     mail.send(msg)
-'''
+
 if __name__ == '__main__':
     app.run(debug=True)
-'''
