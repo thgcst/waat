@@ -313,3 +313,10 @@ def valida_token(token):
     data_agora = datetime.now()
     validacao = (data_agora - data_registro)
     return validacao<timedelta(days=1)
+
+def converte_dataNascimento(data):
+    dia = int(data[:2])
+    mes = int(data[3:5])
+    ano = int(data[6:])
+    data = date(ano, mes, dia)
+    return data

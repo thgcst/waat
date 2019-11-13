@@ -110,7 +110,7 @@ def cadastro():
                         nome_responsavel = '-'
                         cpf_responsavel = '-'
                         tipo=1
-                        controler.cadastra_usuario(cpf, nome, email, telefone, data_de_nascimento, hashed_password, tipo)
+                        controler.cadastra_usuario(cpf, nome, email, telefone, controler.converte_dataNascimento(data_de_nascimento), hashed_password, tipo)
                         id_cliente = controler.select("id", "usuarios", "cpf="+str(cpf))[0][0]
                         controler.cadastra_cliente(id_cliente,cep,endereco,numero,complemento,cidade,estado, nome_responsavel, cpf_responsavel)
                         return redirect(url_for('login'))
@@ -124,7 +124,7 @@ def cadastro():
                             error = "Verifique o CPF do responsável"
                         else:
                             tipo=1
-                            controler.cadastra_usuario(cpf, nome, email, telefone, data_de_nascimento, hashed_password, tipo)
+                            controler.cadastra_usuario(cpf, nome, email, telefone, controler.converte_dataNascimento(data_de_nascimento), hashed_password, tipo)
                             id_cliente = controler.select("id", "usuarios", "cpf="+str(cpf))[0][0]
                             controler.cadastra_cliente(id_cliente,cep,endereco,numero,complemento,cidade,estado, nome_responsavel, cpf_responsavel)
                             return redirect(url_for('login'))
@@ -167,7 +167,7 @@ def cadastro():
                 else:
                     hashed_password = generate_password_hash(senha)
                     tipo=2
-                    controler.cadastra_usuario(cpf, nome, email, telefone, data_de_nascimento, hashed_password, tipo)
+                    controler.cadastra_usuario(cpf, nome, email, telefone, controler.converte_dataNascimento(data_de_nascimento), hashed_password, tipo)
                     id_profissional = controler.select("id", "usuarios", "cpf="+str(cpf))[0][0]
                     telefone_comercial=telefone
                     controler.cadastra_profissional(id_profissional, profissao, registro_profissional, telefone_comercial, cep, endereco, numero, complemento, cidade, estado)
