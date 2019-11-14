@@ -9,18 +9,16 @@
 
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/loggedCliente.css') }}">
-    <!-- <link rel="stylesheet" type="text/css" href="../static/styles/loggedPaciente.css"> -->
-
+    <!-- onclick="window.location.href='{{ url_for( 'loggedCliente')}}'" -->
 
     <title>Login</title>
 </head>
-<input type = "button" onclick = "sayHello()" value = "Say Hello" />
 <body>
     <div class="container-login100">
         <strong class="greetings">Bem vindo, {{ nome_usuario }}!</strong>
         <div class="botoes">
-            <button type = "submit" class="botao" name = 'Profissional' >Profissional</button>
-            <button type = submit  class="botao" name = 'Cliente' >Cliente</button>
+            <button class="botao" onclick="window.location.href='{{ url_for( 'loggedProfissional')}}'" >Profissional</button>
+            <button class="botao" onclick="window.location.href='{{ url_for( 'loggedCliente')}}'">Cliente</button>
         </div>
     </div>
 

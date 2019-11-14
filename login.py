@@ -187,7 +187,6 @@ def login():
             if check_password_hash(user.senha,senha_inserida):
                 session['user'] = True
                 session['id'] = user.id
-
                 tipo = controler.cpf_tipo(cpf_inserido, "usuarios")
                 if tipo==1:
                     return redirect(url_for('loggedCliente'))
@@ -196,7 +195,7 @@ def login():
                     return redirect(url_for('loggedProfissional'))
 
                 elif tipo==3:
-                    return redirect(url_for('loggedCliProf'))    
+                    return redirect(url_for('ProfissionalCliente'))    
             else:
                 error = "Senha incorreta!"
         else:
@@ -227,16 +226,9 @@ def loggedProfissional():
 @app.route('/loggedCliProf', methods=['GET', 'POST'])
 def ProfissionalCliente():
     if 'user' in session:
-        if False :#botão cliente
-            user = Cliente(session['id'])
-            return render_template("loggedCliente.html", cliente=user.nome)
-
-        if True :#botão profisisonal
-            user = Profissional(session['id'])
-            return render_template("loggedProfissional.html", profissional=user.nome)
-        return redirect(url_for('login'))
-    return render_template('ProfissionalCliente.html', nome_usuario='Anderson')
-
+        User = Usuario(session['id'])
+        return render_template('ProfissionalCliente.html', nome_usuario=User.nome)
+    return redirect(url_for('login'))
 
 @app.route('/logout')
 def logout():
