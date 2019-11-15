@@ -110,7 +110,7 @@ def cadastro():
                         nome_responsavel = '-'
                         cpf_responsavel = '-'
                         tipo=1
-                        controler.cadastra_usuario(cpf, nome, email, telefone, controler.converte_dataNascimento(data_de_nascimento), hashed_password, tipo)
+                        controler.cadastra_usuario(cpf, nome, email, telefone, controler.converte_data(data_de_nascimento), hashed_password, tipo)
                         id_cliente = controler.select("id", "usuarios", "cpf="+str(cpf))[0][0]
                         controler.cadastra_cliente(id_cliente,cep,endereco,numero,complemento,cidade,estado, nome_responsavel, cpf_responsavel)
                         return redirect(url_for('login'))
@@ -124,7 +124,7 @@ def cadastro():
                             error = "Verifique o CPF do responsável"
                         else:
                             tipo=1
-                            controler.cadastra_usuario(cpf, nome, email, telefone, controler.converte_dataNascimento(data_de_nascimento), hashed_password, tipo)
+                            controler.cadastra_usuario(cpf, nome, email, telefone, controler.converte_data(data_de_nascimento), hashed_password, tipo)
                             id_cliente = controler.select("id", "usuarios", "cpf="+str(cpf))[0][0]
                             controler.cadastra_cliente(id_cliente,cep,endereco,numero,complemento,cidade,estado, nome_responsavel, cpf_responsavel)
                             return redirect(url_for('login'))
@@ -170,7 +170,7 @@ def cadastro():
                 else:
                     hashed_password = generate_password_hash(senha)
                     tipo=2
-                    controler.cadastra_usuario(cpf, nome, email, telefone, controler.converte_dataNascimento(data_de_nascimento), hashed_password, tipo)
+                    controler.cadastra_usuario(cpf, nome, email, telefone, controler.converte_data(data_de_nascimento), hashed_password, tipo)
                     id_profissional = controler.select("id", "usuarios", "cpf="+str(cpf))[0][0]
                     telefone_comercial=telefone
                     controler.cadastra_profissional(id_profissional, profissao, registro_profissional, telefone_comercial, cep, endereco, numero, complemento, cidade, estado)
@@ -376,19 +376,19 @@ def CadastrarAtendimentos():
                     cpf = controler.limpa_cpf(request.form['cpfCliente'])
                     controler.pre_cadastra_usuario(nome, cpf, controler.limpa_telefone(telefone), email)
                     id_usuarioAtendimento = controler.cpf_id(cpf, 'usuarios')
-                    controler.cadastra_cliente(id_usuarioAtendimento,'-','-''-','-','-','-','-','-','-')
+                    controler.cadastra_cliente(id_usuarioAtendimento,'-','-''-','-','-','-','-','-','-') 
                      #Se o cliente n tá cadastrado, é criado um semi-cadastro e depois o id_cliente dele é puxado
 
             id_profissional = session['id']
-            data_consulta = request.form['dataConsulta']
+            data_consulta = controler.converte_data(request.form['dataConsulta'])
             data_gerado = date.today().strftime("%d/%m/%Y")
             valor = request.form['valor']
             forma_pagamento = request.form.get('forma_pagamento')
             numero_parcelas = request.form['numero_parcelas']
 
-            if request.form["cpfCliente"] != "" and request.form["nome"] != "" and request.form["email"] != "" and request.form["telefone"] != "" and request.form["dataConsulta"] != "" and request.form["valor"] != "":
+            if request.form["cpfCliente"] != "" and request.form["nome"] != "" and request.form["email"] != "" and request.form["telefone"] != "" and request.form["dataConsulta"] != "" and request.form["valor"] != "" and forma_pagamento !="0" and numero_parcelas!="":
                 controler.cadastra_atendimento(id_profissional, id_usuarioAtendimento, valor, data_consulta, data_gerado, forma_pagamento, numero_parcelas)
-                return redirect(url_for('RecibosProfissional'))
+                return redirect(url_for('RecibosProfissional')) 
             else:
                 if "botao" in request.form:
                     error = "Preencha todos os campos"

@@ -313,12 +313,11 @@ def valida_token(token):
     validacao = (data_agora - data_registro)
     return validacao<timedelta(days=1)
 
-def converte_dataNascimento(data):
+def converte_data(data):
+    '''converte uma data do tipo DD/MM/AAAA em date
+    str -> date'''
     dia = int(data[:2])
     mes = int(data[3:5])
     ano = int(data[6:])
     data = date(ano, mes, dia)
     return data
-
-recibo = select("*", "atendimentos", "id_profissional=4")[1]
-print(select("nome", "usuarios", "id=" + str(recibo[2]))[0][0])
