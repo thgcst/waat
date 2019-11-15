@@ -374,20 +374,20 @@ def CadastrarAtendimentos():
                     email = request.form["email"]
                     telefone = request.form["telefone"]
                     cpf = controler.limpa_cpf(request.form['cpfCliente'])
-                    controler.pre_cadastra_usuario(nome, cpf, controler.limpa_telefone(telefone), email)
+                    controler.pre_cadastra(nome, cpf, controler.limpa_telefone(telefone), email)
                     id_usuarioAtendimento = controler.cpf_id(cpf, 'usuarios')
                     controler.cadastra_cliente(id_usuarioAtendimento,'-','-''-','-','-','-','-','-','-') 
                      #Se o cliente n tá cadastrado, é criado um semi-cadastro e depois o id_cliente dele é puxado
 
             id_profissional = session['id']
-            data_consulta = controler.converte_data(request.form['dataConsulta'])
+            data_consulta = request.form['dataConsulta']
             data_gerado = date.today().strftime("%d/%m/%Y")
             valor = request.form['valor']
             forma_pagamento = request.form.get('forma_pagamento')
             numero_parcelas = request.form['numero_parcelas']
 
             if request.form["cpfCliente"] != "" and request.form["nome"] != "" and request.form["email"] != "" and request.form["telefone"] != "" and request.form["dataConsulta"] != "" and request.form["valor"] != "" and forma_pagamento !="0" and numero_parcelas!="":
-                controler.cadastra_atendimento(id_profissional, id_usuarioAtendimento, valor, data_consulta, data_gerado, forma_pagamento, numero_parcelas)
+                controler.cadastra_atendimento(id_profissional, id_usuarioAtendimento, valor, controler.converte_data(data_consulta), data_gerado, int(forma_pagamento), int(numero_parcelas))
                 return redirect(url_for('RecibosProfissional')) 
             else:
                 if "botao" in request.form:

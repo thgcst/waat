@@ -282,19 +282,23 @@ def valida_data(data):
 def gerar_pdf(id_atendimento):
     id_profissional = str(select("id_profissional", "atendimentos", "id_atendimento="+id_atendimento)[0][0])
     id_cliente = str(select("id_cliente", "atendimentos", "id_atendimento = " + id_atendimento)[0][0])
-    nomeProfissional = select("nome", "profissionais" , "id_profissional = " + id_profissional)[0][0]
+
+    nomeProfissional = select("nome", "usuarios" , "id = " + id_profissional)[0][0]
     regProf = select("registro_profissional", "profissionais" , "id_profissional = " + id_profissional)[0][0]
     profissao = select("profissao", "profissionais" , "id_profissional = " + id_profissional)[0][0]
-    nome = select("nome", "clientes" , "id_cliente = " + id_cliente)[0][0]
-    cpf = select("cpf", "clientes" , "id_cliente = " + id_cliente)[0][0]
+
+    nome = select("nome", "usuarios" , "id = " + id_cliente)[0][0]
+    cpf = select("cpf", "usuarios" , "id = " + id_cliente)[0][0]
     cpf = '{}.{}.{}-{}'.format(cpf[0:3],cpf[3:6],cpf[6:9],cpf[9:])
     cpfRes = select("cpf_responsavel", "clientes" , "id_cliente = " + id_cliente)[0][0]
     cpfRes = '{}.{}.{}-{}'.format(cpfRes[0:3],cpfRes[3:6],cpfRes[6:9],cpfRes[9:])
     nomeRes = select("nome_responsavel", "clientes" , "id_cliente = " + id_cliente)[0][0]
+
     precoConsulta = select("valor", "atendimentos", "id_atendimento = " + id_atendimento)[0][0]
-    email = select("email", "profissionais" , "id_profissional = " + id_profissional)[0][0]
+    email = select("email", "usuarios" , "id = " + id_profissional)[0][0]
     enderecoComercial = select("endereco", "profissionais" , "id_profissional = " + id_profissional)[0][0] + "" + select("numero", "profissionais" , "id_profissional = " + id_profissional)[0][0] + ", " + select("endereco", "profissionais" , "id_profissional = " + id_profissional)[0][0]
-    telefone = select("telefone", "profissionais" , "id_profissional = " + id_profissional)[0][0]
+    telefone = select("telefone_comercial", "profissionais" , "id_profissional = " + id_profissional)[0][0]
+
     if len(telefone) == 11:
         telefone = '({}){}-{}'.format(telefone[0:2],telefone[2:7], telefone[7:])
     else:
@@ -308,7 +312,6 @@ def gerar_pdf(id_atendimento):
         rendered = render_template('pdf_template18-.html', nomeProfissional = nomeProfissional, regProf = regProf, profissao = profissao, nome = nome, cpfRes = cpfRes, nomeRes = nomeRes, precoConsulta = precoConsulta, email=email, enderecoComercial = enderecoComercial, telefone = telefone, cep = cep , dataDoAtendimento = dataDoAtendimento)
 
     return rendered
-
 
 def valida_token(token):
     data_registro = select('datahora', 'pedido_mudanca_senha', 'chave= "'+token+'"')[0][0]
