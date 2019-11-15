@@ -235,12 +235,11 @@ def cadastra_esquecimento(cpf, chave, datahora):
     cursor.execute(sql, data)
     con.commit()
 
-def pre_cadastra_cliente(nome, cpf, telefone, email):
-    id_cliente = gera_id()
+def pre_cadastra_usuario(nome, cpf, telefone, email):
     user_mail = separa_email(email)[0]
     domain_mail = separa_email(email)[1]
-    sql = "INSERT INTO clientes (id_cliente, nome, cpf, telefone, email, user_mail, domain_mail) VALUES(%s,%s,%s,%s,%s,%s,%s)"
-    data = (id_cliente, nome, cpf, telefone, email, user_mail, domain_mail)
+    sql = "INSERT INTO usuarios (id, cpf, nome, email, user_mail, domain_mail, telefone, tipo) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)"
+    data = ('DEFAULT', cpf, nome, email, user_mail, domain_mail, telefone, 0)
     cursor.execute(sql, data)
     con.commit()
 
