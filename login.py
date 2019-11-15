@@ -254,7 +254,7 @@ def RecibosProfissional():
         data = val[4][6:] + val[4][3:5] + val[4][0:2]
         return int(data)
     def sortNome(val): 
-        return val[6]
+        return val[8]
     def sortValor(val): 
         valor = val[3].replace("R$","").replace(",","")
         return int(valor)
@@ -300,9 +300,9 @@ def RecibosCliente():
         data = val[4][6:] + val[4][3:5] + val[4][0:2]
         return int(data)
     def sortNome(val): 
-        return val[6]
+        return val[8]
     def sortArea(val): 
-        return val[7]
+        return val[9]
     def sortValor(val): 
         valor = val[3].replace("R$","").replace(",","")
         return int(valor)
@@ -383,9 +383,11 @@ def CadastrarAtendimentos():
             data_consulta = request.form['dataConsulta']
             data_gerado = date.today().strftime("%d/%m/%Y")
             valor = request.form['valor']
+            forma_pagamento = request.form.get('forma_pagamento')
+            numero_parcelas = request.form['numero_parcelas']
 
             if request.form["cpfCliente"] != "" and request.form["nome"] != "" and request.form["email"] != "" and request.form["telefone"] != "" and request.form["dataConsulta"] != "" and request.form["valor"] != "":
-                controler.cadastra_atendimento(id_profissional, id_usuarioAtendimento, valor, data_consulta, data_gerado)
+                controler.cadastra_atendimento(id_profissional, id_usuarioAtendimento, valor, data_consulta, data_gerado, forma_pagamento, numero_parcelas)
                 return redirect(url_for('RecibosProfissional'))
             else:
                 if "botao" in request.form:

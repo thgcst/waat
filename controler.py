@@ -223,9 +223,9 @@ def cadastra_profissional(id_profissional, profissao, registro_profissional, tel
     cursor.execute(sql, data)
     con.commit()
 
-def cadastra_atendimento(id_profissional, id_cliente, valor, data_consulta, data_gerado):
-    sql = "INSERT INTO atendimentos (id_atendimento, id_profissional, id_cliente, valor, data_consulta, data_gerado) VALUES(%s,%s,%s,%s,%s,%s)"
-    data = ('DEFAULT', id_profissional, id_cliente, valor, data_consulta, data_gerado)
+def cadastra_atendimento(id_profissional, id_cliente, valor, data_consulta, data_gerado, forma_pagamento, numero_parcelas):
+    sql = "INSERT INTO atendimentos (id_atendimento, id_profissional, id_cliente, valor, data_consulta, data_gerado,forma_pagamento, numero_parcelas) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)"
+    data = ('DEFAULT', id_profissional, id_cliente, valor, data_consulta, data_gerado,forma_pagamento, numero_parcelas)
     cursor.execute(sql, data)
     con.commit()
 
@@ -319,3 +319,6 @@ def converte_dataNascimento(data):
     ano = int(data[6:])
     data = date(ano, mes, dia)
     return data
+
+recibo = select("*", "atendimentos", "id_profissional=4")[1]
+print(select("nome", "usuarios", "id=" + str(recibo[2]))[0][0])
