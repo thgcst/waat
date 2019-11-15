@@ -311,7 +311,7 @@ def RecibosCliente():
     recibosNew = []
     for recibo in recibos:
         recibo = list(recibo)
-        recibo.append(controler.select("nome", "profissionais", "id_profissional=" + str(recibo[2]))[0][0])
+        recibo.append(controler.select("nome", "usuarios", "id=" + str(recibo[2]))[0][0])
         recibo.append(controler.select("profissao", "profissionais", "id_profissional=" + str(recibo[2]))[0][0])
         recibosNew.append(recibo)
     if request.method == "POST": # Handles os ordenadores
