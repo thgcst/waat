@@ -163,7 +163,10 @@ def cadastro():
             else:
                 cpf = controler.limpa_cpf(request.form["cpfPro"])
                 if controler.verifica_cpf(cpf, 'usuarios'):
-                    error = 'Este CPF já está cadastrado!'
+                    if tipo == 0: #update
+                        pass
+                    else:
+                        error = 'Este CPF já está cadastrado!'
                 else:
                     hashed_password = generate_password_hash(senha)
                     tipo=2
@@ -251,7 +254,7 @@ def RecibosProfissional():
         data = val[4][6:] + val[4][3:5] + val[4][0:2]
         return int(data)
     def sortNome(val): 
-        return val[6]
+        return val[8]
     def sortValor(val): 
         valor = val[3].replace("R$","").replace(",","")
         return int(valor)
@@ -260,7 +263,7 @@ def RecibosProfissional():
     recibosNew = []
     for recibo in recibos:
         recibo = list(recibo)
-        recibo.append(controler.select("nome", "clientes", "id_cliente=" + str(recibo[1]))[0][0])
+        recibo.append(controler.select("nome", "usuarios", "id=" + str(recibo[2]))[0][0])
         recibosNew.append(recibo)
     if request.method == "POST": # Handles os ordenadores
         if "data" in request.form:
@@ -297,9 +300,9 @@ def RecibosCliente():
         data = val[4][6:] + val[4][3:5] + val[4][0:2]
         return int(data)
     def sortNome(val): 
-        return val[6]
+        return val[8]
     def sortArea(val): 
-        return val[7]
+        return val[9]
     def sortValor(val): 
         valor = val[3].replace("R$","").replace(",","")
         return int(valor)
@@ -308,7 +311,7 @@ def RecibosCliente():
     recibosNew = []
     for recibo in recibos:
         recibo = list(recibo)
-        recibo.append(controler.select("nome", "profissionais", "id_profissional=" + str(recibo[2]))[0][0])
+        recibo.append(controler.select("nome", "usuarios", "id=" + str(recibo[2]))[0][0])
         recibo.append(controler.select("profissao", "profissionais", "id_profissional=" + str(recibo[2]))[0][0])
         recibosNew.append(recibo)
     if request.method == "POST": # Handles os ordenadores
@@ -351,9 +354,9 @@ def CadastrarAtendimentos():
             nome = request.form["nome"]
             email = request.form["email"]
             telefone = request.form["telefone"]
-            if controler.verifica_cpf(controler.limpa_cpf(cpf),'usuario'): #Se o cliente está cadastrado, puxa os dados dele
-                id_cliente = controler.cpf_id(controler.limpa_cpf(cpf), 'usuario')
-                userAtendimento = Cliente(id_cliente)
+            if controler.verifica_cpf(controler.limpa_cpf(cpf),'usuarios'): #Se o cliente está cadastrado, puxa os dados dele
+                id_usuarioAtendimento = controler.cpf_id(controler.limpa_cpf(cpf), 'usuarios')
+                userAtendimento = Usuario(id_usuarioAtendimento)
                 if nome != userAtendimento.nome: #Essa sequência de 3 if's é pra completar o preencher automaticamente
                     nome = userAtendimento.nome
                 if email != userAtendimento.email:
@@ -371,16 +374,20 @@ def CadastrarAtendimentos():
                     email = request.form["email"]
                     telefone = request.form["telefone"]
                     cpf = controler.limpa_cpf(request.form['cpfCliente'])
-                    controler.pre_cadastra_cliente(nome, cpf, controler.limpa_telefone(telefone), email)
-                    id_cliente = controler.cpf_id(cpf, 'clientes') #Se o cliente n tá cadastrado, é criado um semi-cadastro e depois o id_cliente dele é puxado
+                    controler.pre_cadastra_usuario(nome, cpf, controler.limpa_telefone(telefone), email)
+                    id_usuarioAtendimento = controler.cpf_id(cpf, 'usuarios')
+                    controler.cadastra_cliente(id_usuarioAtendimento,'-','-''-','-','-','-','-','-','-')
+                     #Se o cliente n tá cadastrado, é criado um semi-cadastro e depois o id_cliente dele é puxado
 
             id_profissional = session['id']
             data_consulta = request.form['dataConsulta']
             data_gerado = date.today().strftime("%d/%m/%Y")
             valor = request.form['valor']
+            forma_pagamento = request.form.get('forma_pagamento')
+            numero_parcelas = request.form['numero_parcelas']
 
             if request.form["cpfCliente"] != "" and request.form["nome"] != "" and request.form["email"] != "" and request.form["telefone"] != "" and request.form["dataConsulta"] != "" and request.form["valor"] != "":
-                controler.cadastra_atendimento(id_profissional, id_cliente, valor, data_consulta, data_gerado)
+                controler.cadastra_atendimento(id_profissional, id_usuarioAtendimento, valor, data_consulta, data_gerado, forma_pagamento, numero_parcelas)
                 return redirect(url_for('RecibosProfissional'))
             else:
                 if "botao" in request.form:

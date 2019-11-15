@@ -56,6 +56,23 @@
                     <input type="tel" name="valor" id="valor" placeholder="Valor do atendimento" value="{{
                 request.form.valor }}" class="input" oninput="this.value = DINHEIRO(this.value, event)" />
                 </div>
+
+                <!-- forma de pagamento -->
+                <div class="inputBox">
+                    <select  name="forma_pagamento"> 
+                        <option value="0">Selecione a forma de pagamento</option>
+                        <option value="1">Cartão de crédito</option>
+                        <option value="2">Cartão de débito</option>
+                        <option value="3">Dinheiro</option>
+                    </select>
+                </div>
+                
+                <!-- numero de parcelas -->
+                <div class="inputBox">
+                        <input type="number" name="numero_parcelas" id="numero_parcelas" placeholder="Número de Parcelas" value="{{
+                    request.form.numero_parcelas }}" class="input"/>
+                </div>
+
                 {% if error %}
                 <p class="error" style="text-align: center; color: #e74c3c; font-size: 14px">{{ error }}
                     {% endif %}
