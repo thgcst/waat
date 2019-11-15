@@ -212,7 +212,6 @@ def cadastra_cliente(id_cliente, cep, endereco, numero, complemento, cidade, est
     cursor.execute(sql, data)
     con.commit()
 
-
 def cadastra_profissional(id_profissional, profissao, registro_profissional, telefone_comercial, cep, endereco, numero, complemento, cidade, estado):
     if registro_profissional == "":
         registro_profissional = "-"
@@ -235,20 +234,24 @@ def cadastra_esquecimento(cpf, chave, datahora):
     cursor.execute(sql, data)
     con.commit()
 
-def pre_cadastra_usuario(nome, cpf, telefone, email):
+def pre_cadastra(nome, cpf, telefone, email):
     user_mail = separa_email(email)[0]
     domain_mail = separa_email(email)[1]
-    sql = "INSERT INTO usuarios (id, cpf, nome, email, user_mail, domain_mail, telefone, tipo) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)"
-    data = ('DEFAULT', cpf, nome, email, user_mail, domain_mail, telefone, 0)
+    data_de_nascimento = '-'
+    senha = '-'
+    tipo = 0
+    sql = "INSERT INTO usuarios (id, cpf, nome, email, user_mail, domain_mail, telefone, data_de_nascimento, senha, tipo) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    data = ('DEFAULT', cpf, nome, email, user_mail, domain_mail, telefone, data_de_nascimento, senha, tipo)
     cursor.execute(sql, data)
     con.commit()
 
 def completa_cadastro_cliente(nome, data_de_nascimento, cpf, telefone, email, senha, cep, endereco, numero, complemento, cidade, estado, nome_responsavel, cpf_responsavel):
-    id_cliente = cpf_id(cpf, 'clientes')
-    user_mail = separa_email(email)[0]
-    domain_mail = separa_email(email)[1]
-    ups = {'nome':nome, 'data_de_nascimento':data_de_nascimento, 'telefone':telefone, 'email':email, 'user_mail':user_mail, 'domain_mail':domain_mail, 'senha':senha, 'cep':cep, 'endereco':endereco, 'numero':numero, 'complemento':complemento, 'cidade':cidade, 'estado':estado, 'nome_responsavel':nome_responsavel, 'cpf_responsavel':cpf_responsavel}
+    id_cliente = cpf_id(cpf, 'usuarios')
+    ups_usuario = {'nome':nome, 'data_de_nascimento':data_de_nascimento, 'telefone':telefone, 'email':email, 'user_mail':user_mail, 'domain_mail':domain_mail, 'senha':senha, 'cep':cep, 'endereco':endereco, 'numero':numero, 'complemento':complemento, 'cidade':cidade, 'estado':estado, 'nome_responsavel':nome_responsavel, 'cpf_responsavel':cpf_responsavel}
     update(ups,'clientes','id_cliente='+str(id_cliente))
+
+def completa_cadastro_profissional():
+    pass
 
 
 def select_CursorDict(fields, tables, where = None):
