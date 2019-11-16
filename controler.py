@@ -322,7 +322,11 @@ def valida_token(token):
 def converte_data(data):
     '''converte uma data do tipo DD/MM/AAAA em date
     str -> date'''
-    dia = int(data[:2])
+    dia = data[:2]
+    if dia[0]=='0':
+        dia = int(dia[1])
+    else:
+        dia = int(dia)
     mes = int(data[3:5])
     ano = int(data[6:])
     data = date(ano, mes, dia)

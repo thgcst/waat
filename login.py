@@ -265,6 +265,8 @@ def RecibosProfissional():
         recibo = list(recibo)
         recibo.append(controler.select("nome", "usuarios", "id=" + str(recibo[2]))[0][0])
         recibosNew.append(recibo)
+        recibo[4] = recibo[4].strftime("%d/%m/%Y")
+
     if request.method == "POST": # Handles os ordenadores
         if "data" in request.form:
             recibosNew.sort(key = sortData)
@@ -314,6 +316,8 @@ def RecibosCliente():
         recibo.append(controler.select("nome", "usuarios", "id=" + str(recibo[2]))[0][0])
         recibo.append(controler.select("profissao", "profissionais", "id_profissional=" + str(recibo[2]))[0][0])
         recibosNew.append(recibo)
+        recibo[4] = recibo[4].strftime("%d/%m/%Y")
+    
     if request.method == "POST": # Handles os ordenadores
         if "data" in request.form:
             recibosNew.sort(key = sortData)
@@ -381,7 +385,7 @@ def CadastrarAtendimentos():
 
             id_profissional = session['id']
             data_consulta = request.form['dataConsulta']
-            data_gerado = date.today().strftime("%d/%m/%Y")
+            data_gerado = date.today()  #para transformar de date em dd/mm/aaa -> .strftime("%d/%m/%Y")
             valor = request.form['valor']
             forma_pagamento = request.form.get('forma_pagamento')
             numero_parcelas = request.form['numero_parcelas']
