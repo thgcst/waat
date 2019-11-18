@@ -22,6 +22,19 @@ def select(fields, tables, where = None):
     cursor.execute(query)
     return cursor.fetchall()
 
+def select_last(id_profissional, id_cliente):
+    global cursor
+    id_profissional = str(id_profissional)
+    id_cliente = str(id_cliente)
+    selectionados = id_cliente+', data_consulta, '+id_profissional
+    query = "id_cliente = "+id_cliente+ " and id_profissional = " + id_profissional + " FROM atendimentos"
+    loc = select("MAX(data_consulta)","atendimentos", "id_cliente = "+id_cliente +" and id_profissional = "+id_profissional)
+    query+= "data_consulta = " + str(loc[0][0])
+    query+=  "ORDER BY id_cliente, data_consulta;"
+    select(selectionados, "atendimentos", )
+    cursor.execute(query)
+    return cursor.fetchall()
+
 def exist(cpf, table):
     global cursor
     query = "SELECT COUNT(nome) FROM " + table +" WHERE cpf="+cpf;

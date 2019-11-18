@@ -20,7 +20,7 @@
         <strong class="greetings">Bem vindo, {{ profissional.split()[0] }}!</strong>
         <div class="botoes">
             <button class="botao" onclick="window.location.href='{{ url_for( 'Informacoes_cadastroPro')}}'">Informações de cadastro</button>
-            <button class="botao">Meus Clientes</button>
+            <button class="botao" onclick="window.location.href='{{ url_for( 'meusClientes')}}'">Meus clientes</button>
             <button class="botao" onclick="window.location.href='{{ url_for( 'RecibosProfissional')}}'">Recibos</button>
 
         </div>

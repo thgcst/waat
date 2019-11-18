@@ -18,7 +18,7 @@ class Usuario():
         
         dados = controler.select_CursorDict('*', 'usuarios', 'id='+self.id)[0]
         self.nome = dados['nome']
-        self.data_de_nascimento = dados['data_de_nascimento']
+        self.data_de_nascimento = dados['data_de_nascimento'].strftime("%d/%m/%Y")
         self.cpf = dados['cpf']
         self.telefone = dados['telefone']
         self.email = dados['email']
@@ -313,8 +313,9 @@ def RecibosCliente():
     recibosNew = []
     for recibo in recibos:
         recibo = list(recibo)
-        recibo.append(controler.select("nome", "usuarios", "id=" + str(recibo[2]))[0][0])
-        recibo.append(controler.select("profissao", "profissionais", "id_profissional=" + str(recibo[2]))[0][0])
+        print (recibo)
+        recibo.append(controler.select("nome", "usuarios", "id=" + str(recibo[1]))[0][0])
+        recibo.append(controler.select("profissao", "profissionais", "id_profissional=" + str(recibo[1]))[0][0])
         recibosNew.append(recibo)
         recibo[4] = recibo[4].strftime("%d/%m/%Y")
     
@@ -345,6 +346,60 @@ def RecibosCliente():
             return response
 
     return render_template('RecibosCliente.html', recibos=recibosNew)
+
+@app.route('/meusClientes', methods=['GET', 'POST'])
+def meusClientes():
+    def sortData(val):
+        data = val[4][6:] + val[4][3:5] + val[4][0:2]
+        return int(data)
+    def sortNome(val): 
+        return val[8]
+    def sortValor(val): 
+        valor = val[3].replace("R$","").replace(",","")
+        return int(valor)
+    id_profissional = session['id']
+    atendimentos = controler.select("*", "atendimentos", "id_profissional="+id_profissional)
+    clientes = [] #criar lista dos clientes atendidos, só o id
+    for atendimento in atendimentos:
+        if atendimento[2] not in clientes:
+            clientes.append([atendimento[2]])
+
+    for atendimento in atendimentos: #para cada atendimento da lista,
+        for cliente in clientes:     #para cada cliente,
+            datas=[]
+            if atendimento[2]==cliente[0]: #se o cliente referenciado for o do atendimento
+                datas.append(atendimento[5]) #bota a data lá
+            ultimo_atendimento = max(datas).strftime("%d/%m/%Y") #pega a ultima
+            cliente.append(ultimo_atendimento) #e bota no cara -> agora temos uma lista de listas com [[id, data do ultimo]]
+
+    if request.method == "POST": # Handles os ordenadores
+        if "data" in request.form:
+            clientes.sort(key = sortData)
+        elif "nome" in request.form:
+            clientes.sort(key = sortNome)
+        elif "valor" in request.form:
+            clientes.sort(key = sortValor)
+
+    app.logger.info(recibosNew[0])
+    if request.method == "POST":
+        dic = request.form.to_dict()
+        app.logger.warning(dic)
+        dicInvertido = dict(zip(dic.values(),dic.keys()))
+        if "Baixar recibo" in dicInvertido :
+            index = int(dicInvertido["Baixar recibo"])
+            id_atendimento = str(recibosNew[index][0])
+            rendered = controler.gerar_pdf(id_atendimento)
+
+            pdf = pdfkit.from_string(rendered, False)
+
+            response =  make_response(pdf)
+            response.headers['Content-Type'] =  'applocation/pdf'
+            response.headers['Content-Disposition'] =   'inline; filename = recibo' + id_atendimento + '.pdf'
+
+            return response
+
+    return render_template('RecibosProfissional.html', recibos=recibosNew, lenRecibos = len(recibosNew))
+
 
 @app.route('/cadastraAtendimento', methods=['GET', 'POST'])
 def CadastrarAtendimentos():
