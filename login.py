@@ -358,7 +358,7 @@ def CadastrarAtendimentos():
             nome = request.form["nome"]
             email = request.form["email"]
             telefone = request.form["telefone"]
-            if controler.verifica_cpf(controler.limpa_cpf(cpf),'usuarios'): #Se o cliente está cadastrado, puxa os dados dele
+            if controler.verifica_cpf(controler.limpa_cpf(cpf),'usuarios'): #Se o usuario está cadastrado, puxa os dados dele
                 id_usuarioAtendimento = controler.cpf_id(controler.limpa_cpf(cpf), 'usuarios')
                 userAtendimento = Usuario(id_usuarioAtendimento)
                 if nome != userAtendimento.nome: #Essa sequência de 3 if's é pra completar o preencher automaticamente
@@ -484,6 +484,10 @@ def enviaEmail(email):
     with app.open_resource("recibo_teste.pdf") as recibo:
         msg.attach("recibo_teste.pdf", "application/pdf", recibo.read())
     mail.send(msg)
+
+@app.route('/clientes')
+def clientes():
+    return render_template("clientes.html")
 
 if __name__ == '__main__':
     app.run(debug=True)

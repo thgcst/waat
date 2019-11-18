@@ -304,7 +304,7 @@ def gerar_pdf(id_atendimento):
     else:
         telefone = '({}){}-{}'.format(telefone[0:2],telefone[2:6], telefone[6:])
     cep = select("cep", "profissionais" , "id_profissional = " + id_profissional)[0][0]
-    dataDoAtendimento = select("data_consulta", "atendimentos" , "id_atendimento = " + id_atendimento)[0][0]
+    dataDoAtendimento = (select("data_consulta", "atendimentos" , "id_atendimento = " + id_atendimento)[0][0]).strftime("%d/%m/%Y")
 
     if nomeRes == '-' or nomeRes == None:
         rendered = render_template('pdf_template18+.html', nomeProfissional = nomeProfissional, regProf = regProf, profissao = profissao, nome = nome, cpf = cpf, precoConsulta = precoConsulta, email=email, enderecoComercial = enderecoComercial, telefone = telefone, cep = cep, dataDoAtendimento = dataDoAtendimento)

@@ -226,6 +226,12 @@ th {
   cursor: default;
 }
 
+.greetings{
+  color: #fff;
+  font-size: 35px;
+  transform: translate(0,-150px)
+}
+
 @keyframes dropdown{
   from{
     opacity: 0;
