@@ -22,6 +22,19 @@ def select(fields, tables, where = None):
     cursor.execute(query)
     return cursor.fetchall()
 
+def select_last(id_profissional, id_cliente):
+    global cursor
+    id_profissional = str(id_profissional)
+    id_cliente = str(id_cliente)
+    selectionados = id_cliente+', data_consulta, '+id_profissional
+    query = "id_cliente = "+id_cliente+ " and id_profissional = " + id_profissional + " FROM atendimentos"
+    loc = select("MAX(data_consulta)","atendimentos", "id_cliente = "+id_cliente +" and id_profissional = "+id_profissional)
+    query+= "data_consulta = " + str(loc[0][0])
+    query+=  "ORDER BY id_cliente, data_consulta;"
+    select(selectionados, "atendimentos", )
+    cursor.execute(query)
+    return cursor.fetchall()
+
 def exist(cpf, table):
     global cursor
     query = "SELECT COUNT(nome) FROM " + table +" WHERE cpf="+cpf;
@@ -304,7 +317,7 @@ def gerar_pdf(id_atendimento):
     else:
         telefone = '({}){}-{}'.format(telefone[0:2],telefone[2:6], telefone[6:])
     cep = select("cep", "profissionais" , "id_profissional = " + id_profissional)[0][0]
-    dataDoAtendimento = select("data_consulta", "atendimentos" , "id_atendimento = " + id_atendimento)[0][0]
+    dataDoAtendimento = (select("data_consulta", "atendimentos" , "id_atendimento = " + id_atendimento)[0][0]).strftime("%d/%m/%Y")
 
     if nomeRes == '-' or nomeRes == None:
         rendered = render_template('pdf_template18+.html', nomeProfissional = nomeProfissional, regProf = regProf, profissao = profissao, nome = nome, cpf = cpf, precoConsulta = precoConsulta, email=email, enderecoComercial = enderecoComercial, telefone = telefone, cep = cep, dataDoAtendimento = dataDoAtendimento)
