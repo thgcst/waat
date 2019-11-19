@@ -359,31 +359,25 @@ def meusClientes():
         return int(valor)
     id_profissional = session['id']
     atendimentos = controler.select("*", "atendimentos", "id_profissional="+id_profissional)
-    
     clientes = [] #criar lista dos clientes atendidos, só o id
+    buffer = []
+
     for atendimento in atendimentos:
-        if atendimento[2] not in clientes:
+        if atendimento[2] not in buffer:
             clientes.append([atendimento[2]])
+            buffer.append(atendimento[2])
 
     for cliente in clientes:
-        cliente.append(controler.select("nome", "usuarios", "id="+str(cliente[0])))
-
-    for atendimento in atendimentos: #para cada atendimento da lista,
-        for cliente in clientes:     #para cada cliente,
-            datas=[]
-            if atendimento[2]==cliente[0]: #se o cliente referenciado for o do atendimento
-                datas.append(atendimento[4]) #bota a data lá
-            ultimo_atendimento = (max(datas)).strftime("%d/%m/%Y") #pega a ultima
-            cliente.append(ultimo_atendimento) #e bota no cara -> agora temos uma lista de listas com [[id, data do ultimo]]
+        cliente.append(controler.select("nome", "usuarios", "id="+str(cliente[0]))[0][0])
+        data_ultima_consulta = (controler.ultima_consulta(id_profissional, cliente[0])).strftime("%d/%m/%Y") 
+        cliente.append(data_ultima_consulta)    
 
     if request.method == "POST": # Handles os ordenadores
-        if "data" in request.form:
+        if "Data" in request.form:
             clientes.sort(key = sortData)
-        elif "nome" in request.form:
+        elif "Nome" in request.form:
             clientes.sort(key = sortNome)
-        elif "valor" in request.form:
-            clientes.sort(key = sortValor)
-    app.logger.info(recibosNew[0])
+    app.logger.info(clientes[0])
     return render_template('clientes.html', recibos=clientes, lenRecibos = len(clientes))
 
 

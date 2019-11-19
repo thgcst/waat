@@ -25,9 +25,9 @@
                     <div class="dropdown" style="margin-bottom: 15px">
                         <button class="botao botao2">Ordenar por</button>
                         <div class="dropdown-content">
-                            <input type="submit" class="option" name="data" value="Data do Último Atendimento"
+                            <input type="submit" class="option" name="data" value="Data"
                                 onclick="document.getElementById('form').submit()">
-                            <input type="submit" class="option" name="nome" value="Nome do Cliente"
+                            <input type="submit" class="option" name="nome" value="Nome"
                                 onclick="document.getElementById('form').submit()">
                         </div>
                     </div>
@@ -51,7 +51,9 @@
                             <tr>
                                 <td>{{recibo[1]}}</td>
                                 <td>{{recibo[2]}}</td>
-                                <td>teste</td>
+                                <td>
+                                    <button class="botao" type="submit">+</button>                                
+                                </td>
 
                             </tr>
                             {% endfor %}

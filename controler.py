@@ -344,3 +344,13 @@ def converte_data(data):
     ano = int(data[6:])
     data = date(ano, mes, dia)
     return data
+
+def ultima_consulta(id_profissional,id_cliente):
+    """
+    """
+    global cursor
+    id_cliente = str(id_cliente)
+    id_profissional = str(id_profissional)
+    query = str.format("SELECT MAX(data_consulta) FROM atendimentos WHERE id_cliente = {} and id_profissional = {}", id_cliente, id_profissional)
+    cursor.execute(query)
+    return cursor.fetchall()[0][0]
