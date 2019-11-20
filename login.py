@@ -18,7 +18,7 @@ class Usuario():
         
         dados = controler.select_CursorDict('*', 'usuarios', 'id='+self.id)[0]
         self.nome = dados['nome']
-        self.data_de_nascimento = dados['data_de_nascimento'].strftime("%d/%m/%Y")
+        self.data_de_nascimento = dados['data_de_nascimento']
         self.cpf = dados['cpf']
         self.telefone = dados['telefone']
         self.email = dados['email']
@@ -372,9 +372,9 @@ def meusClientes():
         cliente.append(data_ultima_consulta)    
 
     if request.method == "POST": # Handles os ordenadores
-        if "Data" in request.form:
+        if "data" in request.form:
             clientes.sort(key = sortData)
-        elif "Nome" in request.form:
+        elif "nome" in request.form:
             clientes.sort(key = sortNome)
         app.logger.info(clientes[0])
 
@@ -523,7 +523,7 @@ def esqueci():
             email = controler.email_user(cpf)[0]
             msg = Message("Recuperação de Senha", recipients=[email])
             link = 'http://127.0.0.1:5000/redefinir/'+chave
-            msg.html= render_template('RecuperarSenha.html', link = link)
+            msg.html= render_template('email_recuperarSenha.html', link = link)
             mail.send(msg)
             return redirect(url_for('login'))
             

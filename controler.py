@@ -3,6 +3,7 @@ import mysql.connector
 from flask import render_template, make_response
 import pdfkit
 from datetime import date, datetime, timedelta
+from wkhtmltopdfwrapper import WKHtmlToPdf
 
 config = {
   'user': 'sql10312877',
