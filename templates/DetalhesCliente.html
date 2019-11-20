@@ -8,16 +8,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/RecibosCliente.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/DetalhesCliente.css') }}">
     <!-- <link rel="stylesheet" type="text/css" href="../static/styles/login.css"> -->
 
-    <title>Atendimentos de {nome_cliente}</title>
+    <title>Atendimentos de {{nome_cliente.split()[0] }}</title>
 </head>
 
 <body>
-    <i class="fa icon" onclick="window.location.href='{{ url_for('RecibosProfissional')}}'">&#xf0a8;</i>
+    <i class="fa icon" onclick="window.location.href='{{ url_for('meusClientes')}}'">&#xf0a8;</i>
     <div class="container-login100" id="container">
-        <div class = "greetings"> Atendimentos de {{nome_cliente}}</div>
+        <div class = "greetings"> Atendimento Detalhado</div>
+        <div class="card">
+                <div class="container2">
+                  <p><b>Nome: </b>{{nome_cliente}}</p>
+                  <p><b>Telefone: </b>{{telefone_cliente}}</p>
+                  <p><b>Email: </b>{{email_cliente}}</p>
+                </div>
+        </div>
         <form method="POST" id="form" style="width: 90% ;max-width: 1050px">
             <div>
                 <div style="display: flex;flex-direction: row; justify-content: space-between;">
@@ -26,8 +33,6 @@
                         <button class="botao botao2">Ordenar por</button>
                         <div class="dropdown-content">
                             <input type="submit" class="option" name="data" value="Data de Atendimento"
-                                onclick="document.getElementById('form').submit()">
-                            <input type="submit" class="option" name="nome" value="Nome do profissional"
                                 onclick="document.getElementById('form').submit()">
                             <input type="submit" class="option" name="valor" value="Valor"
                                 onclick="document.getElementById('form').submit()">
@@ -43,26 +48,12 @@
                     </table>
                     <div style="overflow: scroll;max-height: 60vh;background: #fff;">
                         <table id="table">
-                            {% if lenRecibos == 0 %}
-                            <tr>
-                                <td style="width: 1000px">Você não tem atendimentos cadastrados</td>
-                            </tr>
-                            {% else %}
                             {% for recibo in recibos %}
                             <tr>
                                 <td>{{recibo[4]}}</td>
-                                <td>
-                                    <input type="submit" class="txt2" style="font-size: 17px"
-                                        name={{recibos.index(recibo)}} value="Baixar recibo">
-                                    </input>
-                                </td>
-                                <td>{{recibo[8]}}</td>
-                                <td>{{recibo[9]}}</td>
                                 <td>{{recibo[3]}}</td>
-
                             </tr>
                             {% endfor %}
-                            {% endif %}
                         </table>
                     </div>
                 </div>

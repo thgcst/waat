@@ -77,6 +77,13 @@ def limpa_telefone(telefone):
         bloco1 = telefone[4:8]
         bloco2 = telefone[9:]
         return ddd+bloco1+bloco2
+123456789
+def formata_telefone(telefone):
+    """Transforma um telefone vindo do bd no formato (21)1111-1111 ou (21)1111-11111"""
+    if len(telefone) == 11:
+        telefone = '({}) {}-{}'.format(telefone[0:2],telefone[2:7], telefone[7:])
+    else:
+        telefone = '({}) {}-{}'.format(telefone[0:2],telefone[2:6], telefone[6:])
 
 def limpa_cpf(cpf):
     '''Limpa o CPF, tirando ponto e traço'''

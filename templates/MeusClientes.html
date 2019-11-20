@@ -44,7 +44,7 @@
                         <table id="table">
                             {% if lenRecibos == 0 %}
                             <tr>
-                                <td style="width: 1000px">Você não tem atendimentos cadastrados</td>
+                                <td style="width: 1000px">Você não tem clientes cadastrados</td>
                             </tr>
                             {% else %}
                             {% for recibo in recibos %}
@@ -52,7 +52,10 @@
                                 <td>{{recibo[1]}}</td>
                                 <td>{{recibo[2]}}</td>
                                 <td>
-                                    <button class="botao" type="submit">+</button>                                
+                                    <input type="submit" class="botao" style="font-size: 17px"
+                                    name={{recibos.index(recibo)}} value="+">
+                                    </input>
+                                                           
                                 </td>
 
                             </tr>

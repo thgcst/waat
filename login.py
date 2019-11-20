@@ -215,7 +215,7 @@ def before_request():
 def loggedCliente():
     if 'user' in session:
         user = Cliente(session['id'])
-        return render_template("loggedCliente.html", cliente=user.nome)
+        return render_template("loggedCliente.html", cliente=user.nome, type = Usuario(session['id']).tipo)
     return redirect(url_for('login'))
 
 @app.route('/loggedProfissional')
@@ -276,7 +276,7 @@ def RecibosProfissional():
             recibosNew.sort(key = sortValor)
         elif "cadastrar" in request.form:
             return redirect(url_for('CadastrarAtendimentos'))
-    app.logger.info(recibosNew[0])
+        app.logger.info(recibosNew[0])
     if request.method == "POST":
         dic = request.form.to_dict()
         app.logger.warning(dic)
@@ -313,7 +313,6 @@ def RecibosCliente():
     recibosNew = []
     for recibo in recibos:
         recibo = list(recibo)
-        print (recibo)
         recibo.append(controler.select("nome", "usuarios", "id=" + str(recibo[1]))[0][0])
         recibo.append(controler.select("profissao", "profissionais", "id_profissional=" + str(recibo[1]))[0][0])
         recibosNew.append(recibo)
@@ -377,9 +376,48 @@ def meusClientes():
             clientes.sort(key = sortData)
         elif "Nome" in request.form:
             clientes.sort(key = sortNome)
-    app.logger.info(clientes[0])
-    return render_template('clientes.html', recibos=clientes, lenRecibos = len(clientes))
+        app.logger.info(clientes[0])
 
+    if request.method == "POST":
+        dic = request.form.to_dict()
+        app.logger.warning(dic)
+        dicInvertido = dict(zip(dic.values(),dic.keys()))
+        if "+" in dicInvertido :
+            index = int(dicInvertido["+"])
+            id_cliente = str(clientes[index][0])
+            return redirect(url_for("DetalhesCliente", id_cliente = id_cliente))
+
+    return render_template('MeusClientes.html', recibos=clientes, lenRecibos = len(clientes))
+
+@app.route('/DetalhesCliente/<id_cliente>', methods=['GET', 'POST'])
+def DetalhesCliente(id_cliente):
+    if "user" in session:
+        id_profissional = session["id"]
+        cliente = Cliente(id_cliente)
+
+        def sortData(val):
+            data = val[4][6:] + val[4][3:5] + val[4][0:2]
+            return int(data)
+        def sortValor(val): 
+            valor = val[3].replace("R$","").replace(",","")
+            return int(valor)
+            
+        where = str.format("id_cliente= {} and id_profissional = {}", id_cliente, id_profissional)
+        recibos = controler.select("*", "atendimentos", where)
+        recibosNew = []
+        for recibo in recibos:
+            recibo = list(recibo)
+            recibosNew.append(recibo)
+            recibo[4] = recibo[4].strftime("%d/%m/%Y")
+        
+        if request.method == "POST": # Handles os ordenadores
+            if "data" in request.form:
+                recibosNew.sort(key = sortData)
+            elif "valor" in request.form:
+                recibosNew.sort(key = sortValor)
+
+        return render_template("DetalhesCliente.html", nome_cliente = cliente.nome, telefone_cliente = cliente.telefone, email_cliente = cliente.email, recibos=recibosNew)
+    return redirect(url_for('login'))
 
 @app.route('/cadastraAtendimento', methods=['GET', 'POST'])
 def CadastrarAtendimentos():
@@ -520,9 +558,6 @@ def enviaEmail(email):
         msg.attach("recibo_teste.pdf", "application/pdf", recibo.read())
     mail.send(msg)
 
-@app.route('/clientes')
-def clientes():
-    return render_template("clientes.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
