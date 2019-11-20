@@ -5,10 +5,10 @@ import pdfkit
 from datetime import date, datetime, timedelta
 
 config = {
-  'user': 'sql10311918',
-  'password': 'eWHrsSjmIQ',
+  'user': 'sql10312877',
+  'password': 'YZBUDWdzsP',
   'host': 'sql10.freesqldatabase.com',
-  'database': 'sql10311918',
+  'database': 'sql10312877',
   'port': '3306'}
 
 con = mysql.connector.connect(**config)

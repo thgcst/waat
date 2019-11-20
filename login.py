@@ -215,22 +215,22 @@ def before_request():
 def loggedCliente():
     if 'user' in session:
         user = Cliente(session['id'])
-        return render_template("loggedCliente.html", cliente=user.nome, type = Usuario(session['id']).tipo)
+        return render_template("loggedCliente.html", cliente=user.nome, tipo = Usuario(session['id']).tipo)
     return redirect(url_for('login'))
 
 @app.route('/loggedProfissional')
 def loggedProfissional():
     if 'user' in session:
         user = Profissional(session['id'])
-        return render_template("loggedProfissional.html", profissional=user.nome)
+        return render_template("loggedProfissional.html", profissional=user.nome, tipo = Usuario(session['id']).tipo)
     return redirect(url_for('login'))
 
 
 @app.route('/loggedCliProf', methods=['GET', 'POST'])
 def ProfissionalCliente():
     if 'user' in session:
-        User = Usuario(session['id'])
-        return render_template('ProfissionalCliente.html', nome_usuario=User.nome)
+        user = Usuario(session['id'])
+        return render_template('ProfissionalCliente.html', nome_usuario=user.nome, tipo = Usuario(session['id']).tipo)
     return redirect(url_for('login'))
 
 @app.route('/logout')

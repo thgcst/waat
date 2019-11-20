@@ -22,7 +22,11 @@
             <button class="botao" onclick="window.location.href='{{ url_for( 'Informacoes_cadastroCliente')}}'">Informações de cadastro</button>
             <button class="botao"  onclick="window.location.href='{{ url_for( 'RecibosCliente')}}'">Recibos</button>
         </div>
+        {% if tipo==3 %}
+        <button class="sair" onclick="window.location.href='{{ url_for( 'loggedProfissional')}}'">Alternar para Profissional</button>
+                {% endif %}
         <button class="sair" id="btnSair">Sair</button>
+        
     </div>
 
     <div id="myModal" class="modal">
